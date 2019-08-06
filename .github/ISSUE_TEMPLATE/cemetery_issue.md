@@ -7,9 +7,7 @@ assignees: ''
 
 ---
 
-## Issue description
-
-Describe the problem you are having
+### Describe the problem you are having
 
 
 #### Should a new checkbox be added
