@@ -7,6 +7,12 @@ assignees: ''
 
 ---
 
+<!-- 
+1. place an [x] in the relevant boxes and submit the issue
+1. tag anyone who might be a stakeholder in the deprecation
+1. follow through with the all of the items before closing the issue 
+-->
+
 # Is the data removal temporary or permanent?
 
 - [ ] Replaced with newer data (intials)
