@@ -51,6 +51,8 @@ assignees: ''
 
 - [ ] Should it continue to run or be removed? (intials)
   - [ ] Action taken (intials)
+- [ ] Should stale data be removed from forklift hashing and receiving? (initials)
+  - [ ] Action taken (intials)
 
 # Are there service dependencies?
 
