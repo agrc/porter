@@ -6,6 +6,9 @@ labels: 'deprecation'
 assignees: ''
 
 ---
+# Summary
+
+A short summary of the situation...
 
 <!-- 
 1. place an [x] in the relevant boxes and submit the issue
@@ -19,7 +22,7 @@ assignees: ''
 - [ ] Historical data for archive (intials)
 - [ ] No longer relevant (intials)
 
-# Identify places where the data lives
+# Where does the data live?
 
 - [ ] ArcGIS Online (intials)
   - [ ] Action taken (intials)
