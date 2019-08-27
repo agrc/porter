@@ -6,6 +6,9 @@ labels: 'deprecation'
 assignees: ''
 
 ---
+# Summary
+
+A short summary of the situation...
 
 # Is the data removal temporary or permanent?
 
@@ -13,7 +16,7 @@ assignees: ''
 - [ ] Historical data for archive (intials)
 - [ ] No longer relevant (intials)
 
-# Identify places where the data lives
+# Where does the data live?
 
 - [ ] ArcGIS Online (intials)
   - [ ] Action taken (intials)
