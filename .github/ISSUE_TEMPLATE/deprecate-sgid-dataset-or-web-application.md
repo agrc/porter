@@ -11,61 +11,42 @@ assignees: ''
 A short summary of the situation...
 
 <!-- 
-1. place an [x] in the relevant boxes and submit the issue
-1. tag anyone who might be a stakeholder in the deprecation
-1. follow through with the all of the items before closing the issue 
+1. Delete any action items that you know are not relevant boxes. If in doubt, leave it.
+1. Tag anyone who might be a stakeholder in the deprecation.
+1. All checkboxes should either be removed or checked before closing the issue.
 -->
 
-# Is the data removal temporary or permanent?
-
-- [ ] Replaced with newer data (intials)
-- [ ] Historical data for archive (intials)
-- [ ] No longer relevant (intials)
-
-# Where does the data live?
+# Remove data from the following areas
 
 - [ ] ArcGIS Online (intials)
-  - [ ] Action taken (intials)
 - [ ] Internal SGID (intials)
-  - [ ] Action taken (intials)
 - [ ] External SGID (intials)
-  - [ ] Action taken (intials)
 - [ ] Google Drive (intials)
-  - [ ] Action taken (intials)
 - [ ] Open data (intials)
-  - [ ] Action taken (intials)
 - [ ] Mapserv (intials)
-  - [ ] Action taken (intials)
 - [ ] gis.utah.gov data pages (intials)
-  - [ ] Action taken (intials)
 - [ ] Stewardship doc and sgid-index (intials)
-  - [ ] Action taken (intials)
 
 # Is there a website?
 
-- [ ] Is the source code on GitHub? (initials)
-- [ ] Should it be archived? (intials)
-  - [ ] Action taken (intials)
-- [ ] Should it be removed from the web server or show a static page with information? (intials)
-  - [ ] Action taken (intials)
-- [ ] Should it redirect somewhere else? (intials)
-  - [ ] Action taken (intials)
+- [ ] Archive source code repository (intials)
+- [ ] Remove from the web server (initials)
+or
+- [ ] Replace app with a static page with information (intials)
+or
+- [ ] Redirect somewhere else (intials)
 
 # Is there a map service?
 
-- [ ] Should it be stopped or deleted? (intials)
-  - [ ] Action taken (intials)
+- [ ] Stop (intials)
+- [ ] Delete (initials)
 
 # Is there a forklift pallet?
 
-- [ ] Should it continue to run or be removed? (intials)
-  - [ ] Action taken (intials)
-- [ ] Should stale data be removed from forklift hashing and receiving? (initials)
-  - [ ] Action taken (intials)
+- [ ] Remove repo (intials)
+- [ ] Remove stale data from forklift hashing and receiving (initials)
 
 # Are there service dependencies?
 
-- [ ] Does the web api query it? (intials)
-  - [ ] Action taken (intials)
-- [ ] Do AGRC or applications widgets reference it? (intials)
-  - [ ] Action taken (intials)
+- [ ] Validate that the web api does not query it (intials)
+- [ ] Validate that AGRC or applications widgets do not reference it (intials)
