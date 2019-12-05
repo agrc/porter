@@ -26,6 +26,7 @@ A short summary of the situation...
 - [ ] Mapserv (intials)
 - [ ] gis.utah.gov data pages (intials)
 - [ ] Stewardship doc and sgid-index (intials)
+- [ ] `SGID.META.AGOLItems` (initials)
 
 # Is there a website?
 
