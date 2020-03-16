@@ -20,13 +20,15 @@ A short summary of the situation...
 
 - [ ] ArcGIS Online (intials)
 - [ ] Internal SGID (intials)
-- [ ] External SGID (intials)
+- [ ] SGID10 (intials)
+- [ ] Open SGID (initials)
 - [ ] Google Drive (intials)
 - [ ] Open data (intials)
 - [ ] Mapserv (intials)
 - [ ] gis.utah.gov data pages (intials)
 - [ ] Stewardship doc and sgid-index (intials)
 - [ ] `SGID.META.AGOLItems` (initials)
+- [ ] `SGID.META.ChangeDetection` (initials)
 
 # Is there a website?
 
