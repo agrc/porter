@@ -4,8 +4,9 @@ Track deprecation tasks
 
 ## How to use
 
-1. When an application, dataset, or both are requesting deprecation [create a new issue](https://github.com/agrc/cemetery/issues/new/choose)
-1. Choose the most applicable template from the buttons
-1. place an `[x]` in the relevant boxes and submit the issue
-1. tag anyone who might be a stakeholder in the deprecation
-1. follow through with the all of the items before closing the issue
+1. When an application, dataset, or both needs to be deleted or moved to a different long-term storage, [create a new issue](https://github.com/agrc/cemetery/issues/new/choose)
+1. Choose the `removing_data_or_service` template from the buttons
+1. Tag the three triagers (one from each team) in the triage section
+1. The triagers will choose which items need to be handled and tag the appropriate people to handle them
+1. The people assigned to different issues will check the boxes as they are completed
+1. Once all boxes are checked, close the issue.
