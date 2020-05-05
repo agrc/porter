@@ -1,7 +1,7 @@
 ---
-name: Deprecate SGID Dataset or Web Application
+name: Removing Data From Anywhere
 about: Deprecation Checklist
-title: Deprecate <web app/dataset name>
+title: Remove <web app/dataset name> from <place>
 labels: 'deprecation'
 assignees: ''
 
@@ -11,45 +11,56 @@ assignees: ''
 A short summary of the situation...
 
 <!-- 
-1. Delete any action items that you know are not relevant boxes. If in doubt, leave it.
-1. Tag anyone who might be a stakeholder in the deprecation.
+1. The three teams will triage the request, striking through any line that does not apply.
+1. Assign each step to someone based on list of assignments
 1. All checkboxes should either be removed or checked before closing the issue.
 -->
 
+# Triage
+
+- [ ] Data Team Triage (assigned to)
+- [ ] Dev Team Triage (assigned to)
+- [ ] Cadastre Team Triage
+
 # Remove data from the following areas
 
-- [ ] ArcGIS Online (intials)
-- [ ] Internal SGID (intials)
-- [ ] SGID10 (intials)
-- [ ] Open SGID (initials)
-- [ ] Google Drive (intials)
-- [ ] Open data (intials)
-- [ ] Mapserv (intials)
-- [ ] gis.utah.gov data pages (intials)
-- [ ] Stewardship doc and sgid-index (intials)
-- [ ] `SGID.META.AGOLItems` (initials)
-- [ ] `SGID.META.ChangeDetection` (initials)
+- [ ] ArcGIS Online (assigned to)
+- [ ] Internal SGID (assigned to)
+- [ ] SGID10 (assigned to)
+- [ ] Open SGID (assigned to)
+- [ ] Google Drive (assigned to)
+- [ ] Open data (assigned to)
+- [ ] Mapserv (assigned to)
+- [ ] gis.utah.gov data pages (assigned to)
+- [ ] Stewardship doc and sgid-index (assigned to)
+- [ ] `SGID.META.AGOLItems` (assigned to)
+- [ ] `SGID.META.ChangeDetection` (assigned to)
+
+# Copy data to the following areas
+
+- [ ] Upload to UtahAGRC/AGRC_Shelved folder in AGOL (assigned to)
+- [ ] Upload to appropriate UtahAGRC/{SGID Category} folder in AGOL (for "static" datasets) (assigned to)
 
 # Is there a website?
 
-- [ ] Archive source code repository (intials)
-- [ ] Remove from the web server (initials)
+- [ ] Archive source code repository (assigned to)
+- [ ] Remove from the web server (assigned to)
 or
-- [ ] Replace app with a static page with information (intials)
+- [ ] Replace app with a static page with information (assigned to)
 or
-- [ ] Redirect somewhere else (intials)
+- [ ] Redirect somewhere else (assigned to)
 
 # Is there a map service?
 
-- [ ] Stop (intials)
-- [ ] Delete (initials)
+- [ ] Stop (assigned to)
+- [ ] Delete (assigned to)
 
 # Is there a forklift pallet?
 
-- [ ] Remove repo (intials)
-- [ ] Remove stale data from forklift hashing and receiving (initials)
+- [ ] Remove repo (assigned to)
+- [ ] Remove stale data from forklift hashing and receiving (assigned to)
 
 # Are there service dependencies?
 
-- [ ] Validate that the web api does not query it (intials)
-- [ ] Validate that AGRC or applications widgets do not reference it (intials)
+- [ ] Validate that the web api does not query it (assigned to)
+- [ ] Validate that AGRC or applications widgets do not reference it (assigned to)
