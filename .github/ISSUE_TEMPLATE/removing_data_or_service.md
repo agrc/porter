@@ -11,7 +11,7 @@ assignees: ''
 A short summary of the situation...
 
 <!-- 
-1. The three teams will triage the request, deleting any line that does not apply.
+1. The three teams will triage the request, striking through any line that does not apply.
 1. Assign each step to someone based on list of assignments
 1. All checkboxes should either be removed or checked before closing the issue.
 -->
