@@ -69,3 +69,8 @@ or
 
 - [ ] Validate that the web api does not query it (assigned to)
 - [ ] Validate that AGRC or applications widgets do not reference it (assigned to)
+
+# Notification
+
+- [ ] Blog post (assigned to)
+- [ ] Tweet (assigned to)
