@@ -73,4 +73,6 @@ or
 # Notification
 
 - [ ] Blog post (assigned to)
-- [ ] Tweet (assigned to)
+- [ ] Twitter (@steveoh)
+  - [ ] Intent
+  - [ ] Completed
