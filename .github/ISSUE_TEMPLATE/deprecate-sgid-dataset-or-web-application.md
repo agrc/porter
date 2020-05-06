@@ -18,7 +18,7 @@ A short summary of the situation...
 
 # Triage
 
-- [ ] Data Team Triage (assigned to)
+- [ ] Data Team Triage
 - [ ] Dev Team Triage (assigned to)
 - [ ] Cadastre Team Triage
 
@@ -31,15 +31,19 @@ A short summary of the situation...
 - [ ] Google Drive (assigned to)
 - [ ] Open data (assigned to)
 - [ ] Mapserv (assigned to)
-- [ ] gis.utah.gov data pages (assigned to)
-- [ ] Stewardship doc and sgid-index (assigned to)
-- [ ] `SGID.META.AGOLItems` (assigned to)
-- [ ] `SGID.META.ChangeDetection` (assigned to)
 
 # Copy data to the following areas
 
 - [ ] Upload to UtahAGRC/AGRC_Shelved folder in AGOL (assigned to)
 - [ ] Upload to appropriate UtahAGRC/{SGID Category} folder in AGOL (for "static" datasets) (assigned to)
+
+# Update information in the following areas
+
+- [ ] gis.utah.gov data pages (assigned to)
+- [ ] Stewardship doc and sgid-index (assigned to)
+- [ ] `SGID.META.AGOLItems` (assigned to)
+- [ ] `AGRC_Shelved/AGOLItems_Shelved` (in AGOL) (assigned to)
+- [ ] `SGID.META.ChangeDetection` (assigned to)
 
 # Is there a website?
 
