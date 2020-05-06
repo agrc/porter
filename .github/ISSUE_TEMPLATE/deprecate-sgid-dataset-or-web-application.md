@@ -35,6 +35,7 @@ A short summary of the situation...
 # Copy data to the following areas
 
 - [ ] Upload to UtahAGRC/AGRC_Shelved folder in AGOL (assigned to)
+- [ ] Move existing AGOL item to AGRC_Shelved AGOL folder (assigned to)
 - [ ] Upload to appropriate UtahAGRC/{SGID Category} folder in AGOL (for "static" datasets) (assigned to)
 
 # Update information in the following areas
