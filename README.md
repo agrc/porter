@@ -11,3 +11,29 @@ Track deprecation tasks
    - Items that don't need to be handled should be struck through (wrap the line with `~`'s) instead of being deleted
 1. The people assigned to different issues will check the boxes as they are completed and comment on the issue to notify the rest of the group.
 1. Once all boxes are checked, close the issue.
+
+### Tweet templates
+
+#### intent to deprecate
+
+```md
+🚮🗑️🚮 Deprecation Notice 🚮🗑️🚮
+
+ECONOMY.TaxAreas2018
+
+github.com/agrc/cemetery/…
+
+#utmap #agrcemetery
+```
+
+#### issue completed
+
+```md
+🚮🗑️🚮 Deprecation Complete 🚮🗑️🚮
+
+ECONOMY.TaxAreas2018
+
+github.com/agrc/cemetery/…
+
+#utmap #agrcemetery
+```
