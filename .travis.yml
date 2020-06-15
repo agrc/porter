@@ -1,0 +1,16 @@
+language: python
+python:
+  - "3.6"
+install:
+  - pip install -e .
+before_script:
+  - pip install -e ."[tests]"
+script:
+  - pytest
+after_success:
+  - pip install coveralls
+  - coveralls
+notifications:
+    email:
+        on_success: change
+        on_failure: change
