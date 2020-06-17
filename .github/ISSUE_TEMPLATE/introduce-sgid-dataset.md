@@ -40,17 +40,21 @@ you can strike them out. They are available if for some reason the internal sgid
 <!--
 Where do we expect the data to show up. Check [x] all the areas 
 -->
-# The data should propagate to
+# The data should propagate automatically to
 
 - [ ] ArcGIS Online
 - [ ] Internal SGID
 - [ ] SGID10
 - [ ] Open SGID
 - [ ] Open data
+- [ ] `SGID.META.ChangeDetection`
+
+# References to the data need to be manually added to
+
 - [ ] gis.utah.gov data pages
 - [ ] Stewardship doc and sgid-index
 - [ ] `SGID.META.AGOLItems`
-- [ ] `SGID.META.ChangeDetection`
+
 
 <!--
 assign yourself or someone to check that the dataset is live in its area. once verified, add the date of verification `2020/01/01`
