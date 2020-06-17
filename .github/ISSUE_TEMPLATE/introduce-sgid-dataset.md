@@ -11,7 +11,11 @@ Introduce your data, where it comes from, why it is being added etc
 -->
 # Summary
 
-We received yada yada from blahbidy blah. Foo Bar is the data contact and it will be updated quarterly. I propose we call it Baz and put it in this ISO category or group.
+- **Proposed Dataset Name**: Foo
+- **Data Description**: Bar
+- **Source Agency/Entity**: Baz
+- **Contact**: Bar Baz
+- **Update Frequency**: Quarterly
 
 <!-- 
 When the champion from your team has completed the triage, check [x] the checkbox
