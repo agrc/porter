@@ -50,7 +50,6 @@ Where do we expect the data to show up. Check [x] all the areas
 - [ ] gis.utah.gov data pages
 - [ ] Stewardship doc and sgid-index
 - [ ] `SGID.META.AGOLItems`
-- [ ] `AGRC_Shelved/AGOLItems_Shelved` (in AGOL)
 - [ ] `SGID.META.ChangeDetection`
 
 <!--
@@ -66,7 +65,6 @@ assign yourself or someone to check that the dataset is live in its area. once v
 - [ ] gis.utah.gov data pages (@assigned on ``)
 - [ ] Stewardship doc and sgid-index (@assigned on ``)
 - [ ] `SGID.META.AGOLItems` (@assigned on ``)
-- [ ] `AGRC_Shelved/AGOLItems_Shelved` (in AGOL) (@assigned on ``)
 - [ ] `SGID.META.ChangeDetection` (@assigned on ``)
 
 
