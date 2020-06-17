@@ -53,7 +53,10 @@ Where do we expect the data to show up. Check [x] all the areas
 - [ ] `AGRC_Shelved/AGOLItems_Shelved` (in AGOL)
 - [ ] `SGID.META.ChangeDetection`
 
-# We have verified the data is in 
+<!--
+assign yourself or someone to check that the dataset is live in its area. once verified, add the date of verification `2020/01/01`
+-->
+# We have verified the data is live 
 
 - [ ] ArcGIS Online (@assigned on ``)
 - [ ] Internal SGID (@assigned on ``)
@@ -66,9 +69,10 @@ Where do we expect the data to show up. Check [x] all the areas
 - [ ] `AGRC_Shelved/AGOLItems_Shelved` (in AGOL) (@assigned on ``)
 - [ ] `SGID.META.ChangeDetection` (@assigned on ``)
 
+
 # Notification
 
-- [ ] Blog post (assigned to)
+- [ ] Blog post (@assigned)
 - [ ] Twitter (@steveoh)
   - [ ] Intent
   - [ ] Completed
