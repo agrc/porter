@@ -4,36 +4,67 @@ about: Creation Checklist
 title: Add <dataset name> from <place>
 labels: 'introduction'
 assignees: ''
-
 ---
-# Summary
-
-A short summary of the situation...
 
 <!-- 
-1. The three teams will triage the request, striking through any line that does not apply.
-1. Assign each step to someone based on list of assignments
-1. All checkboxes should either be striked out or checked before closing the issue.
+Introduce your data, where it comes from, why it is being added etc
+-->
+# Summary
+
+We received yada yada from blahbidy blah. Foo Bar is the data contact and it will be updated quarterly. I propse we call it Baz and put it in this ISO category or group.
+
+<!-- 
+When the champion from your team has completed the triage, check [x] the checkbox
 -->
 
 # Triage
 
-- [ ] Data Team Triage
-- [ ] Dev Team Triage (assigned to)
-- [ ] Cadastre Team Triage
+- [ ] Data Team Triage Complete
+- [ ] Dev Team Triage Complete (assigned to)
+- [ ] Cadastre Team Triage Complete
 
-# Data is live in the following areas
+# We are introducing data
 
-- [ ] ArcGIS Online (assigned to)
-- [ ] Internal SGID (assigned to)
-- [ ] SGID10 (assigned to)
-- [ ] Open SGID (assigned to)
-- [ ] Open data (assigned to)
-- [ ] gis.utah.gov data pages (assigned to)
-- [ ] Stewardship doc and sgid-index (assigned to)
-- [ ] `SGID.META.AGOLItems` (assigned to)
-- [ ] `AGRC_Shelved/AGOLItems_Shelved` (in AGOL) (assigned to)
-- [ ] `SGID.META.ChangeDetection` (assigned to)
+The data was or will be added on `2020/00/00` to the following areas
+
+<!-- 
+add an [x] to the applicable areas you plan to add the data or ~strike~ out thoses that do not apply.
+If adding to the internal SGID with the hopes that swapper and forklift will push the item to SGID10 and AGOL
+you can strike them out. They are available if for some reason the internal sgid is skipped. 
+-->
+
+- [ ] Internal SGID
+- [ ] SGID10
+- [ ] ArcGIS Online
+
+<!--
+Where do we expect the data to show up. Check [x] all the areas 
+-->
+# The data should propagate to
+
+- [ ] ArcGIS Online
+- [ ] Internal SGID
+- [ ] SGID10
+- [ ] Open SGID
+- [ ] Open data
+- [ ] gis.utah.gov data pages
+- [ ] Stewardship doc and sgid-index
+- [ ] `SGID.META.AGOLItems`
+- [ ] `AGRC_Shelved/AGOLItems_Shelved` (in AGOL)
+- [ ] `SGID.META.ChangeDetection`
+
+# We have verified the data is in 
+
+- [ ] ArcGIS Online (@assigned on ``)
+- [ ] Internal SGID (@assigned on ``)
+- [ ] SGID10 (@assigned on ``)
+- [ ] Open SGID (@assigned on ``)
+- [ ] Open data (@assigned on ``)
+- [ ] gis.utah.gov data pages (@assigned on ``)
+- [ ] Stewardship doc and sgid-index (@assigned on ``)
+- [ ] `SGID.META.AGOLItems` (@assigned on ``)
+- [ ] `AGRC_Shelved/AGOLItems_Shelved` (in AGOL) (@assigned on ``)
+- [ ] `SGID.META.ChangeDetection` (@assigned on ``)
 
 # Notification
 
