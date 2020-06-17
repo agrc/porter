@@ -76,5 +76,3 @@ assign yourself or someone to check that the dataset is live in its area. once v
 
 - [ ] Blog post (@assigned)
 - [ ] Twitter (@steveoh)
-  - [ ] Intent
-  - [ ] Completed
