@@ -48,6 +48,8 @@ the data should be in good shape.
 # The data is high quality
 
 - [ ] Sweeper checks have run and passed
+- [ ] The minimum requirements for [metadata](https://gis.utah.gov/about/policy/sgid/) are populated
+- [ ] The data complies with our [domain rules](https://gis.utah.gov/about/policy/sgid/)
 
 <!--
 Where do we expect the data to show up. Check [x] all the areas 
