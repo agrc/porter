@@ -42,6 +42,14 @@ you can strike them out. They are available if for some reason the internal sgid
 - [ ] SGID10
 - [ ] ArcGIS Online
 
+<!-- 
+the data should be in good shape.
+-->
+# The data is high quality
+
+- [ ] Sweeper checks have run and passed
+- [ ] The minimum metadata fields are populated
+
 <!--
 Where do we expect the data to show up. Check [x] all the areas 
 -->
