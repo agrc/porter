@@ -48,7 +48,6 @@ Where do we expect the data to show up. Check [x] all the areas
 # The data should propagate automatically to
 
 - [ ] ArcGIS Online
-- [ ] Internal SGID
 - [ ] SGID10
 - [ ] Open SGID
 - [ ] Open data
