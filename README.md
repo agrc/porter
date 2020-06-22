@@ -1,6 +1,11 @@
-# cemetery
+# Porter
 
-Track deprecation tasks
+A porter is person that 
+
+- carries things, such as bags
+- performs routine cleaning, likely on a train, taking care of the sleeping berths.
+
+AGRC manages the additions, replacements, and deletions of SGID items in the broadest sense
 
 ## How to use
 
