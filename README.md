@@ -19,11 +19,11 @@ Track deprecation tasks
 ```md
 🚮🗑️🚮 Deprecation Notice 🚮🗑️🚮
 
-ECONOMY.TaxAreas2018
+[Dataset]
 
-github.com/agrc/cemetery/…
+https://github.com/agrc/porter/issues/#
 
-#utmap #agrcemetery
+#utmap #agrcporter
 ```
 
 #### issue completed
@@ -31,9 +31,24 @@ github.com/agrc/cemetery/…
 ```md
 🚮🗑️🚮 Deprecation Complete 🚮🗑️🚮
 
-ECONOMY.TaxAreas2018
+[Dataset]
 
-github.com/agrc/cemetery/…
+https://github.com/agrc/porter/issues/#
 
-#utmap #agrcemetery
+#utmap #agrcporter
+```
+
+#### intent to add
+
+```md
+
+🌱🌱The SGID is getting larger🌳🌳
+
+Dataset from Agency coming soon!
+
+https://github.com/agrc/porter/issues/#
+
+Follow along and comment if you are interested!
+
+#utmap #agrcporter
 ```
