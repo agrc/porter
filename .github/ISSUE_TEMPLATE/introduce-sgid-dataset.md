@@ -83,7 +83,7 @@ assign yourself or someone to check that the dataset is live in its area. once v
 - [ ] Stewardship doc and sgid-index (@assigned on ``)
 - [ ] `SGID.META.AGOLItems` (@assigned on ``)
 - [ ] `SGID.META.ChangeDetection` (@assigned on ``)
-- [ ] `agol-validator` items (tags, thumbnail, etc) (@assgined on ``)
+- [ ] [agol-validator](https://github.com/agrc/agol-validator) items (@assgined on ``)
 
 
 # Notification
