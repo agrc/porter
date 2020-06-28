@@ -65,9 +65,8 @@ Where do we expect the data to show up. Check [x] all the areas
 # References to the data need to be manually added to
 
 - [ ] gis.utah.gov data pages
-- [ ] Stewardship doc and sgid-index
+- [ ] [Stewardship doc](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1)
 - [ ] `SGID.META.AGOLItems`
-
 
 <!--
 assign yourself or someone to check that the dataset is live in its area. once verified, add the date of verification `2020/01/01`
@@ -78,13 +77,12 @@ assign yourself or someone to check that the dataset is live in its area. once v
 - [ ] Internal SGID (@assigned on ``)
 - [ ] SGID10 (@assigned on ``)
 - [ ] Open SGID (@assigned on ``)
-- [ ] Open data (@assigned on ``)
+- [ ] [Open data](https://opendata.gis.utah.gov) (@assigned on ``)
 - [ ] gis.utah.gov data pages (@assigned on ``)
-- [ ] Stewardship doc and sgid-index (@assigned on ``)
+- [ ] [sgid-index](https://gis.utah.gov/data/sgid-index) (@assigned on ``)
 - [ ] `SGID.META.AGOLItems` (@assigned on ``)
 - [ ] `SGID.META.ChangeDetection` (@assigned on ``)
 - [ ] [agol-validator](https://github.com/agrc/agol-validator) items (@assgined on ``)
-
 
 # Notification
 
