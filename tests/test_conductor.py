@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # * coding: utf8 *
 """
-test_projectname.py
+test_conductor
+.py
 A module that contains tests for the project module.
 """
 
-from scythe import main
+from conductor import conductor
 
 
-def test_hello_returns_hi():
-    assert main.hello() == 'hi'
+def test_imports():
+    assert True
