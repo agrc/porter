@@ -10,13 +10,13 @@ from os.path import basename, splitext
 from setuptools import find_packages, setup
 
 setup(
-    name='scythe',
+    name='conductor',
     version='1.0.0',
     license='MIT',
-    description='A bot to check on the status of a cemetery issue.',
+    description='A bot to check on the status of a porter issue.',
     author='AGRC',
     author_email='agrc@utah.gov',
-    url='https://github.com/agrc/cemetery',
+    url='https://github.com/agrc/porter',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
@@ -29,11 +29,14 @@ setup(
         'Topic :: Utilities',
     ],
     project_urls={
-        'Issue Tracker': 'https://github.com/agrc/python/issues',
+        'Issue Tracker': 'https://github.com/agrc/porter/issues',
     },
     keywords=['gis'],
     install_requires=[
-        # 'package==1.0.*'
+        'PyGithub==1.*',
+        'python-dotenv==0.*',
+        'pyodbc==4.*',
+        'psycopg2-binary==2.*',
     ],
     extras_require={
         'tests': [
@@ -52,6 +55,6 @@ setup(
         'pytest-runner',
     ],
     entry_points={'console_scripts': [
-        'projectname = projectname.main:main',
+        'conductor = conductor.conductor:startup',
     ]},
 )
