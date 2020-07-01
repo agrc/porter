@@ -6,7 +6,22 @@
   "python.formatting.provider": "yapf",
   "python.formatting.yapfPath": "yapf",
   "python.formatting.yapfArgs": ["--style", "${workspaceRoot}/setup.cfg"],
-  "cSpell.words": ["isort", "pylint", "yapf", "pytest", "instafail", "AGRC"],
+  "cSpell.words": [
+    "AGRC",
+    "dotenv",
+    "getenv",
+    "instafail",
+    "isort",
+    "mssql",
+    "pgsql",
+    "psycopg",
+    "pylint",
+    "pyodbc",
+    "pytest",
+    "rindex",
+    "sgid",
+    "yapf"
+  ],
   "editor.formatOnSave": true,
   "editor.rulers": [120],
   "coverage-gutters.showGutterCoverage": true,
@@ -14,5 +29,6 @@
   "coverage-gutters.showRulerCoverage": false,
   "coverage-gutters.highlightdark": "rgb(61, 153, 112, .05)",
   "coverage-gutters.noHighlightDark": "rgb(255, 65, 54, .05)",
-  "coverage-gutters.partialHighlightDark": "rgb(255, 133, 27, .05)"
+  "coverage-gutters.partialHighlightDark": "rgb(255, 133, 27, .05)",
+  "python.pythonPath": "/Users/sgourley/dev/portor/.env/bin/python3"
 }
