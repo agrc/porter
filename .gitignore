@@ -29,3 +29,6 @@ __pycache__
 .env/
 .DS_Store
 cov.xml
+
+# python-dotenv
+.env
