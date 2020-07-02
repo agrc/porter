@@ -31,7 +31,7 @@ A short summary of the situation...
 - [ ] Google Drive (assigned to)
 - [ ] Open data (assigned to)
 - [ ] Mapserv (assigned to)
-- [ ] Retire prod and test SQL Databases (assigned to)
+- [ ] Retire application-specific prod and test SQL Databases (assigned to)
 
 # Copy data to the following areas
 
