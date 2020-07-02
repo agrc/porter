@@ -20,7 +20,7 @@ def startup():
     """the method called when invoking `conductor`
     """
 
-    return main(github.Github('18a2f7bd25fbd98af0d08ee0a9f0cadeaad1f945').get_repo('agrc/porter'))
+    return main(github.Github().get_repo('agrc/porter'))
 
 
 def main(porter):
