@@ -7,10 +7,18 @@ before_script:
   - pip install -e ."[tests]"
 script:
   - pytest
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.8
+      - g++-4.8
+      - unixodbc-dev
 after_success:
   - pip install coveralls
   - coveralls
 notifications:
-    email:
-        on_success: change
-        on_failure: change
+  email:
+    on_success: change
+    on_failure: change
