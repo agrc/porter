@@ -24,11 +24,16 @@ pip-log.txt
 *.csv.xml
 arc.dir
 .pytest_cache
-__pycache__
 
+# environments
 .env/
+
+# cruft
 .DS_Store
+
+# code cov
+.coverage
 cov.xml
 
-# python-dotenv
-.env
+# secrets
+connections.py
