@@ -8,6 +8,8 @@
   "python.formatting.yapfArgs": ["--style", "${workspaceRoot}/setup.cfg"],
   "cSpell.words": [
     "AGRC",
+    "agol",
+    "arcgis",
     "dotenv",
     "getenv",
     "instafail",
