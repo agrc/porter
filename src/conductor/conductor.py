@@ -6,10 +6,11 @@ this file is for testing linting...
 """
 
 import json
-import os
 
 import github
 from dotenv import load_dotenv
+
+from conductor.connections import DB
 
 from .checks import MSSql, PGSql
 
@@ -20,7 +21,7 @@ def startup():
     """the method called when invoking `conductor`
     """
 
-    return main(github.Github().get_repo('agrc/porter'))
+    return main(github.Github().get_repo('agrc/porter', lazy=True))
 
 
 def main(porter):
@@ -52,7 +53,7 @@ def check_removes(issues):
     issues: issues with a deprecation label
     """
     for issue in issues:
-        _extract_metadata_from_body(issue.body)
+        extract_metadata_from_issue_body(issue.body)
     #: is the service in agol
 
     #: is the open data page still active
@@ -77,20 +78,11 @@ def check_adds(issues):
     """
     for issue in issues:
         checks = []
-        metadata = _extract_metadata_from_body(issue)
+        metadata = extract_metadata_from_issue_body(issue)
         if 'table' in metadata:
-            checks.append(MSSql(metadata['table'], os.getenv('sgid10')))
-            checks.append(MSSql(metadata['table'], os.getenv('internalsgid')))
-            checks.append(
-                PGSql(
-                    metadata['table'], {
-                        'host': 'opensgid.agrc.utah.gov',
-                        'database': 'opensgid',
-                        'user': 'agrc',
-                        'password': 'agrc',
-                    }
-                )
-            )
+            checks.append(MSSql(metadata['table'], DB['sgid10']))
+            checks.append(MSSql(metadata['table'], DB['internalsgid']))
+            checks.append(PGSql(metadata['table'], DB['opensgid']))
 
     #: search for service in agol
     #: is it shared properly etc
@@ -111,7 +103,9 @@ def check_adds(issues):
     #: are some of the fields populated
 
 
-def _extract_metadata_from_body(issue):
+def extract_metadata_from_issue_body(issue, notify=True):
+    """extracts conductor metadata from an issue body
+    """
     metadata = None
     for line in issue.body.splitlines():
         if not line.startswith('<!--'):
@@ -125,7 +119,7 @@ def _extract_metadata_from_body(issue):
 
         metadata = json.loads(line[start:end])
 
-    if metadata is None:
+    if notify and metadata is None:
         _notify_missing_metadata(issue)
 
     return metadata
