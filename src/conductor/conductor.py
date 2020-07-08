@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 from conductor.connections import DB
 
-from .checks import MSSqlTableChecker, PGSqlTableChecker
+from .checks import ArcGisOnlineChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker
 
 load_dotenv()
 
@@ -44,7 +44,7 @@ def main(porter):
             deprecations.append(issue)
 
     check_adds(introductions)
-    check_removes(deprecations)
+    # check_removes(deprecations)
 
 
 def check_removes(issues):
@@ -77,13 +77,34 @@ def check_adds(issues):
     issues: issues with the introduction label
     """
     for issue in issues:
-        checks = []
-        metadata = extract_metadata_from_issue_body(issue)
+        report = {}
+        metadata = extract_metadata_from_issue_body(issue, notify=False)
 
         if 'table' in metadata:
-            checks.append(MSSqlTableChecker(metadata['table'], DB['sgid10']))
-            checks.append(MSSqlTableChecker(metadata['table'], DB['internalsgid']))
-            checks.append(PGSqlTableChecker(metadata['table'], DB['opensgid']))
+            check = MSSqlTableChecker(metadata['table'], DB['internalsgid'])
+            report['internal sgid'] = check.exists()
+
+            check = MSSqlTableChecker(metadata['table'], DB['sgid10'])
+            report['sgid10'] = check.exists()
+
+            check = MetaTableChecker(f'sgid.{metadata["table"]}', DB['internalsgid'])
+            report['meta table'] = check.exists()
+
+            if report['meta table'].exists != 'missing item name':
+                check = PGSqlTableChecker(metadata['table'], DB['opensgid'])
+                check.table = PGSqlTableChecker.postgresize(report['meta table'].item_name)
+
+                report['open sgid'] = check.exists()
+
+                check = OpenDataChecker(report['meta table'].item_name)
+                report['open data'] = check.exists()
+
+            if report['meta table'].exists != 'missing item id':
+                check = ArcGisOnlineChecker(report['meta table'].item_id)
+                report['arcgis online'] = check.exists()
+
+            import pdb
+            pdb.set_trace()
 
     #: search for service in agol
     #: is it shared properly etc

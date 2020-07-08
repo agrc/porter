@@ -5,10 +5,12 @@ checks.py
 a module with classes that check for the existence of things
 """
 
+from collections import namedtuple
 from textwrap import dedent
 
 import psycopg2
 import pyodbc
+import requests
 
 
 class TableChecker:  # pylint: disable=too-few-public-methods
@@ -17,12 +19,16 @@ class TableChecker:  # pylint: disable=too-few-public-methods
     driver = None
     connection_info = None
     connection = None
+    original_table = None
+    data = None
+    database = None
     schema = None
     table = None
     sql = None
 
     def __init__(self, table, connection_info):
         self.connection_info = connection_info
+        self.original_table = table
 
         if '.' not in table:
             raise ValueError(f'Must provide the schema {table}')
@@ -37,6 +43,7 @@ class TableChecker:  # pylint: disable=too-few-public-methods
             self.schema = parts[0]
             table = parts[1]
         else:
+            self.database = parts[0]
             self.schema = parts[1]
             table = parts[2]
 
@@ -52,15 +59,17 @@ class TableChecker:  # pylint: disable=too-few-public-methods
 
         return self.connection.cursor()
 
-    def exists(self):
+    def get_data(self, parameters):
         """checks if the table exists
         """
 
         cursor = self.connect()
         with self.connection:
-            cursor.execute(dedent(self.sql), (self.schema, self.table))
+            cursor.execute(dedent(self.sql), parameters)
 
-            return cursor.fetchone()
+            self.data = cursor.fetchone()
+
+            return self.data
 
 
 class MSSqlTableChecker(TableChecker):
@@ -72,8 +81,8 @@ class MSSqlTableChecker(TableChecker):
             FROM
                 sys.tables
             WHERE
-                LOWER(SCHEMA_NAME(schema_id)) = ?
-                AND LOWER(name) = ?
+                LOWER(SCHEMA_NAME(schema_id)) = LOWER(?)
+                AND LOWER(name) = LOWER(?)
             '''
 
     def __init__(self, table, connection_info):
@@ -83,21 +92,22 @@ class MSSqlTableChecker(TableChecker):
     def exists(self):
         """checks if the table exists
         """
-        count, = TableChecker.exists(self)
+        TableChecker.get_data(self, (self.schema, self.table))
+        count = self.data[0]
 
         return count > 0
 
 
 class PGSqlTableChecker(TableChecker):
-    """open sgid checker
+    """open sgid table checker
     """
 
     sql = '''SELECT EXISTS(
                 SELECT FROM
                     information_schema.tables
                 WHERE
-                    LOWER(table_schema) = %s
-                    AND LOWER(table_name) = %s
+                    LOWER(table_schema) = LOWER(%s)
+                    AND LOWER(table_name) = LOWER(%s)
                 );
             '''
 
@@ -105,10 +115,99 @@ class PGSqlTableChecker(TableChecker):
         TableChecker.__init__(self, table, connection_info)
         self.driver = psycopg2
 
+    @classmethod
+    def postgresize(cls, name):
+        """takes the agol name and makes it conform to pgsql conventions
+        """
+        if name is None:
+            return name
+
+        new_name = name.lower()
+        new_name = new_name.replace('utah ', '', 1).replace(' ', '_')
+
+        return new_name
+
     def exists(self):
         """checks if the table exists
         """
 
-        exists, = TableChecker.exists(self)
+        TableChecker.get_data(self, (self.schema, self.table))
+        exists = self.data[0]
 
         return exists
+
+
+class MetaTableChecker(TableChecker):
+    """meta table row checker
+    """
+    sql = '''SELECT AGOL_ITEM_ID, AGOL_PUBLISHED_NAME
+            FROM
+                SGID.META.AGOLITEMS
+            WHERE
+                LOWER(TABLENAME) = LOWER(?)
+            '''
+
+    def __init__(self, table, connection_info):
+        TableChecker.__init__(self, table, connection_info)
+        self.driver = pyodbc
+
+    def exists(self):
+        """checks if the row exists
+        """
+        item_id = None
+        item_name = None
+        MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
+
+        TableChecker.get_data(self, (self.original_table))
+
+        if self.data is None:
+            return MetaResponse(False, item_id, item_name)
+
+        item_id, item_name = self.data
+        response = True
+
+        if not item_id and not item_name:
+            response = False
+        elif not item_id:
+            response = 'missing item id'
+        elif not item_name:
+            response = 'missing item name'
+
+        return MetaResponse(response, item_id, item_name)
+
+
+class ArcGisOnlineChecker():
+    """check if the arcgis online item exists
+    """
+    item_id = None
+
+    def __init__(self, item_id):
+        self.item_id = item_id
+
+    def exists(self):
+        """checks if the url exists
+        """
+        response = requests.get(
+            f'https://www.arcgis.com/sharing/rest/content/items/{self.item_id}', params={'f': 'json'}
+        )
+
+        return 'owner' in response.json()
+
+
+class OpenDataChecker():
+    """check if the arcgis online item exists
+    """
+    item_name = None
+
+    def __init__(self, item_name):
+        self.item_name = self._kebab_case(item_name)
+
+    def _kebab_case(self, string):
+        return string.lower().replace(' ', '-')
+
+    def exists(self):
+        """checks if the url exists
+        """
+        response = requests.get(f'https://opendata.gis.utah.gov/datasets/{self.item_name}', allow_redirects=False)
+
+        return response.status_code == requests.codes.ok
