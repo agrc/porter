@@ -8,7 +8,7 @@ A module that contains tests for the checks module.
 import psycopg2
 import pytest
 
-from conductor.checks import TableChecker, MSSqlTableChecker, PGSqlTableChecker
+from conductor.checks import MetaTableChecker, MSSqlTableChecker, PGSqlTableChecker, TableChecker
 from conductor.connections import DB
 
 CONNECTION_STRING = ''
@@ -109,3 +109,63 @@ def test_mssql_table_does_not_exist_returns_false():
     assert patient.exists() == False
 
     patient.connection.close()
+
+
+@pytest.mark.vpn
+def test_metatable_response_returns_true_when_exists():
+    patient = MetaTableChecker('sgid.boundaries.municipalities', DB['internalsgid'])
+    response = patient.exists()
+
+    assert response.exists == True
+    assert response.item_id == '543fa1f073714198a3dbf8a292bdf30c'
+    assert response.item_name == 'Utah Municipal Boundaries'
+
+
+@pytest.mark.vpn
+def test_response_returns_completely_missing_for_fake_table():
+    patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
+    response = patient.exists()
+
+    assert response.exists == False
+
+
+def test_empty_row_returns_false(mocker):
+    mocker.patch('conductor.checks.TableChecker.get_data')
+
+    patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
+    response = patient.exists()
+
+    assert response.exists == False
+
+
+def test_missing_item_id_returns_correct_string(mocker):
+    mocker.patch('conductor.checks.TableChecker.get_data')
+
+    patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
+    patient.data = (None, 'Agol Published Name')
+
+    response = patient.exists()
+
+    assert response.exists == 'missing item id'
+
+
+def test_missing_item_name_returns_correct_string(mocker):
+    mocker.patch('conductor.checks.TableChecker.get_data')
+
+    patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
+    patient.data = ('someguid', None)
+
+    response = patient.exists()
+
+    assert response.exists == 'missing item name'
+
+
+def test_missing_both_returns_correct_string(mocker):
+    mocker.patch('conductor.checks.TableChecker.get_data')
+
+    patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
+    patient.data = (None, None)
+
+    response = patient.exists()
+
+    assert response.exists == False
