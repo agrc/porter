@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 from conductor.connections import DB
 
-from .checks import MSSql, PGSql
+from .checks import MSSqlTableChecker, PGSqlTableChecker
 
 load_dotenv()
 
@@ -79,10 +79,11 @@ def check_adds(issues):
     for issue in issues:
         checks = []
         metadata = extract_metadata_from_issue_body(issue)
+
         if 'table' in metadata:
-            checks.append(MSSql(metadata['table'], DB['sgid10']))
-            checks.append(MSSql(metadata['table'], DB['internalsgid']))
-            checks.append(PGSql(metadata['table'], DB['opensgid']))
+            checks.append(MSSqlTableChecker(metadata['table'], DB['sgid10']))
+            checks.append(MSSqlTableChecker(metadata['table'], DB['internalsgid']))
+            checks.append(PGSqlTableChecker(metadata['table'], DB['opensgid']))
 
     #: search for service in agol
     #: is it shared properly etc

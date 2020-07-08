@@ -11,7 +11,7 @@ import psycopg2
 import pyodbc
 
 
-class Checker:  # pylint: disable=too-few-public-methods
+class TableChecker:  # pylint: disable=too-few-public-methods
     """base class for checkers
     """
     driver = None
@@ -63,7 +63,7 @@ class Checker:  # pylint: disable=too-few-public-methods
             return cursor.fetchone()
 
 
-class MSSql(Checker):
+class MSSqlTableChecker(TableChecker):
     """sgid10 table checker
     """
 
@@ -77,18 +77,18 @@ class MSSql(Checker):
             '''
 
     def __init__(self, table, connection_info):
-        Checker.__init__(self, table, connection_info)
+        TableChecker.__init__(self, table, connection_info)
         self.driver = pyodbc
 
     def exists(self):
         """checks if the table exists
         """
-        count, = Checker.exists(self)
+        count, = TableChecker.exists(self)
 
         return count > 0
 
 
-class PGSql(Checker):
+class PGSqlTableChecker(TableChecker):
     """open sgid checker
     """
 
@@ -102,13 +102,13 @@ class PGSql(Checker):
             '''
 
     def __init__(self, table, connection_info):
-        Checker.__init__(self, table, connection_info)
+        TableChecker.__init__(self, table, connection_info)
         self.driver = psycopg2
 
     def exists(self):
         """checks if the table exists
         """
 
-        exists, = Checker.exists(self)
+        exists, = TableChecker.exists(self)
 
         return exists
