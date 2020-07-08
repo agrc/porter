@@ -24,7 +24,7 @@
   ],
   "editor.formatOnSave": true,
   "editor.rulers": [120],
-  "coverage-gutters.showGutterCoverage": true,
+  "coverage-gutters.showGutterCoverage": false,
   "coverage-gutters.showLineCoverage": true,
   "coverage-gutters.showRulerCoverage": false,
   "coverage-gutters.highlightdark": "rgb(61, 153, 112, .05)",
