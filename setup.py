@@ -36,19 +36,20 @@ setup(
         'PyGithub==1.*',
         'pyodbc==4.*',
         'psycopg2-binary==2.*',
+        'requests==2.*',
     ],
     extras_require={
         'tests': [
             'pylint-quotes==0.2.*',
-            'pylint==2.5.*',
-            'pytest-cov==2.9.*',
+            'pylint==2.*',
+            'pytest-cov==2.*',
             'pytest-instafail==0.4.*',
-            'pytest-isort==1.0.*',
-            'pytest-mock==3.1.*',
+            'pytest-isort==1.*',
+            'pytest-mock==3.*',
             'pytest-pylint==0.17.*',
-            'pytest-watch==4.2.*',
-            'pytest==5.4.*',
-            'yapf==0.30.*',
+            'pytest-watch==4.*',
+            'pytest==5.*',
+            'yapf==0.*',
         ]
     },
     setup_requires=[
