@@ -9,6 +9,7 @@ import psycopg2
 import pytest
 
 from conductor.checks import Checker, MSSql, PGSql
+from conductor.connections import DB
 
 CONNECTION_STRING = ''
 
@@ -40,31 +41,24 @@ def test_checker_parses_table_with_schema_and_db():
 
 
 def test_checker_raises_with_too_many_parts():
-    table = 'some.incorrect.table.name'
+    table = 'some.very.long.table.name'
 
     with pytest.raises(ValueError):
         Checker(table, CONNECTION_STRING)
 
 
-def test_mssql_raises_with_empty_connection_string():
+def test_checker_raises_with_empty_connection_string():
     with pytest.raises(ValueError):
-        MSSql('table', '').connect()
+        Checker('schema.table', '').connect()
 
 
-def test_pgsql_raises_with_empty_connection_string():
+def test_checker_raises_with_no_connection_string():
     with pytest.raises(ValueError):
-        PGSql('table', None).connect()
+        Checker('schema.table', None).connect()
 
 
 def test_open_sgid_can_connect():
-    patient = PGSql(
-        'boundaries.municipalities', {
-            'host': 'opensgid.agrc.utah.gov',
-            'database': 'opensgid',
-            'user': 'agrc',
-            'password': 'agrc',
-        }
-    )
+    patient = PGSql('boundaries.municipal_boundaries', DB['opensgid'])
 
     cursor = patient.connect()
 
@@ -74,30 +68,43 @@ def test_open_sgid_can_connect():
     patient.connection.close()
 
 
+@pytest.mark.vpn
+def test_mssql_table_can_connect():
+    patient = MSSql('boundaries.municipalities', DB['sgid10'])
+
+    cursor = patient.connect()
+
+    assert cursor is not None
+
+
 def test_pgsql_table_exists_returns_true():
-    patient = PGSql(
-        'boundaries.municipal_boundaries', {
-            'host': 'opensgid.agrc.utah.gov',
-            'database': 'opensgid',
-            'user': 'agrc',
-            'password': 'agrc',
-        }
-    )
+    patient = PGSql('boundaries.municipal_boundaries', DB['opensgid'])
 
     assert patient.exists() == True
 
     patient.connection.close()
 
 
-def test_pgsql_table_does_not_exists_returns_false():
-    patient = PGSql(
-        'fake.table', {
-            'host': 'opensgid.agrc.utah.gov',
-            'database': 'opensgid',
-            'user': 'agrc',
-            'password': 'agrc',
-        }
-    )
+@pytest.mark.vpn
+def test_mssql_table_exists_returns_true():
+    patient = MSSql('boundaries.municipalities', DB['sgid10'])
+
+    assert patient.exists() == True
+
+    patient.connection.close()
+
+
+def test_pgsql_table_does_not_exist_returns_false():
+    patient = PGSql('fake.table', DB['opensgid'])
+
+    assert patient.exists() == False
+
+    patient.connection.close()
+
+
+@pytest.mark.vpn
+def test_mssql_table_does_not_exist_returns_false():
+    patient = MSSql('fake.table', DB['sgid10'])
 
     assert patient.exists() == False
 
