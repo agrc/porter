@@ -34,7 +34,6 @@ setup(
     keywords=['gis'],
     install_requires=[
         'PyGithub==1.*',
-        'python-dotenv==0.*',
         'pyodbc==4.*',
         'psycopg2-binary==2.*',
     ],
