@@ -8,7 +8,9 @@ A module that contains tests for the checks module.
 import psycopg2
 import pytest
 
-from conductor.checks import MetaTableChecker, MSSqlTableChecker, PGSqlTableChecker, TableChecker
+from conductor.checks import (
+    ArcGisOnlineChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker, TableChecker
+)
 
 try:
     from conductor.connections import DB
@@ -157,7 +159,7 @@ def test_missing_item_name_returns_correct_string(mocker):
     mocker.patch('conductor.checks.TableChecker.get_data')
 
     patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
-    patient.data = ('someguid', None)
+    patient.data = ('some-guid', None)
 
     response = patient.exists()
 
@@ -173,3 +175,76 @@ def test_missing_both_returns_correct_string(mocker):
     response = patient.exists()
 
     assert response.exists == False
+
+
+def test_arcgis_online_url_creation():
+    patient = ArcGisOnlineChecker('item_id')
+
+    assert patient.url == 'https://www.arcgis.com/sharing/rest/content/items/item_id'
+
+
+def test_arcgis_online_exists_when_json_contains_owner(mocker):
+    mocker.patch('conductor.checks.UrlChecker.get_data')
+    patient = ArcGisOnlineChecker('item_id')
+    patient.data = mocker.Mock(
+        **{
+            'json.return_value': {
+                "id": "3080c0a2859a4d23a279e17e17c703c8",
+                "owner": "UtahAGRC",
+                "orgId": "123",
+                "created": 1593230216000,
+                "modified": 1594153455000,
+                "guid": None,
+                "name": "TrailsAndPathways",
+                "title": "Utah Trails and Pathways",
+                "type": "Feature Service"
+            }
+        }
+    )
+
+    assert patient.exists() == True
+
+
+def test_arcgis_online_does_not_exist(mocker):
+    mocker.patch('conductor.checks.ArcGisOnlineChecker.get_data')
+    patient = ArcGisOnlineChecker('item_id')
+    patient.data = mocker.Mock(
+        **{
+            'json.return_value': {
+                "error": {
+                    "code": 400,
+                    "messageCode": "CONT_0001",
+                    "message": "Item does not exist or is inaccessible.",
+                    "details": []
+                }
+            }
+        }
+    )
+
+    assert patient.exists() == False
+
+
+def test_open_data_url_creation():
+    patient = OpenDataChecker('UPPER CASED Name')
+
+    assert patient.url == 'https://opendata.gis.utah.gov/datasets/upper-cased-name'
+
+
+def test_open_data_for_existence_with_200(mocker):
+    mocker.patch('conductor.checks.UrlChecker.get_data')
+
+    patient = OpenDataChecker('found layer name')
+    patient.data = mocker.Mock()
+    patient.data.status_code = 200
+
+    assert patient.exists() == True
+
+
+def test_open_data_for_missing_with_301(mocker):
+    mocker.patch('conductor.checks.UrlChecker.get_data')
+
+    patient = OpenDataChecker('missing layer name')
+    patient.data = mocker.Mock()
+    patient.data.status_code = 301
+
+    assert patient.exists() == False
