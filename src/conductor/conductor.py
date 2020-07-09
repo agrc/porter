@@ -13,7 +13,7 @@ from .checks import ArcGisOnlineChecker, MetaTableChecker, MSSqlTableChecker, Op
 
 try:
     from conductor.connections import DB
-except Exception:
+except ModuleNotFoundError:
     from conductor.connection_sample import DB
 
 
