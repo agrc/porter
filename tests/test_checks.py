@@ -9,7 +9,10 @@ import psycopg2
 import pytest
 
 from conductor.checks import MetaTableChecker, MSSqlTableChecker, PGSqlTableChecker, TableChecker
-from conductor.connections import DB
+try:
+    from conductor.connections import DB
+except ModuleNotFoundError:
+    from conductor.connection_sample import DB
 
 CONNECTION_STRING = ''
 
