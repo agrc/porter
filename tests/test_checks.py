@@ -122,9 +122,9 @@ def test_metatable_response_returns_true_when_exists():
     patient = MetaTableChecker('sgid.boundaries.municipalities', DB['internalsgid'])
     response = patient.exists()
 
-    assert response.exists == True
-    assert response.item_id == '543fa1f073714198a3dbf8a292bdf30c'
-    assert response.item_name == 'Utah Municipal Boundaries'
+    assert response == True
+    assert patient.data.item_id == '543fa1f073714198a3dbf8a292bdf30c'
+    assert patient.data.item_name == 'Utah Municipal Boundaries'
 
 
 @pytest.mark.vpn
@@ -132,7 +132,7 @@ def test_response_returns_completely_missing_for_fake_table():
     patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
     response = patient.exists()
 
-    assert response.exists == False
+    assert response == False
 
 
 def test_empty_row_returns_false(mocker):
@@ -141,7 +141,7 @@ def test_empty_row_returns_false(mocker):
     patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
     response = patient.exists()
 
-    assert response.exists == False
+    assert response == False
 
 
 def test_missing_item_id_returns_correct_string(mocker):
@@ -152,7 +152,7 @@ def test_missing_item_id_returns_correct_string(mocker):
 
     response = patient.exists()
 
-    assert response.exists == 'missing item id'
+    assert response == 'missing item id'
 
 
 def test_missing_item_name_returns_correct_string(mocker):
@@ -163,7 +163,7 @@ def test_missing_item_name_returns_correct_string(mocker):
 
     response = patient.exists()
 
-    assert response.exists == 'missing item name'
+    assert response == 'missing item name'
 
 
 def test_missing_both_returns_correct_string(mocker):
@@ -174,7 +174,7 @@ def test_missing_both_returns_correct_string(mocker):
 
     response = patient.exists()
 
-    assert response.exists == False
+    assert response == False
 
 
 def test_arcgis_online_url_creation():

@@ -89,19 +89,22 @@ def check_adds(issues):
 
             check = MetaTableChecker(f'sgid.{metadata["table"]}', DB['internalsgid'])
             report['meta table'] = check.exists()
+            meta_table_data = check.data
 
-            if report['meta table'].exists != 'missing item name':
+            if meta_table_data.exists != 'missing item name':
                 check = PGSqlTableChecker(metadata['table'], DB['opensgid'])
-                check.table = PGSqlTableChecker.postgresize(report['meta table'].item_name)
+                check.table = PGSqlTableChecker.postgresize(meta_table_data.item_name)
 
                 report['open sgid'] = check.exists()
 
-                check = OpenDataChecker(report['meta table'].item_name)
+                check = OpenDataChecker(meta_table_data.item_name)
                 report['open data'] = check.exists()
 
-            if report['meta table'].exists != 'missing item id':
-                check = ArcGisOnlineChecker(report['meta table'].item_id)
+            if meta_table_data.exists != 'missing item id':
+                check = ArcGisOnlineChecker(meta_table_data.item_id)
                 report['arcgis online'] = check.exists()
+
+        print(report)
 
     #: search for service in agol
     #: is it shared properly etc
