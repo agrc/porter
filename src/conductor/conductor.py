@@ -8,13 +8,13 @@ this file is for testing linting...
 import json
 
 import github
-from dotenv import load_dotenv
-
-from conductor.connections import DB
 
 from .checks import ArcGisOnlineChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker
 
-load_dotenv()
+try:
+    from conductor.connections import DB
+except Exception:
+    from conductor.connection_sample import DB
 
 
 def startup():
@@ -102,9 +102,6 @@ def check_adds(issues):
             if report['meta table'].exists != 'missing item id':
                 check = ArcGisOnlineChecker(report['meta table'].item_id)
                 report['arcgis online'] = check.exists()
-
-            import pdb
-            pdb.set_trace()
 
     #: search for service in agol
     #: is it shared properly etc

@@ -176,7 +176,7 @@ class MetaTableChecker(TableChecker):
         return MetaResponse(response, item_id, item_name)
 
 
-class ArcGisOnlineChecker():
+class ArcGisOnlineChecker():  # pylint: disable=too-few-public-methods
     """check if the arcgis online item exists
     """
     item_id = None
@@ -194,7 +194,7 @@ class ArcGisOnlineChecker():
         return 'owner' in response.json()
 
 
-class OpenDataChecker():
+class OpenDataChecker():  # pylint: disable=too-few-public-methods
     """check if the arcgis online item exists
     """
     item_name = None
@@ -202,7 +202,8 @@ class OpenDataChecker():
     def __init__(self, item_name):
         self.item_name = self._kebab_case(item_name)
 
-    def _kebab_case(self, string):
+    @classmethod
+    def _kebab_case(cls, string):
         return string.lower().replace(' ', '-')
 
     def exists(self):
@@ -210,4 +211,4 @@ class OpenDataChecker():
         """
         response = requests.get(f'https://opendata.gis.utah.gov/datasets/{self.item_name}', allow_redirects=False)
 
-        return response.status_code == requests.codes.ok
+        return response.status_code == 200
