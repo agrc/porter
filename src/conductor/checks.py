@@ -176,39 +176,56 @@ class MetaTableChecker(TableChecker):
         return MetaResponse(response, item_id, item_name)
 
 
-class ArcGisOnlineChecker():  # pylint: disable=too-few-public-methods
+class UrlChecker():  # pylint: disable=too-few-public-methods
+    """checks if a url is good or bad
+    """
+    url = None
+    data = None
+
+    def get_data(self, args=None):
+        """requests the data from the url
+        """
+        self.data = requests.get(self.url, params=args, allow_redirects=False)
+
+
+class ArcGisOnlineChecker(UrlChecker):
     """check if the arcgis online item exists
     """
-    item_id = None
 
     def __init__(self, item_id):
-        self.item_id = item_id
+        self.url = f'https://www.arcgis.com/sharing/rest/content/items/{item_id}'
+
+    def get_data(self, args=None):
+        """requests the data from the url
+        """
+        UrlChecker.get_data(self, {'f': 'json'})
 
     def exists(self):
         """checks if the url exists
         """
-        response = requests.get(
-            f'https://www.arcgis.com/sharing/rest/content/items/{self.item_id}', params={'f': 'json'}
-        )
+        self.get_data()
+        self.data = self.data.json()
 
-        return 'owner' in response.json()
+        return 'owner' in self.data
 
 
-class OpenDataChecker():  # pylint: disable=too-few-public-methods
+class OpenDataChecker(UrlChecker):
     """check if the arcgis online item exists
     """
-    item_name = None
 
     def __init__(self, item_name):
-        self.item_name = self._kebab_case(item_name)
+        self.url = f'https://opendata.gis.utah.gov/datasets/{OpenDataChecker.kebab_case(item_name)}'
 
     @classmethod
-    def _kebab_case(cls, string):
+    def kebab_case(cls, string):
+        """returns a lowercase kebab string
+        """
         return string.lower().replace(' ', '-')
 
     def exists(self):
         """checks if the url exists
         """
-        response = requests.get(f'https://opendata.gis.utah.gov/datasets/{self.item_name}', allow_redirects=False)
+        UrlChecker.get_data(self)
+        self.data = self.data.status_code
 
-        return response.status_code == 200
+        return self.data == 200
