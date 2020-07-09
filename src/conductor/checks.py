@@ -161,7 +161,9 @@ class MetaTableChecker(TableChecker):
         TableChecker.get_data(self, (self.original_table))
 
         if self.data is None:
-            return MetaResponse(False, item_id, item_name)
+            self.data = MetaResponse(False, item_id, item_name)
+
+            return False
 
         item_id, item_name = self.data
         response = True
@@ -173,7 +175,9 @@ class MetaTableChecker(TableChecker):
         elif not item_name:
             response = 'missing item name'
 
-        return MetaResponse(response, item_id, item_name)
+        self.data = MetaResponse(response, item_id, item_name)
+
+        return response
 
 
 class UrlChecker():  # pylint: disable=too-few-public-methods
