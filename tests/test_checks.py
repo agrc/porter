@@ -76,6 +76,11 @@ def test_open_sgid_can_connect():
     patient.connection.close()
 
 
+def test_pgsql_postgresize():
+    assert PGSqlTableChecker.postgresize('Utah County Boundaries') == 'county_boundaries'
+    assert PGSqlTableChecker.postgresize('') == ''
+
+
 @pytest.mark.vpn
 def test_mssql_table_can_connect():
     patient = MSSqlTableChecker('boundaries.municipalities', DB['sgid10'])
