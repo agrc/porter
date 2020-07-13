@@ -1,0 +1,9 @@
+[run]
+omit =
+    */connection_sample.py
+
+[report]
+exclude_lines =
+    if __name__ == .__main__.:
+    except ModuleNotFoundError:
+    from conductor.connection_sample import DB
