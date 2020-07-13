@@ -239,8 +239,7 @@ class OpenDataChecker(UrlChecker):
 class GSheetChecker():
     """look for a record and attributes in the stewardship worksheet
     """
-    required_add_fields = ['Description', 'Data Source', 'Website URL', 'Data Type', 'Endpoint']
-    required_remove_fields = ['Deprecated']
+    required_fields = ['Description', 'Data Source', 'Website URL', 'Data Type', 'Endpoint', 'Deprecated']
     client = None
     worksheet = None
 
@@ -250,20 +249,14 @@ class GSheetChecker():
             self.client = pygsheets.authorize(service_account_file='client-secret.json')
         self.sheet_id = sheet_id
         self.worksheet_name = worksheet_name
-        self.add_field_index = {}
-        self.remove_field_index = {}
+        self.field_index = {}
 
     def build_header_row_index(self, header_row):
         """builds an column index map to help with finding neighboring cells
         """
         for index, title in enumerate(header_row):
-            if title in self.required_add_fields:
-                self.add_field_index[title] = index
-
-                continue
-
-            if title in self.required_remove_fields:
-                self.remove_field_index[title] = index
+            if title in self.required_fields:
+                self.field_index[title] = index
 
     def _get_data(self):
         """search the worksheet for the table in SGID Data Layer
@@ -274,11 +267,11 @@ class GSheetChecker():
 
         return self.worksheet.find(self.table, matchEntireCell=True)
 
-    def exists(self, deprecation=False):
+    def exists(self):
         """tests for if the row exists in the sheet
         """
         cells = self._get_data()
-        SheetResponse = namedtuple('SheetResponse', 'exists messages')
+        SheetResponse = namedtuple('SheetResponse', 'valid messages')
 
         if len(cells) > 1:
             row_indexes = ', '.join([str(cell.row) for cell in cells])
@@ -294,11 +287,8 @@ class GSheetChecker():
         cell.link(self.worksheet, update=False)
 
         status = {}
-        fields = self.add_field_index
+        fields = self.field_index
         starting_position = cell.col
-
-        if deprecation:
-            fields = self.remove_field_index
 
         for key, position in fields.items():
             status[key] = False
@@ -309,4 +299,4 @@ class GSheetChecker():
             if value:
                 status[key] = True
 
-        return SheetResponse(all(status.values()), status)
+        return SheetResponse(True, status)

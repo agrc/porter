@@ -24,10 +24,12 @@ def startup():
     """the method called when invoking `conductor`
     """
 
-    return main(github.Github().get_repo('agrc/porter', lazy=True))
+    reports = collect_issue_reports(github.Github().get_repo('agrc/porter', lazy=True))
+
+    return reports
 
 
-def main(porter):
+def collect_issue_reports(porter):
     """finds the issues and delegates them to the checkers
     issues will have metadata for the bot to use to check for items
     <!-- conductor = {"table":"schema.table","when":"2020-07-16T09:00:00.000Z"} -->
@@ -35,86 +37,62 @@ def main(porter):
     #: introduction or removal
     issues = porter.get_issues(state='open')
 
-    introductions = []
-    deprecations = []
+    conductor_issues = []
+    ConductorIssue = namedtuple('ConductorIssue', 'issue introduction')
 
     for issue in issues:
         labels = [label.name for label in issue.labels]
 
-        if 'introduction' in labels and 'reminder' not in labels and 'scheduled' not in labels:
-            introductions.append(issue)
-        elif 'deprecation' in labels and 'reminder' not in labels and 'scheduled' not in labels:
-            deprecations.append(issue)
+        if (
+            'introduction' in labels or 'deprecation' in labels
+        ) and 'reminder' not in labels and 'scheduled' not in labels:
+            conductor_issues.append(ConductorIssue(issue, 'introduction' in labels))
 
-    check_adds(introductions)
-    # check_removes(deprecations)
-
-
-def check_removes(issues):
-    """
-    checks that items have been removed
-    issues: issues with a deprecation label
-    """
-    for issue in issues:
-        extract_metadata_from_issue_body(issue.body)
-    #: is the service in agol
-
-    #: is the open data page still active
-
-    #: is the table in the internal sgid
-
-    #: is the record in the agol items table
-
-    #: is the recrod in the change detection table
-
-    #: is the table in the external sgid
-
-    #: is the table in the open sgid
-
-    #: has the cemetery link been added to the stewardship sheet
+    return conduct_check(conductor_issues)
 
 
-def check_adds(issues):
+def conduct_check(conductor_issues):
     """
     checks that the data has been added to the expected areas
-    issues: issues with the introduction label
+    conductor_issues: a named tuple with the issue and a introduction label boolean
     """
     reports = {}
-    for issue in issues:
-        Report = namedtuple('Report', 'check, result')
-        metadata = extract_metadata_from_issue_body(issue, notify=False)
+
+    for issue in conductor_issues:
+        Report = namedtuple('Report', 'check introduction result')
+        metadata = extract_metadata_from_issue_body(issue.issue, notify=False)
 
         if 'table' in metadata:
             table = metadata['table']
             reports[table] = []
 
             check = MSSqlTableChecker(table, DB['internalsgid'])
-            reports[table].append(Report('internal sgid', check.exists()))
+            reports[table].append(Report('internal sgid', issue.introduction, check.exists()))
 
             check = MSSqlTableChecker(table, DB['sgid10'])
             reports[table].append(Report('sgid10', check.exists()))
 
             check = MetaTableChecker(f'sgid.{metadata["table"]}', DB['internalsgid'])
-            reports[table].append(Report('meta table', check.exists()))
+            reports[table].append(Report('meta table', issue.introduction, check.exists()))
             meta_table_data = check.data
 
             if meta_table_data.exists != 'missing item name':
                 check = PGSqlTableChecker(table, DB['opensgid'])
                 check.table = PGSqlTableChecker.postgresize(meta_table_data.item_name)
 
-                reports[table].append(Report('open sgid', check.exists()))
+                reports[table].append(Report('open sgid', issue.introduction, check.exists()))
 
                 check = OpenDataChecker(meta_table_data.item_name)
-                reports[table].append(Report('open data', check.exists()))
+                reports[table].append(Report('open data', issue.introduction, check.exists()))
 
             if meta_table_data.exists != 'missing item id':
                 check = ArcGisOnlineChecker(meta_table_data.item_id)
-                reports[table].append(Report('arcgis online', check.exists()))
+                reports[table].append(Report('arcgis online', issue.introduction, check.exists()))
 
             check = GSheetChecker(table, '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info')
-            reports[table].append(Report('stewardship', check.exists()))
+            reports[table].append(Report('stewardship', issue.introduction, check.exists()))
 
-        print(reports)
+    return reports
 
 
 def extract_metadata_from_issue_body(issue, notify=True):

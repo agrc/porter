@@ -263,11 +263,10 @@ def test_sheets_build_header_row_index():
         'Webapp', 'Notes', 'Deprecated'
     ]
 
-    patient.required_add_fields = ['Issue', 'Notes']  #: shorten the list to make the testing simpler
+    patient.required_fields = ['Issue', 'Notes', 'Deprecated']  #: shorten the list to make the testing simpler
     patient.build_header_row_index(header_row)
 
-    assert patient.add_field_index == {'Issue': 0, 'Notes': 24}
-    assert patient.remove_field_index == {'Deprecated': 25}
+    assert patient.field_index == {'Issue': 0, 'Notes': 24, 'Deprecated': 25}
 
 
 def test_sheets_with_duplicate_cells_returns_false(mocker):
@@ -277,7 +276,7 @@ def test_sheets_with_duplicate_cells_returns_false(mocker):
 
     response = patient.exists()
 
-    assert response.exists == False
+    assert response.valid == False
     assert response.messages == 'There are multiple items with this name on rows 1, 2. Please remove the duplicates.'
 
 
@@ -287,11 +286,11 @@ def test_sheets_with_no_matches_returns_false(mocker):
 
     response = patient.exists()
 
-    assert response.exists == False
+    assert response.valid == False
     assert response.messages == 'Did not find fake.table in the worksheet'
 
 
-def test_sheets_cell_finds_neighbors_returns_false_for_empty_values(mocker):
+def test_sheets_returns_false_for_empty_values(mocker):
     patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
     patient.build_header_row_index([
         'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
@@ -306,10 +305,18 @@ def test_sheets_cell_finds_neighbors_returns_false_for_empty_values(mocker):
 
     response = patient.exists()
 
-    assert response.exists == False
+    assert response.valid == True
+    assert response.messages == {
+        'Description': False,
+        'Data Source': False,
+        'Website URL': False,
+        'Data Type': False,
+        'Endpoint': False,
+        'Deprecated': False,
+    }
 
 
-def test_sheets_cell_finds_neighbors_returns_false_with_partial_values(mocker):
+def test_sheets_handles_partial_values(mocker):
     patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
     patient.build_header_row_index([
         'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
@@ -325,18 +332,27 @@ def test_sheets_cell_finds_neighbors_returns_false_with_partial_values(mocker):
         side_effect=[
             Cell('A2', val='not empty'),
             Cell('A3', val=' '),
-            Cell('A4', val=''),
-            Cell('A5', val=''),
-            Cell('A6', val=''),
+            Cell('A4', val='not empty'),
+            Cell('A5', val='   '),
+            Cell('A6', val=' true '),
+            Cell('A7', val=' '),
         ]
     )
 
     response = patient.exists()
 
-    assert response.exists == False
+    assert response.valid == True
+    assert response.messages == {
+        'Description': True,
+        'Data Source': False,
+        'Website URL': True,
+        'Data Type': False,
+        'Endpoint': True,
+        'Deprecated': False,
+    }
 
 
-def test_sheets_cell_finds_neighbors_returns_true_if_neighbors_all_have_values(mocker):
+def test_sheets_returns_true_if_neighbors_all_have_values(mocker):
     patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
     patient.build_header_row_index([
         'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
@@ -355,34 +371,21 @@ def test_sheets_cell_finds_neighbors_returns_true_if_neighbors_all_have_values(m
             Cell('A4', val='also not empty'),
             Cell('A5', val='also not empty'),
             Cell('A6', val='also not empty'),
+            Cell('A7', val='also not empty'),
         ]
     )
 
     response = patient.exists()
 
-    assert response.exists == True
-
-
-def test_sheets_cell_deprecations_only_uses_one_neighbor(mocker):
-    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
-    patient.build_header_row_index([
-        'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
-        'Days From Last Refresh', 'Days to Refresh', 'Description', 'Data Source', 'Use Restrictions', 'Website URL',
-        'Anchor', 'Data Type', 'PEL Layer', 'PEL Status', 'Governance/Agreement', 'PEL Inclusion',
-        'Agency Contact Name', 'Agency Contact Email', 'SGID Coordination', 'Archival Schedule', 'Endpoint', 'Tier',
-        'Webapp', 'Notes', 'Deprecated'
-    ])
-    patient._get_data = mocker.Mock(return_value=[Cell('A1', 'fake.table')])
-    mocker.patch('pygsheets.Cell.link')
-    mocker.patch(
-        'pygsheets.Cell.neighbour', side_effect=[
-            Cell('A2', val='link to porter issue required for deprecations'),
-        ]
-    )
-
-    response = patient.exists(deprecation=True)
-
-    assert response.exists == True
+    assert response.valid == True
+    assert response.messages == {
+        'Description': True,
+        'Data Source': True,
+        'Website URL': True,
+        'Data Type': True,
+        'Endpoint': True,
+        'Deprecated': True,
+    }
 
 
 @pytest.mark.google
@@ -407,4 +410,14 @@ def test_sheets_exists_returns_true_for_known_layer():
         'boundaries.counties', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info'
     )
 
-    assert patient.exists().exists == True
+    response = patient.exists()
+
+    assert response.valid == True
+    assert response.messages == {
+        'Description': True,
+        'Data Source': True,
+        'Website URL': True,
+        'Data Type': True,
+        'Endpoint': True,
+        'Deprecated': False,
+    }
