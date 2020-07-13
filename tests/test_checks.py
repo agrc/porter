@@ -7,9 +7,11 @@ A module that contains tests for the checks module.
 
 import psycopg2
 import pytest
+from pygsheets import Cell
 
 from conductor.checks import (
-    ArcGisOnlineChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker, TableChecker
+    ArcGisOnlineChecker, GSheetChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker,
+    TableChecker
 )
 
 try:
@@ -248,3 +250,156 @@ def test_open_data_for_missing_with_301(mocker):
     patient.data.status_code = 301
 
     assert patient.exists() == False
+
+
+def test_sheets_build_header_row_index():
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+
+    header_row = [
+        'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
+        'Days From Last Refresh', 'Days to Refresh', 'Description', 'Data Source', 'Use Restrictions', 'Website URL',
+        'Anchor', 'Data Type', 'PEL Layer', 'PEL Status', 'Governance/Agreement', 'PEL Inclusion',
+        'Agency Contact Name', 'Agency Contact Email', 'SGID Coordination', 'Archival Schedule', 'Endpoint', 'Tier',
+        'Webapp', 'Notes', 'Deprecated'
+    ]
+
+    patient.required_add_fields = ['Issue', 'Notes']  #: shorten the list to make the testing simpler
+    patient.build_header_row_index(header_row)
+
+    assert patient.add_field_index == {'Issue': 0, 'Notes': 24}
+    assert patient.remove_field_index == {'Deprecated': 25}
+
+
+def test_sheets_with_duplicate_cells_returns_false(mocker):
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient._get_data = mocker.Mock(return_value=[Cell('A1', val='fake.table'), Cell('A2', val='fake.table')])
+
+    response = patient.exists()
+
+    assert response.exists == False
+    assert response.messages == 'There are multiple items with this name on rows 1, 2. Please remove the duplicates.'
+
+
+def test_sheets_with_no_matches_returns_false(mocker):
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient._get_data = mocker.Mock(return_value=[])
+
+    response = patient.exists()
+
+    assert response.exists == False
+    assert response.messages == 'Did not find fake.table in the worksheet'
+
+
+def test_sheets_cell_finds_neighbors_returns_false_for_empty_values(mocker):
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient.build_header_row_index([
+        'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
+        'Days From Last Refresh', 'Days to Refresh', 'Description', 'Data Source', 'Use Restrictions', 'Website URL',
+        'Anchor', 'Data Type', 'PEL Layer', 'PEL Status', 'Governance/Agreement', 'PEL Inclusion',
+        'Agency Contact Name', 'Agency Contact Email', 'SGID Coordination', 'Archival Schedule', 'Endpoint', 'Tier',
+        'Webapp', 'Notes', 'Deprecated'
+    ])
+    patient._get_data = mocker.Mock(return_value=[Cell('A1', 'fake.table')])
+    mocker.patch('pygsheets.Cell.neighbour', return_value=Cell('A2'))
+
+    response = patient.exists()
+
+    assert response.exists == False
+
+
+def test_sheets_cell_finds_neighbors_returns_false_with_partial_values(mocker):
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient.build_header_row_index([
+        'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
+        'Days From Last Refresh', 'Days to Refresh', 'Description', 'Data Source', 'Use Restrictions', 'Website URL',
+        'Anchor', 'Data Type', 'PEL Layer', 'PEL Status', 'Governance/Agreement', 'PEL Inclusion',
+        'Agency Contact Name', 'Agency Contact Email', 'SGID Coordination', 'Archival Schedule', 'Endpoint', 'Tier',
+        'Webapp', 'Notes', 'Deprecated'
+    ])
+    patient._get_data = mocker.Mock(return_value=[Cell('A1', 'fake.table')])
+    mocker.patch(
+        'pygsheets.Cell.neighbour',
+        side_effect=[
+            Cell('A2', val='not empty'),
+            Cell('A3', val=' '),
+            Cell('A4', val=''),
+            Cell('A5', val=''),
+            Cell('A6', val=''),
+        ]
+    )
+
+    response = patient.exists()
+
+    assert response.exists == False
+
+
+def test_sheets_cell_finds_neighbors_returns_true_if_neighbors_all_have_values(mocker):
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient.build_header_row_index([
+        'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
+        'Days From Last Refresh', 'Days to Refresh', 'Description', 'Data Source', 'Use Restrictions', 'Website URL',
+        'Anchor', 'Data Type', 'PEL Layer', 'PEL Status', 'Governance/Agreement', 'PEL Inclusion',
+        'Agency Contact Name', 'Agency Contact Email', 'SGID Coordination', 'Archival Schedule', 'Endpoint', 'Tier',
+        'Webapp', 'Notes', 'Deprecated'
+    ])
+    patient._get_data = mocker.Mock(return_value=[Cell('A1', 'fake.table')])
+    mocker.patch(
+        'pygsheets.Cell.neighbour',
+        side_effect=[
+            Cell('A2', val='not empty'),
+            Cell('A3', val='also not empty'),
+            Cell('A4', val='also not empty'),
+            Cell('A5', val='also not empty'),
+            Cell('A6', val='also not empty'),
+        ]
+    )
+
+    response = patient.exists()
+
+    assert response.exists == True
+
+
+def test_sheets_cell_deprecations_only_uses_one_neighbor(mocker):
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient.build_header_row_index([
+        'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
+        'Days From Last Refresh', 'Days to Refresh', 'Description', 'Data Source', 'Use Restrictions', 'Website URL',
+        'Anchor', 'Data Type', 'PEL Layer', 'PEL Status', 'Governance/Agreement', 'PEL Inclusion',
+        'Agency Contact Name', 'Agency Contact Email', 'SGID Coordination', 'Archival Schedule', 'Endpoint', 'Tier',
+        'Webapp', 'Notes', 'Deprecated'
+    ])
+    patient._get_data = mocker.Mock(return_value=[Cell('A1', 'fake.table')])
+    mocker.patch(
+        'pygsheets.Cell.neighbour', side_effect=[
+            Cell('A2', val='link to porter issue required for deprecations'),
+        ]
+    )
+
+    response = patient.exists(deprecation=True)
+
+    assert response.exists == True
+
+
+@pytest.mark.google
+def test_sheets_can_find_workspace():
+    patient = GSheetChecker('fake.table', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info')
+
+    assert len(patient._get_data()) == 0
+
+
+@pytest.mark.google
+def test_sheets_can_find_known_record_in_workspace():
+    patient = GSheetChecker(
+        'basemap.addresspoints', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info'
+    )
+
+    assert len(patient._get_data()) == 1
+
+
+@pytest.mark.google
+def test_sheets_exists_returns_true_for_known_layer():
+    patient = GSheetChecker(
+        'boundaries.counties', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info'
+    )
+
+    assert patient.exists().exists == True
