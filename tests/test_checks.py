@@ -272,6 +272,7 @@ def test_sheets_build_header_row_index():
 
 def test_sheets_with_duplicate_cells_returns_false(mocker):
     patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    mocker.patch('pygsheets.Cell.link')
     patient._get_data = mocker.Mock(return_value=[Cell('A1', val='fake.table'), Cell('A2', val='fake.table')])
 
     response = patient.exists()
@@ -300,6 +301,7 @@ def test_sheets_cell_finds_neighbors_returns_false_for_empty_values(mocker):
         'Webapp', 'Notes', 'Deprecated'
     ])
     patient._get_data = mocker.Mock(return_value=[Cell('A1', 'fake.table')])
+    mocker.patch('pygsheets.Cell.link')
     mocker.patch('pygsheets.Cell.neighbour', return_value=Cell('A2'))
 
     response = patient.exists()
@@ -317,6 +319,7 @@ def test_sheets_cell_finds_neighbors_returns_false_with_partial_values(mocker):
         'Webapp', 'Notes', 'Deprecated'
     ])
     patient._get_data = mocker.Mock(return_value=[Cell('A1', 'fake.table')])
+    mocker.patch('pygsheets.Cell.link')
     mocker.patch(
         'pygsheets.Cell.neighbour',
         side_effect=[
@@ -343,6 +346,7 @@ def test_sheets_cell_finds_neighbors_returns_true_if_neighbors_all_have_values(m
         'Webapp', 'Notes', 'Deprecated'
     ])
     patient._get_data = mocker.Mock(return_value=[Cell('A1', 'fake.table')])
+    mocker.patch('pygsheets.Cell.link')
     mocker.patch(
         'pygsheets.Cell.neighbour',
         side_effect=[
@@ -369,6 +373,7 @@ def test_sheets_cell_deprecations_only_uses_one_neighbor(mocker):
         'Webapp', 'Notes', 'Deprecated'
     ])
     patient._get_data = mocker.Mock(return_value=[Cell('A1', 'fake.table')])
+    mocker.patch('pygsheets.Cell.link')
     mocker.patch(
         'pygsheets.Cell.neighbour', side_effect=[
             Cell('A2', val='link to porter issue required for deprecations'),
