@@ -5,8 +5,8 @@ a description of what this module does.
 this file is for testing linting...
 """
 
-from collections import namedtuple
 import json
+from collections import namedtuple
 
 import github
 
