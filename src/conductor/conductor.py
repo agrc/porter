@@ -5,11 +5,14 @@ a description of what this module does.
 this file is for testing linting...
 """
 
+from collections import namedtuple
 import json
 
 import github
 
-from .checks import ArcGisOnlineChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker
+from .checks import (
+    ArcGisOnlineChecker, GSheetChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker
+)
 
 try:
     from conductor.connections import DB
@@ -76,53 +79,42 @@ def check_adds(issues):
     checks that the data has been added to the expected areas
     issues: issues with the introduction label
     """
+    reports = {}
     for issue in issues:
-        report = {}
+        Report = namedtuple('Report', 'check, result')
         metadata = extract_metadata_from_issue_body(issue, notify=False)
 
         if 'table' in metadata:
-            check = MSSqlTableChecker(metadata['table'], DB['internalsgid'])
-            report['internal sgid'] = check.exists()
+            table = metadata['table']
+            reports[table] = []
 
-            check = MSSqlTableChecker(metadata['table'], DB['sgid10'])
-            report['sgid10'] = check.exists()
+            check = MSSqlTableChecker(table, DB['internalsgid'])
+            reports[table].append(Report('internal sgid', check.exists()))
+
+            check = MSSqlTableChecker(table, DB['sgid10'])
+            reports[table].append(Report('sgid10', check.exists()))
 
             check = MetaTableChecker(f'sgid.{metadata["table"]}', DB['internalsgid'])
-            report['meta table'] = check.exists()
+            reports[table].append(Report('meta table', check.exists()))
             meta_table_data = check.data
 
             if meta_table_data.exists != 'missing item name':
-                check = PGSqlTableChecker(metadata['table'], DB['opensgid'])
+                check = PGSqlTableChecker(table, DB['opensgid'])
                 check.table = PGSqlTableChecker.postgresize(meta_table_data.item_name)
 
-                report['open sgid'] = check.exists()
+                reports[table].append(Report('open sgid', check.exists()))
 
                 check = OpenDataChecker(meta_table_data.item_name)
-                report['open data'] = check.exists()
+                reports[table].append(Report('open data', check.exists()))
 
             if meta_table_data.exists != 'missing item id':
                 check = ArcGisOnlineChecker(meta_table_data.item_id)
-                report['arcgis online'] = check.exists()
+                reports[table].append(Report('arcgis online', check.exists()))
 
-        print(report)
+            check = GSheetChecker(table, '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info')
+            reports[table].append(Report('stewardship', check.exists()))
 
-    #: search for service in agol
-    #: is it shared properly etc
-
-    #: is the open data page created
-
-    #: is the table in the internal sgid
-
-    #: is the record in the agol items table
-
-    #: is the recrod in the change detection table
-
-    #: is the table in the external sgid
-
-    #: is the table in the open sgid
-
-    #: is there a record in the stewardship sheet
-    #: are some of the fields populated
+        print(reports)
 
 
 def extract_metadata_from_issue_body(issue, notify=True):
