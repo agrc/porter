@@ -37,3 +37,4 @@ cov.xml
 
 # secrets
 connections.py
+client-secret.json
