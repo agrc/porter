@@ -37,6 +37,7 @@ setup(
         'pyodbc==4.*',
         'psycopg2-binary==2.*',
         'requests==2.*',
+        'pygsheets==2.*',
     ],
     extras_require={
         'tests': [

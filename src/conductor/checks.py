@@ -9,11 +9,12 @@ from collections import namedtuple
 from textwrap import dedent
 
 import psycopg2
+import pygsheets
 import pyodbc
 import requests
 
 
-class TableChecker:  # pylint: disable=too-few-public-methods
+class TableChecker:
     """base class for checkers
     """
     driver = None
@@ -233,3 +234,79 @@ class OpenDataChecker(UrlChecker):
         self.data = self.data.status_code
 
         return self.data == 200
+
+
+class GSheetChecker():
+    """look for a record and attributes in the stewardship worksheet
+    """
+    required_add_fields = ['Description', 'Data Source', 'Website URL', 'Data Type', 'Endpoint']
+    required_remove_fields = ['Deprecated']
+    client = None
+    worksheet = None
+
+    def __init__(self, table, sheet_id, worksheet_name, testing=False):
+        self.table = table
+        if not testing:
+            self.client = pygsheets.authorize(service_account_file='client-secret.json')
+        self.sheet_id = sheet_id
+        self.worksheet_name = worksheet_name
+        self.add_field_index = {}
+        self.remove_field_index = {}
+
+    def build_header_row_index(self, header_row):
+        """builds an column index map to help with finding neighboring cells
+        """
+        for index, title in enumerate(header_row):
+            if title in self.required_add_fields:
+                self.add_field_index[title] = index
+
+                continue
+
+            if title in self.required_remove_fields:
+                self.remove_field_index[title] = index
+
+    def _get_data(self):
+        """search the worksheet for the table in SGID Data Layer
+        """
+        self.worksheet = self.client.open_by_key(self.sheet_id).worksheet_by_title(self.worksheet_name)
+        header_row = self.worksheet.get_row(1)
+        self.build_header_row_index(header_row)
+
+        return self.worksheet.find(self.table, matchEntireCell=True)
+
+    def exists(self, deprecation=False):
+        """tests for if the row exists in the sheet
+        """
+        cells = self._get_data()
+        SheetResponse = namedtuple('SheetResponse', 'exists messages')
+
+        if len(cells) > 1:
+            row_indexes = ', '.join([str(cell.row) for cell in cells])
+
+            return SheetResponse(
+                False, f'There are multiple items with this name on rows {row_indexes}. Please remove the duplicates.'
+            )
+
+        if len(cells) == 0:
+            return SheetResponse(False, f'Did not find {self.table} in the worksheet')
+
+        cell = cells[0]
+        cell.link(self.worksheet, update=False)
+
+        status = {}
+        fields = self.add_field_index
+        starting_position = cell.col
+
+        if deprecation:
+            fields = self.remove_field_index
+
+        for key, position in fields.items():
+            status[key] = False
+
+            delta = (0, (position + 1) - starting_position)
+            value = cell.neighbour(delta).value.strip()
+
+            if value:
+                status[key] = True
+
+        return SheetResponse(all(status.values()), status)
