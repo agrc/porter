@@ -17,7 +17,7 @@ AGRC tracks the additions, replacements, and deletions of SGID items (in the bro
    - [ ] ArcGIS Online (@jacobdadams)
    - Items that don't need to be handled should be struck through (wrap the line with `~`'s) instead of being deleted:
       - `~ArcGISOnline (assigned to)~` (note there are no spaces between the `~`'s and the text to be struck out)
-   - Once the triager has identified any steps required for their team or made any relevant comments, they should check the box to indicate that their triage is complete:
+   - Once the triager has identified any steps required for their team or made any relevant comments, they should check the box in the triage section to indicate that their triage is complete:
       - [x] Data Team Triage (@gregbunce)
 1. The people assigned to different issues will check the boxes as they are completed and comment on the issue to notify the rest of the group:
    - [x] ArcGIS Online (@jacobdadams)
