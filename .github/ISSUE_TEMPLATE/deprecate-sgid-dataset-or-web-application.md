@@ -65,6 +65,7 @@ or
 
 - [ ] Remove repo (assigned to)
 - [ ] Remove stale data from forklift hashing and receiving (assigned to)
+- [ ] Remove row from `data/hashed/changedetection.gdb/TableHashes`
 
 # Are there service dependencies?
 
