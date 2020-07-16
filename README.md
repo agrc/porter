@@ -27,11 +27,13 @@ AGRC tracks the additions, replacements, and deletions of SGID items (in the bro
 
 Data in the internal SGID will automatically be added to the SGID10 with via the swapper pallet.
 
-If there is a record added to `SGID.META.AGOLItems`, the corresponding dataset will be added to:
+If there is a record added to `SGID.META.AGOLItems`, the corresponding dataset will automatically be added to:
 
 1. the open sgid with cloudb
 1. arcgis online with forklift
 1. open data with the agol validator
+
+Note: This automation does not work in reverse. If a record is removed from `SGID.META.AGOLItems`, the corresponding data needs to be manually removed from the systems above.
 
 ### Tweet templates
 
