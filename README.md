@@ -23,6 +23,16 @@ AGRC tracks the additions, replacements, and deletions of SGID items (in the bro
    - [x] ArcGIS Online (@jacobdadams)
 1. Once all boxes are checked, the person who first opened the issue should close it.
 
+## Data Flow for New SGID Datasets
+
+Data in the internal SGID will automatically be added to the SGID10 with via the swapper pallet.
+
+If there is a record added to `SGID.META.AGOLItems`, the corresponding dataset will be added to:
+
+1. the open sgid with cloudb
+1. arcgis online with forklift
+1. open data with the agol validator
+
 ### Tweet templates
 
 #### intent to deprecate
