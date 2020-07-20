@@ -33,7 +33,7 @@ If there is a record added to `SGID.META.AGOLItems`, the corresponding dataset w
 1. arcgis online with forklift
 1. open data with the agol validator
 
-Note: This automation does not work in reverse. If a record is removed from `SGID.META.AGOLItems`, the corresponding data needs to be manually removed from the systems above.
+Note: Cloudb is the only automation from the list above works in reverse. If a record is removed from `SGID.META.AGOLItems`, the corresponding data needs to be manually removed from all of the systems above with the exception of the Open SGID.
 
 ### Tweet templates
 
