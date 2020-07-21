@@ -466,7 +466,7 @@ def test_sheet_grade_returns_false_for_missing_field_for_add():
     grade = GSheetChecker('fake.table', 'id', 'name',
                           testing=True).grade(add=True, report_value=SheetResponse(True, grades))
 
-    assert grade == '\n| - Description | :-1: |\n| - Data Source | :+1: |'
+    assert grade == ' |\n| - Description | :-1: |\n| - Data Source | :+1:'
 
 
 def test_sheet_grade_returns_true_for_deprecation_field_for_remove():
