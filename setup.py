@@ -33,6 +33,7 @@ setup(
     },
     keywords=['gis'],
     install_requires=[
+        'colorama==0.*',
         'PyGithub==1.*',
         'pyodbc==4.*',
         'psycopg2-binary==2.*',
