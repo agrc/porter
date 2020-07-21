@@ -5,6 +5,8 @@ test_checks.py
 A module that contains tests for the checks module.
 """
 
+from collections import namedtuple
+
 import psycopg2
 import pytest
 from pygsheets import Cell
@@ -237,6 +239,11 @@ def test_open_data_url_creation():
     assert patient.url == 'https://opendata.gis.utah.gov/datasets/upper-cased-name'
 
 
+def test_open_data_raises_for_empty_url():
+    with pytest.raises(ValueError):
+        OpenDataChecker(None)
+
+
 def test_open_data_for_existence_with_200(mocker):
     mocker.patch('conductor.checks.UrlChecker.get_data')
 
@@ -426,3 +433,66 @@ def test_sheets_exists_returns_true_for_known_layer():
         'Endpoint': True,
         'Deprecated': False,
     }
+
+
+def test_sheet_grade_returns_false_for_no_row_for_add():
+    SheetResponse = namedtuple('SheetResponse', 'valid messages')
+    grade = GSheetChecker('fake.table', 'id', 'name', testing=True).grade(
+        add=True, report_value=SheetResponse(False, 'Did not find fake.table in the worksheet')
+    )
+
+    assert grade == ':-1: Did not find fake.table in the worksheet'
+
+
+def test_sheet_grade_returns_false_for_multiple_row_for_add():
+    SheetResponse = namedtuple('SheetResponse', 'valid messages')
+    grade = GSheetChecker('fake.table', 'id', 'name', testing=True).grade(
+        add=True,
+        report_value=SheetResponse(
+            False, 'There are multiple items with this name on rows 1,2. Please remove the duplicates.'
+        )
+    )
+
+    assert grade == ':-1: There are multiple items with this name on rows 1,2. Please remove the duplicates.'
+
+
+def test_sheet_grade_returns_false_for_missing_field_for_add():
+    SheetResponse = namedtuple('SheetResponse', 'valid messages')
+    grades = {
+        'Description': False,
+        'Data Source': True,
+        'Deprecated': False,
+    }
+    grade = GSheetChecker('fake.table', 'id', 'name',
+                          testing=True).grade(add=True, report_value=SheetResponse(True, grades))
+
+    # assert grade == '\n| - Description | :-1: |\n| - Data Source | :+1: |'
+
+
+def test_sheet_grade_returns_true_for_deprecation_field_for_remove():
+    SheetResponse = namedtuple('SheetResponse', 'valid messages')
+    grades = {
+        'Description': False,
+        'Data Source': True,
+        'Deprecated': True,
+    }
+    grade = GSheetChecker('fake.table', 'id', 'name',
+                          testing=True).grade(add=False, report_value=SheetResponse(True, grades))
+
+    assert grade == ' |\n| - deprecation issue link | :+1:'
+
+
+def test_sheet_grade_returns_false_for_deprecation_field_for_remove():
+    SheetResponse = namedtuple('SheetResponse', 'valid messages')
+    grades = {
+        'Description': False,
+        'Data Source': True,
+        'Deprecated': False,
+    }
+    grade = GSheetChecker('fake.table', 'id', 'name',
+                          testing=True).grade(add=False, report_value=SheetResponse(True, grades))
+
+    assert grade == ' |\n| - deprecation issue link | :-1:'
+
+
+# def test_sheet_grading_sub_table():
