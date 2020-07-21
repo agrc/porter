@@ -586,6 +586,7 @@ def test_write_report(mocker):
     mocker.patch('conductor.checks.PGSqlTableChecker.exists', return_value=True)
     mocker.patch('conductor.checks.OpenDataChecker.exists', return_value=True)
     mocker.patch('conductor.checks.ArcGisOnlineChecker.exists', return_value=True)
+    mocker.patch('conductor.checks.GSheetChecker.__init__', return_value=None)
     mocker.patch(
         'conductor.checks.GSheetChecker.exists',
         return_value=SheetResponse(True, {
@@ -625,6 +626,7 @@ def test_write_report_without_item_id(mocker):
     mocker.patch('conductor.checks.PGSqlTableChecker.exists', return_value=True)
     mocker.patch('conductor.checks.OpenDataChecker.exists', return_value=True)
     mocker.patch('conductor.checks.ArcGisOnlineChecker.exists', return_value=True)
+    mocker.patch('conductor.checks.GSheetChecker.__init__', return_value=None)
     mocker.patch(
         'conductor.checks.GSheetChecker.exists',
         return_value=SheetResponse(True, {
@@ -664,6 +666,7 @@ def test_write_report_without_item_id(mocker):
     mocker.patch('conductor.checks.PGSqlTableChecker.exists', return_value=True)
     mocker.patch('conductor.checks.OpenDataChecker.exists', return_value=True)
     mocker.patch('conductor.checks.ArcGisOnlineChecker.exists', return_value=True)
+    mocker.patch('conductor.checks.GSheetChecker.__init__', return_value=None)
     mocker.patch(
         'conductor.checks.GSheetChecker.exists',
         return_value=SheetResponse(True, {
