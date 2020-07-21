@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 """
 setup.py
-A module that installs projectname as a module
+A module that installs conductor as a module
 """
 from glob import glob
 from os.path import basename, splitext
