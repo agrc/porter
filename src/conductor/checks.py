@@ -72,6 +72,22 @@ class TableChecker:
 
             return self.data
 
+    @staticmethod
+    def grade(add, report_value):
+        """grades the basic boolean report
+            report - boolean exists result
+        """
+        if add:
+            if report_value:
+                return ':+1:'
+
+            return ':-1:'
+
+        if report_value:
+            return ':-1:'
+
+        return ':+1:'
+
 
 class MSSqlTableChecker(TableChecker):
     """sgid10 table checker
@@ -116,8 +132,8 @@ class PGSqlTableChecker(TableChecker):
         TableChecker.__init__(self, table, connection_info)
         self.driver = psycopg2
 
-    @classmethod
-    def postgresize(cls, name):
+    @staticmethod
+    def postgresize(name):
         """takes the agol name and makes it conform to pgsql conventions
         """
         if name is None:
@@ -180,6 +196,28 @@ class MetaTableChecker(TableChecker):
 
         return response
 
+    @staticmethod
+    def grade(add, report_value):
+        """overrides the basic grading
+        """
+        if add:
+            if not report_value.item_id and not report_value.item_name:
+                return ' |\n| - item id | :-1: |\n| - item name | :-1:'
+
+            if not report_value.item_id:
+                return ' |\n| - item id | :-1: |\n| - item name | :+1:'
+
+            if not report_value.item_name:
+                return ' |\n| - item id | :+1: |\n| - item name | :-1:'
+
+            return ' |\n| - item id | :+1: |\n| - item name | :+1:'
+
+        #: deletions should not contain a row
+        if report_value.exists:
+            return ':-1:'
+
+        return ':+1:'
+
 
 class UrlChecker():  # pylint: disable=too-few-public-methods
     """checks if a url is good or bad
@@ -191,6 +229,22 @@ class UrlChecker():  # pylint: disable=too-few-public-methods
         """requests the data from the url
         """
         self.data = requests.get(self.url, params=args, allow_redirects=False)
+
+    @staticmethod
+    def grade(add, report_value):
+        """grades the basic boolean report
+            report - boolean exists result
+        """
+        if add:
+            if report_value:
+                return ':+1:'
+
+            return ':-1:'
+
+        if report_value:
+            return ':-1:'
+
+        return ':+1:'
 
 
 class ArcGisOnlineChecker(UrlChecker):
@@ -219,12 +273,20 @@ class OpenDataChecker(UrlChecker):
     """
 
     def __init__(self, item_name):
-        self.url = f'https://opendata.gis.utah.gov/datasets/{OpenDataChecker.kebab_case(item_name)}'
+        url = OpenDataChecker.kebab_case(item_name)
 
-    @classmethod
-    def kebab_case(cls, string):
+        if not url:
+            raise ValueError('url cannot be empty')
+
+        self.url = f'https://opendata.gis.utah.gov/datasets/{url}'
+
+    @staticmethod
+    def kebab_case(string):
         """returns a lowercase kebab string
         """
+        if string is None:
+            raise ValueError('string cannot be empty')
+
         return string.lower().replace(' ', '-')
 
     def exists(self):
@@ -300,3 +362,31 @@ class GSheetChecker():
                 status[key] = True
 
         return SheetResponse(True, status)
+
+    @staticmethod
+    def grade(add, report_value):
+        """grades the report
+            report - SheetResponse
+        """
+        if add:
+            if not report_value.valid:
+                return f':-1: {report_value.messages}'
+
+            failures = ''.join([
+                f'\n| - {key} | :-1: |' for key in report_value.messages
+                if not report_value.messages[key] and key != 'Deprecated'
+            ])
+            success = ''.join([
+                f'\n| - {key} | :+1: |' for key in report_value.messages
+                if report_value.messages[key] and key != 'Deprecated'
+            ])
+
+            return f' |{failures}{success}'.rstrip(' |').strip('\n\n')
+
+        #: removal
+        has_linked_deprecation_issue = report_value.messages['Deprecated']
+
+        if not has_linked_deprecation_issue:
+            return ' |\n| - deprecation issue link | :-1:'
+
+        return ' |\n| - deprecation issue link | :+1:'
