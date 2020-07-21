@@ -9,6 +9,7 @@ import json
 from collections import namedtuple
 
 import github
+from colorama import Fore, init
 
 from .checks import (
     ArcGisOnlineChecker, GSheetChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker
@@ -23,17 +24,24 @@ except ModuleNotFoundError:
 def startup():
     """the method called when invoking `conductor`
     """
+    init()
+    print('gathering issues...')
 
     issues = gather_issues(github.Github(GITHUB_TOKEN).get_repo('agrc/porter', lazy=True))
+    print(f'collected {Fore.MAGENTA}{len(issues)}{Fore.RESET} issues')
 
     if len(issues) == 0:
+        print(f'{Fore.MAGENTA}finished{Fore.RESET}')
         return
 
     reports = write_reports(issues)
+    print(f'{Fore.BLUE}all tickets punched{Fore.RESET}')
 
     grades = grade_reports(reports)
+    print('finished grading reports')
 
     publish_grades(grades)
+    print(f'{Fore.MAGENTA}finished{Fore.RESET}')
 
     return grades
 
@@ -68,6 +76,7 @@ def gather_issues(porter):
         if not capture:
             continue
 
+        print(f'collecting {Fore.CYAN}{issue.title}{Fore.RESET}')
         conductor_issues.append(ConductorIssue(issue, introduction))
 
     return conductor_issues
@@ -85,36 +94,45 @@ def write_reports(conductor_issues):
         metadata = extract_metadata_from_issue_body(issue.issue, notify=False)
 
         if metadata is None:
+            print(f'could not find metadata in {Fore.YELLOW}{issue.issue.title}{Fore.RESET}')
             continue
 
         if 'table' in metadata:
             table = metadata['table']
+            print(f'punching ticket for {Fore.CYAN}{table}{Fore.RESET}')
             reports[table] = []
 
             check = MSSqlTableChecker(table, DB['internalsgid'])
             reports[table].append(Report('internal sgid', issue, check.exists(), MSSqlTableChecker.grade))
+            print(f'{Fore.GREEN}internal sgid{Fore.RESET} punched')
 
             check = MSSqlTableChecker(table, DB['sgid10'])
             reports[table].append(Report('sgid10', issue, check.exists(), MSSqlTableChecker.grade))
+            print(f'{Fore.GREEN}sgid 10{Fore.RESET} punched')
 
             check = MetaTableChecker(f'sgid.{metadata["table"]}', DB['internalsgid'])
             reports[table].append(Report('meta table', issue, check.exists(), MetaTableChecker.grade))
             meta_table_data = check.data
+            print(f'{Fore.GREEN}meta table{Fore.RESET} punched')
 
             if meta_table_data.exists != 'missing item name':
                 check = PGSqlTableChecker(table, DB['opensgid'])
                 check.table = PGSqlTableChecker.postgresize(meta_table_data.item_name)
                 reports[table].append(Report('open sgid', issue, check.exists(), PGSqlTableChecker.grade))
+                print(f'{Fore.GREEN}open sgid{Fore.RESET} punched')
 
                 check = OpenDataChecker(meta_table_data.item_name)
                 reports[table].append(Report('open data', issue, check.exists(), OpenDataChecker.grade))
+                print(f'{Fore.GREEN}open data{Fore.RESET} punched')
 
             if meta_table_data.exists != 'missing item id':
                 check = ArcGisOnlineChecker(meta_table_data.item_id)
                 reports[table].append(Report('arcgis online', issue, check.exists(), ArcGisOnlineChecker.grade))
+                print(f'{Fore.GREEN}arcgis online{Fore.RESET} punched')
 
             check = GSheetChecker(table, '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info')
             reports[table].append(Report('stewardship', issue, check.exists(), GSheetChecker.grade))
+            print(f'{Fore.GREEN}stewardship sheet{Fore.RESET} punched')
 
     return reports
 
@@ -150,6 +168,7 @@ def publish_grades(all_grades):
 
         issue.create_comment(f'## conductor results\n\n{comment_table}{comment}')
 
+        print(f'comment left on issue {Fore.CYAN}{issue.title}{Fore.RESET}')
 
     return comments
 
@@ -183,5 +202,7 @@ def _notify_missing_metadata(issue):
 
 
 if __name__ == '__main__':
+    print('starting conductor...')
+
     github.enable_console_debug_logging()
     results = startup()
