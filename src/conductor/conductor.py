@@ -32,7 +32,7 @@ def startup():
 
     if len(issues) == 0:
         print(f'{Fore.MAGENTA}finished{Fore.RESET}')
-        return
+        return None
 
     reports = write_reports(issues)
     print(f'{Fore.BLUE}all tickets punched{Fore.RESET}')
