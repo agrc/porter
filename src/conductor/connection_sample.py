@@ -26,3 +26,4 @@ DB = {
         'password': 'agrc'
     }
 }
+GITHUB_TOKEN = 'https://github.com/settings/tokens/new with public repo access'
