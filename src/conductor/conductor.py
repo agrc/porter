@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # * coding: utf8 *
 """
-a description of what this module does.
-this file is for testing linting...
+conductor.py a script that interacts with github issues, reads some metadata from the issue description,
+searchings our SGID facets for the item in the metadata, and finally posts a comment with the completeness
 """
 
 import json
