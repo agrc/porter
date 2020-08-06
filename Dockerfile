@@ -12,6 +12,6 @@ COPY src ./src
 
 RUN python -m pip install -U pip
 
-RUN pip install ./
+RUN pip install .[cloud-run]
 
 CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 conductor.server:app
