@@ -150,7 +150,7 @@ def test_empty_row_returns_false(mocker):
     patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
     response = patient.exists()
 
-    assert response == False
+    assert response.exists == False
 
 
 def test_missing_item_id_returns_correct_string(mocker):
@@ -161,7 +161,7 @@ def test_missing_item_id_returns_correct_string(mocker):
 
     response = patient.exists()
 
-    assert response == 'missing item id'
+    assert response.exists == 'missing item id'
 
 
 def test_missing_item_name_returns_correct_string(mocker):
@@ -172,18 +172,17 @@ def test_missing_item_name_returns_correct_string(mocker):
 
     response = patient.exists()
 
-    assert response == 'missing item name'
+    assert response.exists == 'missing item name'
 
 
 def test_missing_both_returns_correct_string(mocker):
     mocker.patch('conductor.checks.TableChecker.get_data')
-
     patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
     patient.data = (None, None)
 
     response = patient.exists()
 
-    assert response == False
+    assert response.exists == False
 
 
 def test_arcgis_online_url_creation():

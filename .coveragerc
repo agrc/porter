@@ -1,6 +1,8 @@
 [run]
 omit =
     */connection_sample.py
+    */__init__.py
+    */connections.py
 
 [report]
 exclude_lines =
