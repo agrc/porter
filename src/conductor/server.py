@@ -35,8 +35,9 @@ def schedule():
         return (f'Bad Request: {msg}', 400)
 
     client = secretmanager.SecretManagerServiceClient()
-    secrets = client.access_secret_version('projects/174444704019/secrets/conductor-connections/versions/latest')
-    secrets = json.load(secrets)
+    name = client.secret_version_path('174444704019', 'conductor-connections', 'latest')
+    secrets = client.access_secret_version(name)
+    secrets = json.loads(secrets.payload.data.decode('UTF-8'))
 
     try:
         startup(secrets)
