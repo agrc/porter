@@ -180,7 +180,7 @@ class MetaTableChecker(TableChecker):
         if self.data is None:
             self.data = MetaResponse(False, item_id, item_name)
 
-            return False
+            return MetaResponse(False, item_id, item_name)
 
         item_id, item_name = self.data
         response = True
@@ -191,10 +191,11 @@ class MetaTableChecker(TableChecker):
             response = 'missing item id'
         elif not item_name:
             response = 'missing item name'
+        #: TODO: add geometry type
 
         self.data = MetaResponse(response, item_id, item_name)
 
-        return response
+        return self.data
 
     @staticmethod
     def grade(add, report_value):

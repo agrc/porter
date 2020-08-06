@@ -115,20 +115,21 @@ def write_reports(conductor_issues):
             meta_table_data = check.data
             print(f'{Fore.GREEN}meta table{Fore.RESET} punched')
 
-            if meta_table_data.exists != 'missing item name':
-                check = PGSqlTableChecker(table, DB['opensgid'])
-                check.table = PGSqlTableChecker.postgresize(meta_table_data.item_name)
-                reports[table].append(Report('open sgid', issue, check.exists(), PGSqlTableChecker.grade))
-                print(f'{Fore.GREEN}open sgid{Fore.RESET} punched')
+            if meta_table_data.exists:
+                if meta_table_data.exists != 'missing item name':
+                    check = PGSqlTableChecker(table, DB['opensgid'])
+                    check.table = PGSqlTableChecker.postgresize(meta_table_data.item_name)
+                    reports[table].append(Report('open sgid', issue, check.exists(), PGSqlTableChecker.grade))
+                    print(f'{Fore.GREEN}open sgid{Fore.RESET} punched')
 
-                check = OpenDataChecker(meta_table_data.item_name)
-                reports[table].append(Report('open data', issue, check.exists(), OpenDataChecker.grade))
-                print(f'{Fore.GREEN}open data{Fore.RESET} punched')
+                    check = OpenDataChecker(meta_table_data.item_name)
+                    reports[table].append(Report('open data', issue, check.exists(), OpenDataChecker.grade))
+                    print(f'{Fore.GREEN}open data{Fore.RESET} punched')
 
-            if meta_table_data.exists != 'missing item id':
-                check = ArcGisOnlineChecker(meta_table_data.item_id)
-                reports[table].append(Report('arcgis online', issue, check.exists(), ArcGisOnlineChecker.grade))
-                print(f'{Fore.GREEN}arcgis online{Fore.RESET} punched')
+                if meta_table_data.exists != 'missing item id':
+                    check = ArcGisOnlineChecker(meta_table_data.item_id)
+                    reports[table].append(Report('arcgis online', issue, check.exists(), ArcGisOnlineChecker.grade))
+                    print(f'{Fore.GREEN}arcgis online{Fore.RESET} punched')
 
             check = GSheetChecker(table, '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info')
             reports[table].append(Report('stewardship', issue, check.exists(), GSheetChecker.grade))
