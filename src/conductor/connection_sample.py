@@ -4,7 +4,7 @@
 connections.py
 A module that holds connection information
 """
-DB = {
+SECRETS = {
     'internalsgid': {
         'server': '',
         'database': '',
@@ -24,6 +24,6 @@ DB = {
         'database': 'opensgid',
         'user': 'agrc',
         'password': 'agrc'
-    }
+    },
+    'github_token': 'https://github.com/settings/tokens/new with public repo access'
 }
-GITHUB_TOKEN = 'https://github.com/settings/tokens/new with public repo access'

@@ -15,26 +15,22 @@ from .checks import (
     ArcGisOnlineChecker, GSheetChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker
 )
 
-try:
-    from conductor.connections import DB, GITHUB_TOKEN
-except ModuleNotFoundError:
-    from conductor.connection_sample import DB, GITHUB_TOKEN
 
-
-def startup():
+def startup(secrets):
     """the method called when invoking `conductor`
+       secrets: a dictionary with the secrets
     """
     init()
     print('gathering issues...')
 
-    issues = gather_issues(github.Github(GITHUB_TOKEN).get_repo('agrc/porter', lazy=True))
+    issues = gather_issues(github.Github(secrets['github_token']).get_repo('agrc/porter', lazy=True))
     print(f'collected {Fore.MAGENTA}{len(issues)}{Fore.RESET} issues')
 
     if len(issues) == 0:
         print(f'{Fore.MAGENTA}finished{Fore.RESET}')
         return None
 
-    reports = write_reports(issues)
+    reports = write_reports(issues, secrets)
     print(f'{Fore.BLUE}all tickets punched{Fore.RESET}')
 
     grades = grade_reports(reports)
@@ -82,7 +78,7 @@ def gather_issues(porter):
     return conductor_issues
 
 
-def write_reports(conductor_issues):
+def write_reports(conductor_issues, secrets):
     """
     checks that the data has been added to the expected areas
     conductor_issues: a named tuple with the issue and a introduction label boolean
@@ -102,22 +98,22 @@ def write_reports(conductor_issues):
             print(f'punching ticket for {Fore.CYAN}{table}{Fore.RESET}')
             reports[table] = []
 
-            check = MSSqlTableChecker(table, DB['internalsgid'])
+            check = MSSqlTableChecker(table, secrets['internalsgid'])
             reports[table].append(Report('internal sgid', issue, check.exists(), MSSqlTableChecker.grade))
             print(f'{Fore.GREEN}internal sgid{Fore.RESET} punched')
 
-            check = MSSqlTableChecker(table, DB['sgid10'])
+            check = MSSqlTableChecker(table, secrets['sgid10'])
             reports[table].append(Report('sgid10', issue, check.exists(), MSSqlTableChecker.grade))
             print(f'{Fore.GREEN}sgid 10{Fore.RESET} punched')
 
-            check = MetaTableChecker(f'sgid.{metadata["table"]}', DB['internalsgid'])
+            check = MetaTableChecker(f'sgid.{metadata["table"]}', secrets['internalsgid'])
             reports[table].append(Report('meta table', issue, check.exists(), MetaTableChecker.grade))
             meta_table_data = check.data
             print(f'{Fore.GREEN}meta table{Fore.RESET} punched')
 
             if meta_table_data.exists:
                 if meta_table_data.exists != 'missing item name':
-                    check = PGSqlTableChecker(table, DB['opensgid'])
+                    check = PGSqlTableChecker(table, secrets['opensgid'])
                     check.table = PGSqlTableChecker.postgresize(meta_table_data.item_name)
                     reports[table].append(Report('open sgid', issue, check.exists(), PGSqlTableChecker.grade))
                     print(f'{Fore.GREEN}open sgid{Fore.RESET} punched')
@@ -205,5 +201,11 @@ def _notify_missing_metadata(issue):
 if __name__ == '__main__':
     print('starting conductor...')
 
+    try:
+        from .connections import SECRETS
+    except ModuleNotFoundError:
+        from .connection_sample import SECRETS
+        print('secrets not found')
+
     github.enable_console_debug_logging()
-    results = startup()
+    results = startup(SECRETS)
