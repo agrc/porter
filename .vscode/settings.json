@@ -12,6 +12,7 @@
     "arcgis",
     "dotenv",
     "getenv",
+    "gunicorn",
     "instafail",
     "isort",
     "mssql",
