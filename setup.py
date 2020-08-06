@@ -34,13 +34,18 @@ setup(
     keywords=['gis'],
     install_requires=[
         'colorama==0.*',
-        'PyGithub==1.*',
-        'pyodbc==4.*',
         'psycopg2-binary==2.*',
-        'requests==2.*',
+        'PyGithub==1.*',
         'pygsheets==2.*',
+        'pyodbc==4.*',
+        'requests==2.*',
     ],
     extras_require={
+        'cloud-run': [
+            'flask==1.*',
+            'google-cloud-secret-manager==1.*',
+            'gunicorn==20.*',
+        ],
         'tests': [
             'pylint-quotes==0.2.*',
             'pylint==2.*',
