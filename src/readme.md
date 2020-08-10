@@ -37,7 +37,8 @@ docker push gcr.io/ut-dts-agrc-porter-prod/conductor
 1. authentication: `require authentication`
 1. choose latest container image
    - `gcr.io/ut-dts-agrc-porter-prod/conductor@latest`
-1. choose VPC connector under `advanced settings > connections`
+1. enable shared VPC connector
+   - `gcloud run services update conductor --vpc-connector projects/ut-dts-shared-vpc-dev/locations/us-central1/connectors/dts-shared-vpc-connector`
 
 ### subscriptions
 
