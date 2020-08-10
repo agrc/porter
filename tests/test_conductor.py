@@ -13,6 +13,7 @@ from github.Label import Label
 
 from conductor import conductor
 from conductor.checks import GSheetChecker, MetaTableChecker, TableChecker, UrlChecker
+from conductor.connection_sample import SECRETS
 
 
 def test_imports():
@@ -603,7 +604,7 @@ def test_write_report(mocker):
         ConductorIssue(mocker.MagicMock(), True),
         ConductorIssue(mocker.MagicMock(), True),
         ConductorIssue(mocker.MagicMock(), True)
-    ])
+    ], SECRETS)
 
     assert len(reports) == 1
     assert len(reports['fake.table']) == 7
@@ -643,7 +644,7 @@ def test_write_report_without_item_id(mocker):
         ConductorIssue(mocker.MagicMock(), True),
         ConductorIssue(mocker.MagicMock(), True),
         ConductorIssue(mocker.MagicMock(), True)
-    ])
+    ], SECRETS)
 
     assert len(reports) == 1
     assert len(reports['fake.table']) == 5
@@ -683,7 +684,7 @@ def test_write_report_without_item_id(mocker):
         ConductorIssue(mocker.MagicMock(), True),
         ConductorIssue(mocker.MagicMock(), True),
         ConductorIssue(mocker.MagicMock(), True)
-    ])
+    ], SECRETS)
 
     assert len(reports) == 1
     assert len(reports['fake.table']) == 6
