@@ -17,9 +17,9 @@ from conductor.checks import (
 )
 
 try:
-    from conductor.connections import DB
+    from conductor.connections import SECRETS
 except ModuleNotFoundError:
-    from conductor.connection_sample import DB
+    from conductor.connection_sample import SECRETS
 
 CONNECTION_STRING = ''
 
@@ -68,7 +68,7 @@ def test_checker_raises_with_no_connection_string():
 
 
 def test_open_sgid_can_connect():
-    patient = PGSqlTableChecker('boundaries.municipal_boundaries', DB['opensgid'])
+    patient = PGSqlTableChecker('boundaries.municipal_boundaries', SECRETS['opensgid'])
 
     cursor = patient.connect()
 
@@ -85,7 +85,7 @@ def test_pgsql_postgresize():
 
 @pytest.mark.vpn
 def test_mssql_table_can_connect():
-    patient = MSSqlTableChecker('boundaries.municipalities', DB['sgid10'])
+    patient = MSSqlTableChecker('boundaries.municipalities', SECRETS['sgid10'])
 
     cursor = patient.connect()
 
@@ -93,7 +93,7 @@ def test_mssql_table_can_connect():
 
 
 def test_pgsql_table_exists_returns_true():
-    patient = PGSqlTableChecker('boundaries.municipal_boundaries', DB['opensgid'])
+    patient = PGSqlTableChecker('boundaries.municipal_boundaries', SECRETS['opensgid'])
 
     assert patient.exists() == True
 
@@ -102,7 +102,7 @@ def test_pgsql_table_exists_returns_true():
 
 @pytest.mark.vpn
 def test_mssql_table_exists_returns_true():
-    patient = MSSqlTableChecker('boundaries.municipalities', DB['sgid10'])
+    patient = MSSqlTableChecker('boundaries.municipalities', SECRETS['sgid10'])
 
     assert patient.exists() == True
 
@@ -110,7 +110,7 @@ def test_mssql_table_exists_returns_true():
 
 
 def test_pgsql_table_does_not_exist_returns_false():
-    patient = PGSqlTableChecker('fake.table', DB['opensgid'])
+    patient = PGSqlTableChecker('fake.table', SECRETS['opensgid'])
 
     assert patient.exists() == False
 
@@ -119,7 +119,7 @@ def test_pgsql_table_does_not_exist_returns_false():
 
 @pytest.mark.vpn
 def test_mssql_table_does_not_exist_returns_false():
-    patient = MSSqlTableChecker('fake.table', DB['sgid10'])
+    patient = MSSqlTableChecker('fake.table', SECRETS['sgid10'])
 
     assert patient.exists() == False
 
@@ -128,26 +128,26 @@ def test_mssql_table_does_not_exist_returns_false():
 
 @pytest.mark.vpn
 def test_metatable_response_returns_true_when_exists():
-    patient = MetaTableChecker('sgid.boundaries.municipalities', DB['internalsgid'])
+    patient = MetaTableChecker('sgid.boundaries.municipalities', SECRETS['internalsgid'])
     response = patient.exists()
 
-    assert response == True
+    assert response.exists == True
     assert patient.data.item_id == '543fa1f073714198a3dbf8a292bdf30c'
     assert patient.data.item_name == 'Utah Municipal Boundaries'
 
 
 @pytest.mark.vpn
 def test_response_returns_completely_missing_for_fake_table():
-    patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
+    patient = MetaTableChecker('sgid.fake.table', SECRETS['internalsgid'])
     response = patient.exists()
 
-    assert response == False
+    assert response.exists == False
 
 
 def test_empty_row_returns_false(mocker):
     mocker.patch('conductor.checks.TableChecker.get_data')
 
-    patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
+    patient = MetaTableChecker('sgid.fake.table', SECRETS['internalsgid'])
     response = patient.exists()
 
     assert response.exists == False
@@ -156,7 +156,7 @@ def test_empty_row_returns_false(mocker):
 def test_missing_item_id_returns_correct_string(mocker):
     mocker.patch('conductor.checks.TableChecker.get_data')
 
-    patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
+    patient = MetaTableChecker('sgid.fake.table', SECRETS['internalsgid'])
     patient.data = (None, 'Agol Published Name')
 
     response = patient.exists()
@@ -167,7 +167,7 @@ def test_missing_item_id_returns_correct_string(mocker):
 def test_missing_item_name_returns_correct_string(mocker):
     mocker.patch('conductor.checks.TableChecker.get_data')
 
-    patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
+    patient = MetaTableChecker('sgid.fake.table', SECRETS['internalsgid'])
     patient.data = ('some-guid', None)
 
     response = patient.exists()
@@ -177,7 +177,7 @@ def test_missing_item_name_returns_correct_string(mocker):
 
 def test_missing_both_returns_correct_string(mocker):
     mocker.patch('conductor.checks.TableChecker.get_data')
-    patient = MetaTableChecker('sgid.fake.table', DB['internalsgid'])
+    patient = MetaTableChecker('sgid.fake.table', SECRETS['internalsgid'])
     patient.data = (None, None)
 
     response = patient.exists()
