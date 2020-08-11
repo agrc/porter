@@ -42,8 +42,8 @@ docker push gcr.io/ut-dts-agrc-porter-prod/conductor
 
 ### subscriptions
 
-1. create topic with id: `conductor`
-1. create subscription with id: `conductor` pointed at the newly created topic
+1. create topic with id: `conductor-topic`
+1. create subscription with id: `conductor-subscription` pointed at the newly created topic
 
    - delivery type: `push`
    - expiration: `never expires`
