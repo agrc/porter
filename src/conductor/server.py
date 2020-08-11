@@ -7,7 +7,9 @@ possibly github web hooks
 """
 
 import json
+import logging
 import os
+import sys
 
 from flask import Flask, request
 from google.cloud import secretmanager
@@ -16,21 +18,24 @@ from .conductor import startup
 
 app = Flask(__name__)
 
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+
 
 @app.route('/gcp/schedule', methods=['POST'])
 def schedule():
     """ schedule: the post route that gcp pub sub sends when conductor should execute
     """
+    logging.debug('request accepted')
     body = request.get_json()
     if not body:
         msg = 'no Pub/Sub message received'
-        print(f'error: {msg}')
+        logging.error('error: %s', msg)
 
         return (f'Bad Request: {msg}', 400)
 
     if not isinstance(body, dict) or 'message' not in body:
         msg = 'invalid Pub/Sub message format'
-        print(f'error: {msg}')
+        logging.error('error: %s', msg)
 
         return (f'Bad Request: {msg}', 400)
 
@@ -42,7 +47,11 @@ def schedule():
     try:
         startup(secrets)
     except Exception as error:
+        logging.error('conductor failure %s', error)
+
         return (f'error: {error}', 500)
+
+    logging.info('successful run')
 
     return ('', 204)
 
