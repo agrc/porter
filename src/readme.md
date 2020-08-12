@@ -1,5 +1,9 @@
 # conductor
 
+a bot that checks on the existance of data and required fields
+
+![conductor_sm](https://user-images.githubusercontent.com/325813/90076216-62563280-dcbc-11ea-8023-afa62e75b04b.png)
+
 ## prerequisites
 
 1. enable
