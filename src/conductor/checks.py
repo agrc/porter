@@ -309,7 +309,7 @@ class GSheetChecker():
     def __init__(self, table, sheet_id, worksheet_name, testing=False):
         self.table = table
         if not testing:
-            self.client = pygsheets.authorize()
+            self.client = pygsheets.authorize(service_account_file='/tmp/keys/sa.json')
         self.sheet_id = sheet_id
         self.worksheet_name = worksheet_name
         self.field_index = {}
