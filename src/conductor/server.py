@@ -11,9 +11,8 @@ import logging
 import os
 import sys
 
-from google.cloud import secretmanager
-
 from flask import Flask, request
+from google.cloud import secretmanager
 
 from .conductor import startup
 
