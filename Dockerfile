@@ -18,6 +18,7 @@ WORKDIR /app
 
 COPY setup.py .
 COPY src ./src
+COPY client-secret.json /tmp/keys/sa.json
 
 RUN python -m pip install -U pip
 
