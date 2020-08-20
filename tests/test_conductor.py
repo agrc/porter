@@ -688,3 +688,25 @@ def test_write_report_without_item_id(mocker):
 
     assert len(reports) == 1
     assert len(reports['fake.table']) == 6
+
+
+def test_startup_with_no_issues_returns(mocker):
+    mocker.patch('conductor.conductor.gather_issues', return_value=[])
+    write_reports = mocker.patch('conductor.conductor.write_reports')
+
+    conductor.startup({'github_token': ''})
+
+    write_reports.assert_not_called()
+
+
+def test_startup(mocker):
+    mocker.patch('conductor.conductor.gather_issues', return_value=[{}])
+    write_reports = mocker.patch('conductor.conductor.write_reports')
+    grade_reports = mocker.patch('conductor.conductor.grade_reports')
+    publish_grades = mocker.patch('conductor.conductor.publish_grades')
+
+    conductor.startup({'github_token': ''})
+
+    write_reports.assert_called_once()
+    grade_reports.assert_called_once()
+    publish_grades.assert_called_once()
