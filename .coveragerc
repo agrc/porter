@@ -3,6 +3,7 @@ omit =
     */connection_sample.py
     */__init__.py
     */connections.py
+    */server.py
 
 [report]
 exclude_lines =
