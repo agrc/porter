@@ -85,3 +85,8 @@ docker push gcr.io/ut-dts-agrc-porter-prod/conductor
 
 1. create secret as valid json with name: `conductor-connections`
 1. give default compute service account `secret manager secret accessor` role
+
+## Development
+
+1. use `test_conductor` as the entry point
+1. set the `service_account_file` path to a service account file with access to the stewardship sheet
