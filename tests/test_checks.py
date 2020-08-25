@@ -264,7 +264,7 @@ def test_open_data_for_missing_with_301(mocker):
 
 
 def test_sheets_build_header_row_index():
-    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', None)
 
     header_row = [
         'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
@@ -281,7 +281,7 @@ def test_sheets_build_header_row_index():
 
 
 def test_sheets_with_duplicate_cells_returns_false(mocker):
-    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', None)
     mocker.patch('pygsheets.Cell.link')
     patient._get_data = mocker.Mock(return_value=[Cell('A1', val='fake.table'), Cell('A2', val='fake.table')])
 
@@ -292,7 +292,7 @@ def test_sheets_with_duplicate_cells_returns_false(mocker):
 
 
 def test_sheets_with_no_matches_returns_false(mocker):
-    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', None)
     patient._get_data = mocker.Mock(return_value=[])
 
     response = patient.exists()
@@ -302,7 +302,7 @@ def test_sheets_with_no_matches_returns_false(mocker):
 
 
 def test_sheets_returns_false_for_empty_values(mocker):
-    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', None)
     patient.build_header_row_index([
         'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
         'Days From Last Refresh', 'Days to Refresh', 'Description', 'Data Source', 'Use Restrictions', 'Website URL',
@@ -328,7 +328,7 @@ def test_sheets_returns_false_for_empty_values(mocker):
 
 
 def test_sheets_handles_partial_values(mocker):
-    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', None)
     patient.build_header_row_index([
         'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
         'Days From Last Refresh', 'Days to Refresh', 'Description', 'Data Source', 'Use Restrictions', 'Website URL',
@@ -364,7 +364,7 @@ def test_sheets_handles_partial_values(mocker):
 
 
 def test_sheets_returns_true_if_neighbors_all_have_values(mocker):
-    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', testing=True)
+    patient = GSheetChecker('fake.table', 'sheet_id', 'worksheet_name', None)
     patient.build_header_row_index([
         'Issue', 'Authoritative Access From', 'SGID Data Layer', 'Refresh Cycle (Days)', 'Last Update',
         'Days From Last Refresh', 'Days to Refresh', 'Description', 'Data Source', 'Use Restrictions', 'Website URL',
@@ -401,7 +401,9 @@ def test_sheets_returns_true_if_neighbors_all_have_values(mocker):
 
 @pytest.mark.google
 def test_sheets_can_find_workspace():
-    patient = GSheetChecker('fake.table', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info')
+    patient = GSheetChecker(
+        'fake.table', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info', 'client-secret.json'
+    )
 
     assert len(patient._get_data()) == 0
 
@@ -409,7 +411,8 @@ def test_sheets_can_find_workspace():
 @pytest.mark.google
 def test_sheets_can_find_known_record_in_workspace():
     patient = GSheetChecker(
-        'basemap.addresspoints', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info'
+        'basemap.addresspoints', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info',
+        'client-secret.json'
     )
 
     assert len(patient._get_data()) == 1
@@ -418,7 +421,8 @@ def test_sheets_can_find_known_record_in_workspace():
 @pytest.mark.google
 def test_sheets_exists_returns_true_for_known_layer():
     patient = GSheetChecker(
-        'boundaries.counties', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info'
+        'boundaries.counties', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info',
+        'client-secret.json'
     )
 
     response = patient.exists()
@@ -436,23 +440,23 @@ def test_sheets_exists_returns_true_for_known_layer():
 
 def test_sheet_grade_returns_false_for_no_row_for_add():
     SheetResponse = namedtuple('SheetResponse', 'valid messages')
-    grade = GSheetChecker('fake.table', 'id', 'name', testing=True).grade(
+    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(
         add=True, report_value=SheetResponse(False, 'Did not find fake.table in the worksheet')
     )
 
-    assert grade == ':-1: Did not find fake.table in the worksheet'
+    assert grade == ':no_entry: Did not find fake.table in the worksheet'
 
 
 def test_sheet_grade_returns_false_for_multiple_row_for_add():
     SheetResponse = namedtuple('SheetResponse', 'valid messages')
-    grade = GSheetChecker('fake.table', 'id', 'name', testing=True).grade(
+    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(
         add=True,
         report_value=SheetResponse(
             False, 'There are multiple items with this name on rows 1,2. Please remove the duplicates.'
         )
     )
 
-    assert grade == ':-1: There are multiple items with this name on rows 1,2. Please remove the duplicates.'
+    assert grade == ':no_entry: There are multiple items with this name on rows 1,2. Please remove the duplicates.'
 
 
 def test_sheet_grade_returns_false_for_missing_field_for_add():
@@ -462,10 +466,9 @@ def test_sheet_grade_returns_false_for_missing_field_for_add():
         'Data Source': True,
         'Deprecated': False,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name',
-                          testing=True).grade(add=True, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=True, report_value=SheetResponse(True, grades))
 
-    assert grade == ' |\n| - Description | :-1: |\n| - Data Source | :+1:'
+    assert grade == ' |\n| - Description | :no_entry: |\n| - Data Source | :+1:'
 
 
 def test_sheet_grade_returns_true_for_deprecation_field_for_remove():
@@ -475,8 +478,7 @@ def test_sheet_grade_returns_true_for_deprecation_field_for_remove():
         'Data Source': True,
         'Deprecated': True,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name',
-                          testing=True).grade(add=False, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=False, report_value=SheetResponse(True, grades))
 
     assert grade == ' |\n| - deprecation issue link | :+1:'
 
@@ -488,7 +490,6 @@ def test_sheet_grade_returns_false_for_deprecation_field_for_remove():
         'Data Source': True,
         'Deprecated': False,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name',
-                          testing=True).grade(add=False, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=False, report_value=SheetResponse(True, grades))
 
-    assert grade == ' |\n| - deprecation issue link | :-1:'
+    assert grade == ' |\n| - deprecation issue link | :no_entry:'
