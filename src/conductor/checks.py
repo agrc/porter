@@ -306,10 +306,10 @@ class GSheetChecker():
     client = None
     worksheet = None
 
-    def __init__(self, table, sheet_id, worksheet_name, sa):
+    def __init__(self, table, sheet_id, worksheet_name, service_account_file):
         self.table = table
-        if sa is not None and len(sa) > 1:
-            self.client = pygsheets.authorize(service_account_file=sa)
+        if service_account_file is not None and len(service_account_file) > 1:
+            self.client = pygsheets.authorize(service_account_file=service_account_file)
         self.sheet_id = sheet_id
         self.worksheet_name = worksheet_name
         self.field_index = {}
