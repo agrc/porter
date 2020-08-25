@@ -5,7 +5,7 @@ connections.py
 A module that holds connection information
 """
 #: this is a template so of course it will have duplicate code
-# pylint: disable=duplicate-code
+# pylint: disable-all
 SECRETS = {
     'internalsgid': {
         'server': '',
