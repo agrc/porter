@@ -62,7 +62,10 @@ setup(
     setup_requires=[
         'pytest-runner',
     ],
-    entry_points={'console_scripts': [
-        'conductor = conductor.conductor:startup',
-    ]},
+    entry_points={
+        'console_scripts': [
+            'conductor = conductor.conductor:startup',
+            'test_conductor = conductor.conductor:local',
+        ]
+    },
 )
