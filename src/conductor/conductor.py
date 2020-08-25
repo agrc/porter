@@ -157,13 +157,13 @@ def publish_grades(all_grades):
         all_grades: dict table: [Grade(check grade issue)]
     """
     comments = []
-    for _, grades in all_grades.items():
+    for name, grades in all_grades.items():
         issue = grades[0].issue
         comment_table = '| check | status |\n| - | :-: |\n'
         comment = '\n'.join([f'| {grade.check} | {grade.grade} |' for grade in grades])
-        comments.append(f'## conductor results\n\n{comment_table}{comment}')
+        comments.append(f'## conductor results for `{name}`\n\n{comment_table}{comment}')
 
-        issue.create_comment(f'## conductor results\n\n{comment_table}{comment}')
+        issue.create_comment(f'## conductor results for {name}\n\n{comment_table}{comment}')
 
         print(f'comment left on issue {Fore.CYAN}{issue.title}{Fore.RESET}')
 
