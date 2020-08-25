@@ -81,10 +81,10 @@ class TableChecker:
             if report_value:
                 return ':+1:'
 
-            return ':-1:'
+            return ':no_entry:'
 
         if report_value:
-            return ':-1:'
+            return ':no_entry:'
 
         return ':+1:'
 
@@ -203,19 +203,19 @@ class MetaTableChecker(TableChecker):
         """
         if add:
             if not report_value.item_id and not report_value.item_name:
-                return ' |\n| - item id | :-1: |\n| - item name | :-1:'
+                return ' |\n| - item id | :no_entry: |\n| - item name | :no_entry:'
 
             if not report_value.item_id:
-                return ' |\n| - item id | :-1: |\n| - item name | :+1:'
+                return ' |\n| - item id | :no_entry: |\n| - item name | :+1:'
 
             if not report_value.item_name:
-                return ' |\n| - item id | :+1: |\n| - item name | :-1:'
+                return ' |\n| - item id | :+1: |\n| - item name | :no_entry:'
 
             return ' |\n| - item id | :+1: |\n| - item name | :+1:'
 
         #: deletions should not contain a row
         if report_value.exists:
-            return ':-1:'
+            return ':no_entry:'
 
         return ':+1:'
 
@@ -240,10 +240,10 @@ class UrlChecker():  # pylint: disable=too-few-public-methods
             if report_value:
                 return ':+1:'
 
-            return ':-1:'
+            return ':no_entry:'
 
         if report_value:
-            return ':-1:'
+            return ':no_entry:'
 
         return ':+1:'
 
@@ -306,10 +306,10 @@ class GSheetChecker():
     client = None
     worksheet = None
 
-    def __init__(self, table, sheet_id, worksheet_name, testing=False):
+    def __init__(self, table, sheet_id, worksheet_name, sa, testing=False):
         self.table = table
         if not testing:
-            self.client = pygsheets.authorize(service_account_file='/tmp/keys/sa.json')
+            self.client = pygsheets.authorize(service_account_file=sa)
         self.sheet_id = sheet_id
         self.worksheet_name = worksheet_name
         self.field_index = {}
@@ -371,10 +371,10 @@ class GSheetChecker():
         """
         if add:
             if not report_value.valid:
-                return f':-1: {report_value.messages}'
+                return f':no_entry: {report_value.messages}'
 
             failures = ''.join([
-                f'\n| - {key} | :-1: |' for key in report_value.messages
+                f'\n| - {key} | :no_entry: |' for key in report_value.messages
                 if not report_value.messages[key] and key != 'Deprecated'
             ])
             success = ''.join([
@@ -388,6 +388,6 @@ class GSheetChecker():
         has_linked_deprecation_issue = report_value.messages['Deprecated']
 
         if not has_linked_deprecation_issue:
-            return ' |\n| - deprecation issue link | :-1:'
+            return ' |\n| - deprecation issue link | :no_entry:'
 
         return ' |\n| - deprecation issue link | :+1:'
