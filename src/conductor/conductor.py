@@ -198,14 +198,16 @@ def _notify_missing_metadata(issue):
     issue.add_to_labels('missing-metadata')
 
 
-if __name__ == '__main__':
+def local():
+    """a way to access local secrets to run conductor locally
+    """
     print('starting conductor...')
 
     try:
-        from .connections import SECRETS
+        from .connections import SECRETS  # pylint: disable=import-outside-toplevel
     except ModuleNotFoundError:
-        from .connection_sample import SECRETS
+        from .connection_sample import SECRETS  # pylint: disable=import-outside-toplevel
         print('secrets not found')
 
     github.enable_console_debug_logging()
-    results = startup(SECRETS)
+    startup(SECRETS)
