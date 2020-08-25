@@ -401,8 +401,15 @@ def test_sheets_returns_true_if_neighbors_all_have_values(mocker):
 
 @pytest.mark.google
 def test_sheets_can_find_workspace():
+    try:
+        from conductor.connections import SECRETS  # pylint: disable=import-outside-toplevel
+    except ModuleNotFoundError:
+        from conductor.connection_sample import SECRETS  # pylint: disable=import-outside-toplevel
+        print('secrets not found')
+
     patient = GSheetChecker(
-        'fake.table', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info', 'client-secret.json'
+        'fake.table', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info',
+        SECRETS['service_account_file']
     )
 
     assert len(patient._get_data()) == 0
@@ -410,9 +417,15 @@ def test_sheets_can_find_workspace():
 
 @pytest.mark.google
 def test_sheets_can_find_known_record_in_workspace():
+    try:
+        from conductor.connections import SECRETS  # pylint: disable=import-outside-toplevel
+    except ModuleNotFoundError:
+        from conductor.connection_sample import SECRETS  # pylint: disable=import-outside-toplevel
+        print('secrets not found')
+
     patient = GSheetChecker(
         'basemap.addresspoints', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info',
-        'client-secret.json'
+        SECRETS['service_account_file']
     )
 
     assert len(patient._get_data()) == 1
@@ -420,9 +433,15 @@ def test_sheets_can_find_known_record_in_workspace():
 
 @pytest.mark.google
 def test_sheets_exists_returns_true_for_known_layer():
+    try:
+        from conductor.connections import SECRETS  # pylint: disable=import-outside-toplevel
+    except ModuleNotFoundError:
+        from conductor.connection_sample import SECRETS  # pylint: disable=import-outside-toplevel
+        print('secrets not found')
+
     patient = GSheetChecker(
         'boundaries.counties', '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info',
-        'client-secret.json'
+        SECRETS['service_account_file']
     )
 
     response = patient.exists()
