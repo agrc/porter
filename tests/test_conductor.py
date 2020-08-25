@@ -10,10 +10,13 @@ from collections import namedtuple
 
 from github.Issue import Issue
 from github.Label import Label
+from github.Requester import Requester
 
 from conductor import conductor
 from conductor.checks import GSheetChecker, MetaTableChecker, TableChecker, UrlChecker
 from conductor.connection_sample import SECRETS
+
+REQUESTER = Requester('token', None, None, 'http://gis.utah.gov', 0, 'client-id', 'secret', '', 1, False, {})
 
 
 def test_imports():
@@ -23,10 +26,10 @@ def test_imports():
 def test_can_extract_metadata_from_issue_body():
     headers = {}
     attributes = {
-        'body': 'text\n<!-- some comments -->\n<!-- conductor = {"table":"schema.table","when":"2020-07-16T09:00:00.000Z"} -->\nmore text'
+        'body': 'text\n<!-- some comments -->\n<!-- conductor = {"table":"schema.table","when":"2020-07no_entry6T09:00:00.000Z"} -->\nmore text'
     }
 
-    issue = Issue(None, headers, attributes, True)
+    issue = Issue(REQUESTER, headers, attributes, True)
 
     metadata = conductor.extract_metadata_from_issue_body(issue, notify=False)
 
@@ -37,7 +40,7 @@ def test_extract_metadata_from_issue_body_returns_none_when_not_found():
     headers = {}
     attributes = {'body': 'text\nmore text\n<!-- some comments -->'}
 
-    issue = Issue(None, headers, attributes, True)
+    issue = Issue(REQUESTER, headers, attributes, True)
 
     metadata = conductor.extract_metadata_from_issue_body(issue, notify=False)
 
@@ -49,7 +52,7 @@ def test_notify_is_called_when_metadata_is_empty(mocker):
     headers = {}
     attributes = {'body': 'text\nmore text\n<!-- some comments -->'}
 
-    issue = Issue(None, headers, attributes, True)
+    issue = Issue(REQUESTER, headers, attributes, True)
 
     metadata = conductor.extract_metadata_from_issue_body(issue, notify=True)
 
@@ -62,12 +65,14 @@ def test_publish_grades_formats_table(mocker):
     Grade = namedtuple('Grade', 'check grade issue')
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('check', 'grade', issue)]})
 
-    spy.assert_called_once_with('## conductor results\n\n| check | status |\n| - | :-: |\n| check | grade |')
+    spy.assert_called_once_with(
+        '## conductor results for table.name\n\n| check | status |\n| - | :-: |\n| check | grade |'
+    )
 
 
 def test_publish_sheets_integration_test_add_mixed(mocker):
@@ -79,22 +84,21 @@ def test_publish_sheets_integration_test_add_mixed(mocker):
         'Data Source': True,
         'Deprecated': False,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name',
-                          testing=True).grade(add=True, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=True, report_value=SheetResponse(True, grades))
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]})
 
     spy.assert_called_once_with(
-        '''## conductor results
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
 | sheetchecker |  |
-| - Description | :-1: |
+| - Description | :no_entry: |
 | - Data Source | :+1: |'''
     )
 
@@ -108,17 +112,16 @@ def test_publish_sheets_integration_test_add_all_success(mocker):
         'Data Source': True,
         'Deprecated': False,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name',
-                          testing=True).grade(add=True, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=True, report_value=SheetResponse(True, grades))
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]})
 
     spy.assert_called_once_with(
-        '''## conductor results
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
@@ -137,23 +140,22 @@ def test_publish_sheets_integration_test_add_all_fail(mocker):
         'Data Source': False,
         'Deprecated': False,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name',
-                          testing=True).grade(add=True, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=True, report_value=SheetResponse(True, grades))
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]})
 
     spy.assert_called_once_with(
-        '''## conductor results
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
 | sheetchecker |  |
-| - Description | :-1: |
-| - Data Source | :-1: |'''
+| - Description | :no_entry: |
+| - Data Source | :no_entry: |'''
     )
 
 
@@ -166,22 +168,21 @@ def test_publish_sheets_integration_test_remove_all_fail(mocker):
         'Data Source': True,
         'Deprecated': False,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name',
-                          testing=True).grade(add=False, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=False, report_value=SheetResponse(True, grades))
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]})
 
     spy.assert_called_once_with(
-        '''## conductor results
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
 | sheetchecker |  |
-| - deprecation issue link | :-1: |'''
+| - deprecation issue link | :no_entry: |'''
     )
 
 
@@ -194,17 +195,16 @@ def test_publish_sheets_integration_test_remove_all_pass(mocker):
         'Data Source': True,
         'Deprecated': True,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name',
-                          testing=True).grade(add=False, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=False, report_value=SheetResponse(True, grades))
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]})
 
     spy.assert_called_once_with(
-        '''## conductor results
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
@@ -218,16 +218,18 @@ def test_url_checker_grade_integration_add_success(mocker):
     grade = UrlChecker().grade(add=True, report_value=True)
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]})
 
-    spy.assert_called_once_with('''## conductor results
+    spy.assert_called_once_with(
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
-| urlchecker | :+1: |''')
+| urlchecker | :+1: |'''
+    )
 
 
 def test_url_checker_grade_integration_add_fail(mocker):
@@ -235,16 +237,18 @@ def test_url_checker_grade_integration_add_fail(mocker):
     grade = UrlChecker().grade(add=True, report_value=False)
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]})
 
-    spy.assert_called_once_with('''## conductor results
+    spy.assert_called_once_with(
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
-| urlchecker | :-1: |''')
+| urlchecker | :no_entry: |'''
+    )
 
 
 def test_url_checker_grade_integration_remove_success(mocker):
@@ -252,16 +256,18 @@ def test_url_checker_grade_integration_remove_success(mocker):
     grade = UrlChecker().grade(add=False, report_value=False)
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]})
 
-    spy.assert_called_once_with('''## conductor results
+    spy.assert_called_once_with(
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
-| urlchecker | :+1: |''')
+| urlchecker | :+1: |'''
+    )
 
 
 def test_url_checker_grade_integration_remove_fail(mocker):
@@ -269,16 +275,18 @@ def test_url_checker_grade_integration_remove_fail(mocker):
     grade = UrlChecker().grade(add=False, report_value=True)
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]})
 
-    spy.assert_called_once_with('''## conductor results
+    spy.assert_called_once_with(
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
-| urlchecker | :-1: |''')
+| urlchecker | :no_entry: |'''
+    )
 
 
 def test_table_checker_grade_integration_add_success(mocker):
@@ -286,16 +294,18 @@ def test_table_checker_grade_integration_add_success(mocker):
     grade = TableChecker('table.name', {}).grade(add=True, report_value=True)
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]})
 
-    spy.assert_called_once_with('''## conductor results
+    spy.assert_called_once_with(
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
-| tablechecker | :+1: |''')
+| tablechecker | :+1: |'''
+    )
 
 
 def test_table_checker_grade_integration_add_fail(mocker):
@@ -303,16 +313,18 @@ def test_table_checker_grade_integration_add_fail(mocker):
     grade = TableChecker('table.name', {}).grade(add=True, report_value=False)
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]})
 
-    spy.assert_called_once_with('''## conductor results
+    spy.assert_called_once_with(
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
-| tablechecker | :-1: |''')
+| tablechecker | :no_entry: |'''
+    )
 
 
 def test_table_checker_grade_integration_remove_success(mocker):
@@ -320,16 +332,18 @@ def test_table_checker_grade_integration_remove_success(mocker):
     grade = TableChecker('table.name', {}).grade(add=False, report_value=False)
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]})
 
-    spy.assert_called_once_with('''## conductor results
+    spy.assert_called_once_with(
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
-| tablechecker | :+1: |''')
+| tablechecker | :+1: |'''
+    )
 
 
 def test_table_checker_grade_integration_remove_fail(mocker):
@@ -337,16 +351,18 @@ def test_table_checker_grade_integration_remove_fail(mocker):
     grade = TableChecker('table.name', {}).grade(add=False, report_value=True)
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]})
 
-    spy.assert_called_once_with('''## conductor results
+    spy.assert_called_once_with(
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
-| tablechecker | :-1: |''')
+| tablechecker | :no_entry: |'''
+    )
 
 
 def test_metatable_checker_grade_integration_add_success(mocker):
@@ -355,13 +371,13 @@ def test_metatable_checker_grade_integration_add_success(mocker):
     grade = MetaTableChecker('table.name', {}).grade(add=True, report_value=MetaResponse(True, 'item id', 'item name'))
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
 
     spy.assert_called_once_with(
-        '''## conductor results
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
@@ -377,18 +393,18 @@ def test_metatable_checker_grade_integration_add_mixed(mocker):
     grade = MetaTableChecker('table.name', {}).grade(add=True, report_value=MetaResponse(True, None, 'item name'))
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
 
     spy.assert_called_once_with(
-        '''## conductor results
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
 | meta table |  |
-| - item id | :-1: |
+| - item id | :no_entry: |
 | - item name | :+1: |'''
     )
 
@@ -399,19 +415,19 @@ def test_metatable_checker_grade_integration_add_mixed_2(mocker):
     grade = MetaTableChecker('table.name', {}).grade(add=True, report_value=MetaResponse(True, 'item id', None))
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
 
     spy.assert_called_once_with(
-        '''## conductor results
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
 | meta table |  |
 | - item id | :+1: |
-| - item name | :-1: |'''
+| - item name | :no_entry: |'''
     )
 
 
@@ -421,19 +437,19 @@ def test_metatable_checker_grade_integration_add_fail(mocker):
     grade = MetaTableChecker('table.name', {}).grade(add=True, report_value=MetaResponse(True, None, None))
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
 
     spy.assert_called_once_with(
-        '''## conductor results
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
 | meta table |  |
-| - item id | :-1: |
-| - item name | :-1: |'''
+| - item id | :no_entry: |
+| - item name | :no_entry: |'''
     )
 
 
@@ -443,16 +459,18 @@ def test_metatable_checker_grade_integration_remove_success(mocker):
     grade = MetaTableChecker('table.name', {}).grade(add=False, report_value=MetaResponse(False, None, None))
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
 
-    spy.assert_called_once_with('''## conductor results
+    spy.assert_called_once_with(
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
-| meta table | :+1: |''')
+| meta table | :+1: |'''
+    )
 
 
 def test_metatable_checker_grade_integration_remove_fail(mocker):
@@ -461,16 +479,18 @@ def test_metatable_checker_grade_integration_remove_fail(mocker):
     grade = MetaTableChecker('table.name', {}).grade(add=False, report_value=MetaResponse(True, None, None))
 
     attributes = {}
-    issue = Issue(None, None, attributes, True)
+    issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
     conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
 
-    spy.assert_called_once_with('''## conductor results
+    spy.assert_called_once_with(
+        '''## conductor results for table.name
 
 | check | status |
 | - | :-: |
-| meta table | :-1: |''')
+| meta table | :no_entry: |'''
+    )
 
 
 def test_grade_report(mocker):
@@ -478,7 +498,7 @@ def test_grade_report(mocker):
     Grade = namedtuple('Grade', 'check grade issue')
     ConductorIssue = namedtuple('ConductorIssue', 'issue introduction')
 
-    issue = ConductorIssue(Issue(None, None, {}, True), True)
+    issue = ConductorIssue(Issue(REQUESTER, {}, {}, True), True)
 
     grader = mocker.MagicMock(return_value='pass')
 
@@ -501,14 +521,14 @@ def test_gather_issues_skips_reminders(mocker):
     reminder_issue = mocker.Mock(
         **{
             'title': 'issue with reminder',
-            'labels': [Label(None, {}, {'name': 'reminder'}, True)],
+            'labels': [Label(REQUESTER, {}, {'name': 'reminder'}, True)],
         }
     )
 
     schedule_issue = mocker.Mock(
         **{
             'title': 'issue with schedule',
-            'labels': [Label(None, {}, {'name': 'scheduled'}, True)],
+            'labels': [Label(REQUESTER, {}, {'name': 'scheduled'}, True)],
         }
     )
 
@@ -523,35 +543,37 @@ def test_gather_issues_skips_find_introductions_and_deprecations(mocker):
     reminder_issue = mocker.Mock(
         **{
             'title': 'issue with reminder',
-            'labels': [Label(None, {}, {'name': 'reminder'}, True)],
+            'labels': [Label(REQUESTER, {}, {'name': 'reminder'}, True)],
         }
     )
 
     schedule_issue = mocker.Mock(
         **{
             'title': 'issue with schedule',
-            'labels': [Label(None, {}, {'name': 'scheduled'}, True)],
+            'labels': [Label(REQUESTER, {}, {'name': 'scheduled'}, True)],
         }
     )
 
     introduction_issue = mocker.Mock(
         **{
             'title': 'issue with introduction',
-            'labels': [Label(None, {}, {'name': 'introduction'}, True)],
+            'labels': [Label(REQUESTER, {}, {'name': 'introduction'}, True)],
         }
     )
 
     deprecation_issue = mocker.Mock(
         **{
             'title': 'issue with deprecation',
-            'labels': [Label(None, {}, {'name': 'deprecation'}, True)],
+            'labels': [Label(REQUESTER, {}, {'name': 'deprecation'}, True)],
         }
     )
 
-    other_issue = mocker.Mock(**{
-        'title': 'issue with other',
-        'labels': [Label(None, {}, {'name': 'other'}, True)],
-    })
+    other_issue = mocker.Mock(
+        **{
+            'title': 'issue with other',
+            'labels': [Label(REQUESTER, {}, {'name': 'other'}, True)],
+        }
+    )
 
     porter = mocker.Mock(
         **{
