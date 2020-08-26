@@ -12,6 +12,7 @@ Introduce your data, where it comes from, why it is being added etc
 # Summary
 
 - **Proposed Dataset Name**: Foo
+- **Proposed ArcGIS Online Name**: Utah Foo
 - **Proposed ISO Category**: Quux
 - **Data Description**: Bar
 - **Source Agency/Entity**: Baz
