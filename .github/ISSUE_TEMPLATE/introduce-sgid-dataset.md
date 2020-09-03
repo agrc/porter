@@ -68,6 +68,7 @@ Where do we expect the data to show up. Check [x] all the areas
 - [ ] gis.utah.gov data pages
 - [ ] [Stewardship doc](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1)
 - [ ] `SGID.META.AGOLItems`
+- [ ] `AGOLItems_shelved` metatable (Hosted table in ArcGIS Online in the AGRC_Shelved folder for any `static` or `shelved` items)
 
 <!--
 assign yourself or someone to check that the dataset is live in its area. once verified, add the date of verification `2020/01/01`
