@@ -12,7 +12,8 @@ import github
 from colorama import Fore, init
 
 from .checks import (
-    ArcGisOnlineChecker, GSheetChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker
+    ArcGisOnlineChecker, GSheetChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker,
+    TriageChecker
 )
 
 
@@ -87,8 +88,20 @@ def write_reports(conductor_issues, secrets):
 
     for issue in conductor_issues:
         Report = namedtuple('Report', 'check issue report grader')
-        metadata = extract_metadata_from_issue_body(issue.issue, notify=False)
 
+        triage_key = f'triage - {issue.issue.number}'
+        print(f'punching ticket for {Fore.CYAN}{triage_key}{Fore.RESET}')
+        for team in ['Data', 'Dev', 'Cadastre']:
+            check = TriageChecker(team, issue.issue.body)
+            report = Report(check.get_title(), issue, check.exists(), TriageChecker.grade)
+
+            if report.report is not None:
+                reports.setdefault(triage_key, []).append(report)
+                print(f'{Fore.GREEN}{team} Team{Fore.RESET} punched')
+            else:
+                print(f'No triage task found for team: {team}')
+
+        metadata = extract_metadata_from_issue_body(issue.issue, notify=False)
         if metadata is None:
             print(f'could not find metadata in {Fore.YELLOW}{issue.issue.title}{Fore.RESET}')
             continue

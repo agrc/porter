@@ -1,0 +1,83 @@
+<!-- conductor = {"table":"Society.Schools_HigherEd"} -->
+
+# Summary
+This dataset contains point locations of higher education institutions in Utah: colleges and universities.  It's one of two new layers (the other being Society.Schools_PreKto12)  that will [replace Society.Schools](https://github.com/agrc/porter/issues/60).
+
+- **Proposed Dataset Name**: Schools_HigherEducation
+- **Proposed ArcGIS Online Name**: Utah Schools Higher Education
+- **Proposed ISO Category**: Society
+- **Data Description**: This layer contains higher education institutions in the state of Utah: colleges and universities.
+- **Source Agency/Entity**: AGRC, USHE, and USBE
+- **Contact**: AGRC
+- **Update Frequency**: Annually
+
+<!--
+When the champion from your team has completed the triage, check [x] the checkbox
+-->
+
+# Triage
+
+- [x] Data Team Triage (@gregbunce)
+- [ ] Dev Team Triage (@steveoh)
+- [ ] Cadastre Team Triage (@rkelson)
+
+# We are introducing data
+
+The data was or will be added TBD (week of 8/24 or 8/31) to the following areas
+
+<!--
+add an [x] to the applicable areas you plan to add the data or ~strike~ out thoses that do not apply.
+If adding to the internal SGID with the hopes that swapper and forklift will push the item to SGID10 and AGOL
+you can strike them out. They are available if for some reason the internal sgid is skipped.
+-->
+
+- [x] Internal SGID
+- [x] SGID10
+- [x] ArcGIS Online
+
+<!--
+the data should be in good shape.
+-->
+# The data is high quality
+
+- [x] Sweeper checks have run and passed (@ZachBeck )
+- [ ] The minimum requirements for [metadata](https://gis.utah.gov/about/policy/sgid/) are populated (@gregbunce )
+- [x] The data complies with our [domain rules](https://gis.utah.gov/about/policy/sgid/) (@ZachBeck )
+
+<!--
+Where do we expect the data to show up. Check [x] all the areas
+-->
+# The data should propagate automatically to
+
+- [x] ArcGIS Online
+- [x] SGID10
+- [x] Open SGID
+- [x] Open data
+- [x] `SGID.META.ChangeDetection`
+
+# References to the data need to be manually added to
+
+- [x] gis.utah.gov data pages
+- [x] [Stewardship doc](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1)
+- [x] `SGID.META.AGOLItems`
+
+<!--
+assign yourself or someone to check that the dataset is live in its area. once verified, add the date of verification `2020/01/01`
+-->
+# We have verified the data is live
+
+- [ ] ArcGIS Online (@gregbunce on ``)
+- [x] Internal SGID (@ZachBeck on `9/1/2020`)
+- [ ] SGID10 (@ZachBeck on ``)
+- [ ] Open SGID (@gregbunce on ``)
+- [ ] [Open data](https://opendata.gis.utah.gov) (@gregbunce on ``)
+- [ ] gis.utah.gov data pages (@gregbunce on ``)
+- [x] [sgid-index](https://gis.utah.gov/data/sgid-index) (@ZachBeck on `9/1/2020`)
+- [x] `SGID.META.AGOLItems` (@ZachBeck on `9/1/2020`)
+- [ ] `SGID.META.ChangeDetection` (@ZachBeck on ``)
+- [ ] [agol-validator](https://github.com/agrc/agol-validator) items (@jacobdadams on ``)
+
+# Notification
+
+- [ ] Blog post (@assigned)
+- [ ] Twitter (@steveoh)

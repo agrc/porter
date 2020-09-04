@@ -609,6 +609,7 @@ def test_write_report(mocker):
     mocker.patch('conductor.checks.PGSqlTableChecker.exists', return_value=True)
     mocker.patch('conductor.checks.OpenDataChecker.exists', return_value=True)
     mocker.patch('conductor.checks.ArcGisOnlineChecker.exists', return_value=True)
+    mocker.patch('conductor.checks.TriageChecker.exists', return_value=True)
     mocker.patch('conductor.checks.GSheetChecker.__init__', return_value=None)
     mocker.patch(
         'conductor.checks.GSheetChecker.exists',
@@ -628,7 +629,7 @@ def test_write_report(mocker):
         ConductorIssue(mocker.MagicMock(), True)
     ], SECRETS)
 
-    assert len(reports) == 1
+    assert len(reports) == 4
     assert len(reports['fake.table']) == 7
 
 
@@ -649,6 +650,7 @@ def test_write_report_without_item_id(mocker):
     mocker.patch('conductor.checks.PGSqlTableChecker.exists', return_value=True)
     mocker.patch('conductor.checks.OpenDataChecker.exists', return_value=True)
     mocker.patch('conductor.checks.ArcGisOnlineChecker.exists', return_value=True)
+    mocker.patch('conductor.checks.TriageChecker.exists', return_value=True)
     mocker.patch('conductor.checks.GSheetChecker.__init__', return_value=None)
     mocker.patch(
         'conductor.checks.GSheetChecker.exists',
@@ -689,6 +691,7 @@ def test_write_report_without_item_id(mocker):
     mocker.patch('conductor.checks.PGSqlTableChecker.exists', return_value=True)
     mocker.patch('conductor.checks.OpenDataChecker.exists', return_value=True)
     mocker.patch('conductor.checks.ArcGisOnlineChecker.exists', return_value=True)
+    mocker.patch('conductor.checks.TriageChecker.exists', return_value=True)
     mocker.patch('conductor.checks.GSheetChecker.__init__', return_value=None)
     mocker.patch(
         'conductor.checks.GSheetChecker.exists',
@@ -708,7 +711,7 @@ def test_write_report_without_item_id(mocker):
         ConductorIssue(mocker.MagicMock(), True)
     ], SECRETS)
 
-    assert len(reports) == 1
+    assert len(reports) == 4
     assert len(reports['fake.table']) == 6
 
 
