@@ -25,6 +25,7 @@
     "pytest",
     "rindex",
     "sgid",
+    "steveoh",
     "yapf"
   ],
   "editor.formatOnSave": true,
