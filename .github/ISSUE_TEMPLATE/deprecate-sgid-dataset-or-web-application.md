@@ -2,15 +2,15 @@
 name: Removing Data From Anywhere
 about: Deprecation Checklist
 title: Remove <web app/dataset name> from <place>
-labels: 'deprecation'
-assignees: ''
-
+labels: "deprecation"
+assignees: ""
 ---
+
 # Summary
 
 A short summary of the situation...
 
-<!-- 
+<!--
 1. The three teams will triage the request, striking through any line that does not apply.
 1. Assign each step to someone based on list of assignments
 1. All checkboxes should either be removed or checked before closing the issue.
@@ -18,9 +18,9 @@ A short summary of the situation...
 
 # Triage
 
-- [ ] Data Team Triage
-- [ ] Dev Team Triage (assigned to)
-- [ ] Cadastre Team Triage
+- [ ] Data Team Triage (@gregbunce)
+- [ ] Dev Team Triage (@steveoh)
+- [ ] Cadastre Team Triage (@rkelson)
 
 # Remove data from the following areas
 
@@ -52,9 +52,9 @@ A short summary of the situation...
 
 - [ ] Archive source code repository (assigned to)
 - [ ] Remove from the web server (assigned to)
-or
+      or
 - [ ] Replace app with a static page with information (assigned to)
-or
+      or
 - [ ] Redirect somewhere else (assigned to)
 
 # Is there a map service?
