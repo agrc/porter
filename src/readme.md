@@ -89,4 +89,7 @@ docker push gcr.io/ut-dts-agrc-porter-prod/conductor
 ## Development
 
 1. use `test_conductor` as the entry point
-1. set the `service_account_file` path to a service account file with access to the stewardship sheet
+1. install the Microsoft ODBC driver for SQL Server for [Windows](https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server) or [macOS](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos)
+1. create a copy of `src/conductor/connections_sample.py` as `src/conductor/connections.py`
+   1. generate a [new GitHub personal access token](https://github.com/settings/tokens/new) with `public_repo` and store it in `github_token`
+   1. set the `service_account_file` path to a service account file with access to the stewardship sheet
