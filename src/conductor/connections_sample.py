@@ -28,5 +28,5 @@ SECRETS = {
         'password': 'agrc'
     },
     'github_token': 'https://github.com/settings/tokens/new with public repo access',
-    'service_account_file': 'secret.json'
+    'service_account_file': 'client-secret.json'
 }

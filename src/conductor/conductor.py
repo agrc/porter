@@ -222,7 +222,7 @@ def local():
     try:
         from .connections import SECRETS  # pylint: disable=import-outside-toplevel
     except ModuleNotFoundError:
-        from .connection_sample import SECRETS  # pylint: disable=import-outside-toplevel
+        from .connections_sample import SECRETS  # pylint: disable=import-outside-toplevel
         print('secrets not found')
 
     github.enable_console_debug_logging()
