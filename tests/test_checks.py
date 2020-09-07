@@ -19,7 +19,7 @@ from conductor.checks import (
 try:
     from conductor.connections import SECRETS
 except ModuleNotFoundError:
-    from conductor.connection_sample import SECRETS
+    from conductor.connections_sample import SECRETS
 
 CONNECTION_STRING = ''
 
