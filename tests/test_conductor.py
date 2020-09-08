@@ -68,7 +68,7 @@ def test_publish_grades_formats_table(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('check', 'grade', issue)]})
+    conductor.publish_grades({'table.name': [Grade('check', 'grade', issue)]}, True)
 
     spy.assert_called_once_with(
         '## conductor results for table.name\n\n| check | status |\n| - | :-: |\n| check | grade |'
@@ -90,7 +90,7 @@ def test_publish_sheets_integration_test_add_mixed(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -118,7 +118,7 @@ def test_publish_sheets_integration_test_add_all_success(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -146,7 +146,7 @@ def test_publish_sheets_integration_test_add_all_fail(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -174,7 +174,7 @@ def test_publish_sheets_integration_test_remove_all_fail(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -201,7 +201,7 @@ def test_publish_sheets_integration_test_remove_all_pass(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('sheetchecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -221,7 +221,7 @@ def test_url_checker_grade_integration_add_success(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -240,7 +240,7 @@ def test_url_checker_grade_integration_add_fail(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -259,7 +259,7 @@ def test_url_checker_grade_integration_remove_success(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -278,7 +278,7 @@ def test_url_checker_grade_integration_remove_fail(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('urlchecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -297,7 +297,7 @@ def test_table_checker_grade_integration_add_success(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -316,7 +316,7 @@ def test_table_checker_grade_integration_add_fail(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -335,7 +335,7 @@ def test_table_checker_grade_integration_remove_success(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -354,7 +354,7 @@ def test_table_checker_grade_integration_remove_fail(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('tablechecker', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -374,7 +374,7 @@ def test_metatable_checker_grade_integration_add_success(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -396,7 +396,7 @@ def test_metatable_checker_grade_integration_add_mixed(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -418,7 +418,7 @@ def test_metatable_checker_grade_integration_add_mixed_2(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -440,7 +440,7 @@ def test_metatable_checker_grade_integration_add_fail(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -462,7 +462,7 @@ def test_metatable_checker_grade_integration_remove_success(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -482,7 +482,7 @@ def test_metatable_checker_grade_integration_remove_fail(mocker):
     issue = Issue(REQUESTER, {}, attributes, True)
     issue.create_comment = spy = mocker.MagicMock()
 
-    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]})
+    conductor.publish_grades({'table.name': [Grade('meta table', grade, issue)]}, True)
 
     spy.assert_called_once_with(
         '''## conductor results for table.name
@@ -719,7 +719,7 @@ def test_startup_with_no_issues_returns(mocker):
     mocker.patch('conductor.conductor.gather_issues', return_value=[])
     write_reports = mocker.patch('conductor.conductor.write_reports')
 
-    conductor.startup({'github_token': ''})
+    conductor.startup({'github_token': ''}, False)
 
     write_reports.assert_not_called()
 
@@ -730,7 +730,7 @@ def test_startup(mocker):
     grade_reports = mocker.patch('conductor.conductor.grade_reports')
     publish_grades = mocker.patch('conductor.conductor.publish_grades')
 
-    conductor.startup({'github_token': ''})
+    conductor.startup({'github_token': ''}, False)
 
     write_reports.assert_called_once()
     grade_reports.assert_called_once()

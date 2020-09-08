@@ -17,7 +17,7 @@ from .checks import (
 )
 
 
-def startup(secrets):
+def startup(secrets, is_production):
     """the method called when invoking `conductor`
        secrets: a dictionary with the secrets
     """
@@ -37,7 +37,7 @@ def startup(secrets):
     grades = grade_reports(reports)
     print('finished grading reports')
 
-    publish_grades(grades)
+    publish_grades(grades, is_production)
     print(f'{Fore.MAGENTA}finished{Fore.RESET}')
 
     return grades
@@ -168,20 +168,24 @@ def grade_reports(all_reports):
     return grades
 
 
-def publish_grades(all_grades):
+def publish_grades(all_grades, is_production):
     """adds a comment to the issue with the grades
         all_grades: dict table: [Grade(check grade issue)]
     """
     comments = []
     for name, grades in all_grades.items():
         issue = grades[0].issue
-        comment_table = '| check | status |\n| - | :-: |\n'
-        comment = '\n'.join([f'| {grade.check} | {grade.grade} |' for grade in grades])
-        comments.append(f'## conductor results for `{name}`\n\n{comment_table}{comment}')
+        grades_table = '| check | status |\n| - | :-: |\n'
+        grade_row = '\n'.join([f'| {grade.check} | {grade.grade} |' for grade in grades])
+        comments.append(f'## conductor results for `{name}`\n\n{grades_table}{grade_row}')
 
-        issue.create_comment(f'## conductor results for {name}\n\n{comment_table}{comment}')
-
-        print(f'comment left on issue {Fore.CYAN}{issue.title}{Fore.RESET}')
+        comment = f'## conductor results for {name}\n\n{grades_table}{grade_row}'
+        if is_production:
+            issue.create_comment(comment)
+            print(f'comment left on issue {Fore.CYAN}{issue.title}{Fore.RESET}')
+        else:
+            print(f'comment below would be posted to issue: "{issue.title}" in production')
+            print(comment)
 
     return comments
 
@@ -226,4 +230,4 @@ def local():
         print('secrets not found')
 
     github.enable_console_debug_logging()
-    startup(SECRETS)
+    startup(SECRETS, False)

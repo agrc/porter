@@ -45,7 +45,7 @@ def schedule():
     secrets = json.loads(secrets.payload.data.decode('UTF-8'))
 
     try:
-        startup(secrets)
+        startup(secrets, True)
     except Exception as error:
         logging.error('conductor failure %s', error)
 
