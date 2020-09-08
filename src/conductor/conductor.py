@@ -229,5 +229,5 @@ def local():
         from .connections_sample import SECRETS  # pylint: disable=import-outside-toplevel
         print('secrets not found')
 
-    github.enable_console_debug_logging()
+    # github.enable_console_debug_logging()
     startup(SECRETS, False)
