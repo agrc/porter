@@ -672,47 +672,6 @@ def test_write_report_without_item_id(mocker):
     ], SECRETS)
 
     assert len(reports) == 1
-    assert len(reports['fake.table']) == 5
-
-
-def test_write_report_without_item_id(mocker):
-    ConductorIssue = namedtuple('ConductorIssue', 'issue introduction')
-    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
-    SheetResponse = namedtuple('SheetResponse', 'valid messages')
-
-    conductor.extract_metadata_from_issue_body = mocker.MagicMock(
-        side_effect=[None, {
-            'no table': ''
-        }, {
-            'table': 'fake.table'
-        }]
-    )
-
-    mocker.patch('conductor.checks.MSSqlTableChecker.exists', return_value=True)
-    mocker.patch('conductor.checks.PGSqlTableChecker.exists', return_value=True)
-    mocker.patch('conductor.checks.OpenDataChecker.exists', return_value=True)
-    mocker.patch('conductor.checks.ArcGisOnlineChecker.exists', return_value=True)
-    mocker.patch('conductor.checks.TriageChecker.exists', return_value=True)
-    mocker.patch('conductor.checks.GSheetChecker.__init__', return_value=None)
-    mocker.patch(
-        'conductor.checks.GSheetChecker.exists',
-        return_value=SheetResponse(True, {
-            'Data source': True,
-            'Deprecation': False,
-        })
-    )
-
-    mocker.patch('conductor.checks.MetaTableChecker.exists', return_value=MetaResponse(False, None, None))
-    mock = mocker.patch('conductor.checks.MetaTableChecker.data', new_callable=mocker.PropertyMock)
-    mock.return_value = MetaResponse('missing item id', None, 'Name')
-
-    reports = conductor.write_reports([
-        ConductorIssue(mocker.MagicMock(), True),
-        ConductorIssue(mocker.MagicMock(), True),
-        ConductorIssue(mocker.MagicMock(), True)
-    ], SECRETS)
-
-    assert len(reports) == 4
     assert len(reports['fake.table']) == 6
 
 
