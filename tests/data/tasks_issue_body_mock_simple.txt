@@ -1,0 +1,24 @@
+<!-- conductor = {"table":"Society.Schools_HigherEd"} -->
+
+# Summary
+This dataset contains point locations of higher education institutions in Utah: colleges and universities.  It's one of two new layers (the other being Society.Schools_PreKto12)  that will [replace Society.Schools](https://github.com/agrc/porter/issues/60).
+
+- **Proposed Dataset Name**: Schools_HigherEducation
+- **Proposed ArcGIS Online Name**: Utah Schools Higher Education
+- **Proposed ISO Category**: Society
+- **Data Description**: This layer contains higher education institutions in the state of Utah: colleges and universities.
+- **Source Agency/Entity**: AGRC, USHE, and USBE
+- **Contact**: AGRC
+- **Update Frequency**: Annually
+
+<!--
+When the champion from your team has completed the triage, check [x] the checkbox
+-->
+
+# Triage
+
+- [x] Data Team Triage (@gregbunce)
+- [ ] Dev Team Triage (@steveoh)
+- [ ] Cadastre Team Triage (@rkelson)
+
+- [ ] Another task (@steveoh )

@@ -593,6 +593,7 @@ def test_gather_issues_skips_find_introductions_and_deprecations(mocker):
 
 
 def test_write_report(mocker):
+    GitHubIssue = namedtuple('GitHubIssue', 'body number title')
     ConductorIssue = namedtuple('ConductorIssue', 'issue introduction')
     MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
     SheetResponse = namedtuple('SheetResponse', 'valid messages')
@@ -609,7 +610,6 @@ def test_write_report(mocker):
     mocker.patch('conductor.checks.PGSqlTableChecker.exists', return_value=True)
     mocker.patch('conductor.checks.OpenDataChecker.exists', return_value=True)
     mocker.patch('conductor.checks.ArcGisOnlineChecker.exists', return_value=True)
-    mocker.patch('conductor.checks.TriageChecker.exists', return_value=True)
     mocker.patch('conductor.checks.GSheetChecker.__init__', return_value=None)
     mocker.patch(
         'conductor.checks.GSheetChecker.exists',
@@ -624,16 +624,17 @@ def test_write_report(mocker):
     mock.return_value = MetaResponse(True, 'item_id', 'item_name')
 
     reports = conductor.write_reports([
-        ConductorIssue(mocker.MagicMock(), True),
-        ConductorIssue(mocker.MagicMock(), True),
-        ConductorIssue(mocker.MagicMock(), True)
+        ConductorIssue(GitHubIssue('issue body text', 1, 'issue title'), True),
+        ConductorIssue(GitHubIssue('issue body text', 1, 'issue title'), True),
+        ConductorIssue(GitHubIssue('issue body text', 1, 'issue title'), True)
     ], SECRETS)
 
-    assert len(reports) == 4
+    assert len(reports) == 1
     assert len(reports['fake.table']) == 7
 
 
 def test_write_report_without_item_id(mocker):
+    GitHubIssue = namedtuple('GitHubIssue', 'body number title')
     ConductorIssue = namedtuple('ConductorIssue', 'issue introduction')
     MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
     SheetResponse = namedtuple('SheetResponse', 'valid messages')
@@ -650,7 +651,7 @@ def test_write_report_without_item_id(mocker):
     mocker.patch('conductor.checks.PGSqlTableChecker.exists', return_value=True)
     mocker.patch('conductor.checks.OpenDataChecker.exists', return_value=True)
     mocker.patch('conductor.checks.ArcGisOnlineChecker.exists', return_value=True)
-    mocker.patch('conductor.checks.TriageChecker.exists', return_value=True)
+    mocker.patch('conductor.checks.TaskChecker.has_completed_all_tasks', return_value=True)
     mocker.patch('conductor.checks.GSheetChecker.__init__', return_value=None)
     mocker.patch(
         'conductor.checks.GSheetChecker.exists',
@@ -662,12 +663,12 @@ def test_write_report_without_item_id(mocker):
 
     mocker.patch('conductor.checks.MetaTableChecker.exists', return_value=MetaResponse(False, None, None))
     mock = mocker.patch('conductor.checks.MetaTableChecker.data', new_callable=mocker.PropertyMock)
-    mock.return_value = MetaResponse('missing item name', 'ids', None)
+    mock.return_value = MetaResponse('missing item id', None, 'Name')
 
     reports = conductor.write_reports([
-        ConductorIssue(mocker.MagicMock(), True),
-        ConductorIssue(mocker.MagicMock(), True),
-        ConductorIssue(mocker.MagicMock(), True)
+        ConductorIssue(GitHubIssue('issue body text', 1, 'issue title'), True),
+        ConductorIssue(GitHubIssue('issue body text', 1, 'issue title'), True),
+        ConductorIssue(GitHubIssue('issue body text', 1, 'issue title'), True)
     ], SECRETS)
 
     assert len(reports) == 1
