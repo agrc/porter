@@ -394,43 +394,59 @@ class GSheetChecker():
         return ' |\n| - deprecation issue link | :+1:'
 
 
-class TriageChecker:
-    """verifies that triage boxes have been checked
+class TaskChecker:
+    """verifies that task boxes have been checked
     """
 
-    def __init__(self, team, issue_body):
-        self.team = team
-        self.issue_body = issue_body
+    def __init__(self, user, assigned, completed):
+        self.user = user
+        self.assigned = assigned
+        self.completed = completed
 
     def get_title(self):
-        """return the issue label for the specific team
+        """return a string representing the result of this check
         """
-        return f'triage - {self.team} Team'
 
-    def exists(self):
-        """parse the issue body and validate that the triage item has been checked
+        #: don't ping a user if they have completed all of their tasks
+        if self.has_completed_all_tasks():
+            user = self.user[1:]
+        else:
+            user = self.user
+        return f'{user} has completed **{self.completed}** out of **{self.assigned}** tasks'
+
+    def has_completed_all_tasks(self):
+        """check to see if the user has completed all of their tasks
         """
-        TriageResponse = namedtuple('TriageResponse', 'valid message')
-
-        expression = fr'(?P<strikethrough>~?)- \[(?P<is_completed>[x| ]?)\] {self.team} Team Triage \((?P<user>@\S*)\)'
-        match = re.search(expression, self.issue_body, re.MULTILINE)
-
-        if match:
-            is_complete = match.group('is_completed').strip().lower() == 'x' or len(match.group('strikethrough')) > 0
-            user = match.group('user')
-
-            message = None if is_complete else f'{user} has not yet performed triage for this issue'
-
-            return TriageResponse(is_complete, message)
-
-        return None
+        return self.assigned == self.completed
 
     @staticmethod
     def grade(_, report_value):
         """convert the report value into a string suitable for the report table
         """
 
-        if report_value.valid:
+        if report_value:
             return ':+1:'
 
-        return f':no_entry: {report_value.message}'
+        return ':no_entry:'
+
+
+def get_users_task_statuses(issue_body):
+    """returns a list of tuples containing a user, the number of assigned tasks, and
+    the number of completed tasks
+    """
+    users = {}
+    expression = r'(?P<strikethrough>~?)- \[(?P<is_completed>[x| ]?)\] .* \(\s?(?P<user>@\S*\b).*\)'
+
+    for match in re.finditer(expression, issue_body, re.MULTILINE):
+        user = match.group('user')
+        if match.group('strikethrough') or user == '@assigned':
+            continue
+        is_complete = match.group('is_completed').strip().lower() == 'x' or len(match.group('strikethrough')) > 0
+        users.setdefault(user, []).append(is_complete)
+
+    tasks = []
+    for user in users:
+        task_results = users[user]
+        tasks.append((user, len(task_results), task_results.count(True)))
+
+    return tasks

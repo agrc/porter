@@ -70,15 +70,7 @@ assign yourself or someone to check that the dataset is live in its area. once v
 - [ ] ArcGIS Online (@gregbunce on ``)
 - [x] Internal SGID (@ZachBeck on `9/1/2020`)
 - [ ] SGID10 (@ZachBeck on ``)
-- [ ] Open SGID (@gregbunce on ``)
-- [ ] [Open data](https://opendata.gis.utah.gov) (@gregbunce on ``)
-- [ ] gis.utah.gov data pages (@gregbunce on ``)
-- [x] [sgid-index](https://gis.utah.gov/data/sgid-index) (@ZachBeck on `9/1/2020`)
-- [x] `SGID.META.AGOLItems` (@ZachBeck on `9/1/2020`)
-- [ ] `SGID.META.ChangeDetection` (@ZachBeck on ``)
-- [ ] [agol-validator](https://github.com/agrc/agol-validator) items (@jacobdadams on ``)
 
-# Notification
-
+ignore @assigned
 - [ ] Blog post (@assigned)
 - [ ] Twitter (@steveoh)
