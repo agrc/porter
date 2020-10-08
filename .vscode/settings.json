@@ -11,7 +11,9 @@
     "agol",
     "arcgis",
     "dotenv",
+    "finditer",
     "getenv",
+    "gregbunce",
     "gunicorn",
     "instafail",
     "isort",
@@ -24,6 +26,7 @@
     "pyodbc",
     "pytest",
     "rindex",
+    "rkelson",
     "sgid",
     "steveoh",
     "yapf"
@@ -36,5 +39,7 @@
   "coverage-gutters.highlightdark": "rgb(61, 153, 112, .05)",
   "coverage-gutters.noHighlightDark": "rgb(255, 65, 54, .05)",
   "coverage-gutters.partialHighlightDark": "rgb(255, 133, 27, .05)",
-  "python.languageServer": "Pylance"
+  "python.languageServer": "Pylance",
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": ["--no-cov"]
 }
