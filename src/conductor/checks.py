@@ -8,10 +8,13 @@ a module with classes that check for the existence of things
 import re
 from collections import namedtuple
 from textwrap import dedent
+from google.cloud import secretmanager
+from google.oauth2 import service_account
 
 import psycopg2
 import pygsheets
 import pyodbc
+import json
 import requests
 
 
@@ -303,14 +306,27 @@ class OpenDataChecker(UrlChecker):
 class GSheetChecker():
     """look for a record and attributes in the stewardship worksheet
     """
+    scopes = ('https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive')
     required_fields = ['Description', 'Data Source', 'Website URL', 'Data Type', 'Endpoint', 'Deprecated']
     client = None
     worksheet = None
 
-    def __init__(self, table, sheet_id, worksheet_name, service_account_file):
+    def __init__(self, table, sheet_id, worksheet_name, service_account_file=None):
         self.table = table
+
         if service_account_file is not None and len(service_account_file) > 1:
             self.client = pygsheets.authorize(service_account_file=service_account_file)
+        else:
+            client = secretmanager.SecretManagerServiceClient()
+            name = client.secret_version_path('746866000386', 'stewardship-sa', 'latest')
+            secrets = client.access_secret_version(name)
+
+            if secrets is not None:
+                secrets = service_account.Credentials.from_service_account_info(
+                    json.loads(secrets.payload.data.decode('UTF-8')), scopes=self.scopes
+                )
+                self.client = pygsheets.authorize(custom_credentials=secrets)
+
         self.sheet_id = sheet_id
         self.worksheet_name = worksheet_name
         self.field_index = {}

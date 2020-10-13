@@ -5,7 +5,10 @@
   "python.linting.pycodestyleEnabled": false,
   "python.formatting.provider": "yapf",
   "python.formatting.yapfPath": "yapf",
-  "python.formatting.yapfArgs": ["--style", "${workspaceRoot}/setup.cfg"],
+  "python.formatting.yapfArgs": [
+    "--style",
+    "${workspaceRoot}/setup.cfg"
+  ],
   "cSpell.words": [
     "AGRC",
     "agol",
@@ -32,7 +35,9 @@
     "yapf"
   ],
   "editor.formatOnSave": true,
-  "editor.rulers": [120],
+  "editor.rulers": [
+    120
+  ],
   "coverage-gutters.showGutterCoverage": false,
   "coverage-gutters.showLineCoverage": true,
   "coverage-gutters.showRulerCoverage": false,
@@ -41,5 +46,10 @@
   "coverage-gutters.partialHighlightDark": "rgb(255, 133, 27, .05)",
   "python.languageServer": "Pylance",
   "python.testing.pytestEnabled": true,
-  "python.testing.pytestArgs": ["--no-cov"]
+  "python.testing.pytestArgs": [
+    "--no-cov"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
 }
