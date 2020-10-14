@@ -1,5 +1,8 @@
 # conductor
 
+![Tests](https://github.com/agrc/porter/workflows/Build%20and%20Test/badge.svg)
+![Continuous Deployment](https://github.com/agrc/porter/workflows/Build%20and%20Deploy%20to%20Cloud%20Run/badge.svg)
+
 a bot that checks on the existence of data and required fields
 
 ![conductor_sm](https://user-images.githubusercontent.com/325813/90076216-62563280-dcbc-11ea-8023-afa62e75b04b.png)

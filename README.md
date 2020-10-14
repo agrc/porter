@@ -1,8 +1,5 @@
 # Porter
 
-![Tests](https://github.com/agrc/porter/workflows/Build%20and%20Test/badge.svg)
-![Continuous Deployment](https://github.com/agrc/porter/workflows/Build%20and%20Deploy%20to%20Cloud%20Run/badge.svg)
-
 A porter is person that
 
 - carries things, such as bags
