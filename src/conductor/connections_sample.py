@@ -28,5 +28,15 @@ SECRETS = {
         'password': 'agrc'
     },
     'github_token': 'https://github.com/settings/tokens/new with public repo access',
-    'service_account_file': 'client-secret.json'
+    'local': {
+        'service_account_file': 'client-secret.json',
+    },
+    'dev': {
+        'project_id': '746866000386',
+        'secret_name': 'stewardship-sa'
+    },
+    'prod': {
+        'project_id': '174444704019',
+        'secret_name': 'stewardship-sa'
+    }
 }

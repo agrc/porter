@@ -150,7 +150,7 @@ def write_reports(conductor_issues, secrets):
 
             check = GSheetChecker(
                 table, '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info',
-                secrets['service_account_file']
+                secrets['client_builder']
             )
             reports[table].append(Report('stewardship', issue, check.exists(), GSheetChecker.grade))
             print(f'{Fore.GREEN}stewardship sheet{Fore.RESET} punched')
