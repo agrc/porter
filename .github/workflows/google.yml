@@ -1,8 +1,9 @@
 name: Build and Deploy to Cloud Run
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - '*'
 
 env:
   PROJECT_ID: ${{ secrets.RUN_PROJECT }}
