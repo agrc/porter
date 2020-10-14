@@ -19,6 +19,13 @@ from conductor.connections_sample import SECRETS
 REQUESTER = Requester('token', None, None, 'http://gis.utah.gov', 0, 'client-id', 'secret', '', 1, False, {})
 
 
+def noop():
+    pass
+
+
+SECRETS['client_builder'] = noop
+
+
 def test_imports():
     assert conductor is not None
 
@@ -84,7 +91,7 @@ def test_publish_sheets_integration_test_add_mixed(mocker):
         'Data Source': True,
         'Deprecated': False,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=True, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', noop).grade(add=True, report_value=SheetResponse(True, grades))
 
     attributes = {}
     issue = Issue(REQUESTER, {}, attributes, True)
@@ -112,7 +119,7 @@ def test_publish_sheets_integration_test_add_all_success(mocker):
         'Data Source': True,
         'Deprecated': False,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=True, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', noop).grade(add=True, report_value=SheetResponse(True, grades))
 
     attributes = {}
     issue = Issue(REQUESTER, {}, attributes, True)
@@ -140,7 +147,7 @@ def test_publish_sheets_integration_test_add_all_fail(mocker):
         'Data Source': False,
         'Deprecated': False,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=True, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', noop).grade(add=True, report_value=SheetResponse(True, grades))
 
     attributes = {}
     issue = Issue(REQUESTER, {}, attributes, True)
@@ -168,7 +175,7 @@ def test_publish_sheets_integration_test_remove_all_fail(mocker):
         'Data Source': True,
         'Deprecated': False,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=False, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', noop).grade(add=False, report_value=SheetResponse(True, grades))
 
     attributes = {}
     issue = Issue(REQUESTER, {}, attributes, True)
@@ -195,7 +202,7 @@ def test_publish_sheets_integration_test_remove_all_pass(mocker):
         'Data Source': True,
         'Deprecated': True,
     }
-    grade = GSheetChecker('fake.table', 'id', 'name', None).grade(add=False, report_value=SheetResponse(True, grades))
+    grade = GSheetChecker('fake.table', 'id', 'name', noop).grade(add=False, report_value=SheetResponse(True, grades))
 
     attributes = {}
     issue = Issue(REQUESTER, {}, attributes, True)
