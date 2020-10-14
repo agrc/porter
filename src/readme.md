@@ -87,6 +87,19 @@ docker push gcr.io/ut-dts-agrc-porter-prod/conductor
 
 1. create secret as valid json with name: `conductor-connections`
 1. give default compute service account `secret manager secret accessor` role
+1. create a secret named `stewardship-sa` and upload the `client-secret.json` key created earlier
+
+### CI/CD
+
+1. create a service account with the following privileges and create a key:
+   - Cloud Build Service Account
+   - Cloud Build Editor
+   - Service Account User
+   - Cloud Run Admin
+   - Viewer
+1. create two secrets in [github](https://github.com/agrc/porter/settings/secrets)
+   - RUN_PROJECT - the project id to deploy conductor to
+   - RUN_SA_KEY - the service account key data
 
 ## Development
 
@@ -94,4 +107,4 @@ docker push gcr.io/ut-dts-agrc-porter-prod/conductor
 1. install the Microsoft ODBC driver for SQL Server for [Windows](https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server) or [macOS](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos)
 1. create a copy of `src/conductor/connections_sample.py` as `src/conductor/connections.py`
    1. generate a [new GitHub personal access token](https://github.com/settings/tokens/new) with `public_repo` and store it in `github_token`
-   1. set the `service_account_file` path to a service account file with access to the stewardship sheet
+   1. set the `local.service_account_file` path to a service account file with access to the stewardship sheet
