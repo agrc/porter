@@ -5,17 +5,18 @@ checks.py
 a module with classes that check for the existence of things
 """
 
+import json
 import re
 from collections import namedtuple
+from pathlib import Path
 from textwrap import dedent
-from google.cloud import secretmanager
-from google.oauth2 import service_account
 
 import psycopg2
 import pygsheets
 import pyodbc
-import json
 import requests
+from google.cloud import secretmanager
+from google.oauth2 import service_account
 
 
 class TableChecker:
