@@ -20,6 +20,9 @@ app = Flask(__name__)
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
+DEV_PROJECT = '746866000386'
+PROD_PROJECT = '174444704019'
+
 
 @app.route('/gcp/schedule', methods=['POST'])
 def schedule():
@@ -40,7 +43,7 @@ def schedule():
         return (f'Bad Request: {msg}', 400)
 
     client = secretmanager.SecretManagerServiceClient()
-    name = client.secret_version_path('174444704019', 'conductor-connections', 'latest')
+    name = client.secret_version_path(PROD_PROJECT, 'conductor-connections', 'latest')
     secrets = client.access_secret_version(name)
     secrets = json.loads(secrets.payload.data.decode('UTF-8'))
 
@@ -57,7 +60,7 @@ def schedule():
 
 
 if __name__ == '__main__':
-    PORT = int(os.getenv('PORT')) if os.getenv('PORT') else 8080
+    PORT = int(str(os.getenv('PORT'))) if os.getenv('PORT') else 8080
 
     # This is used when running locally. Gunicorn is used to run the
     # application on Cloud Run. See entrypoint in Dockerfile.
