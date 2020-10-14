@@ -409,6 +409,38 @@ class GSheetChecker():
 
         return ' |\n| - deprecation issue link | :+1:'
 
+    @staticmethod
+    def create_client_with_service_account(file_path):
+        """creates a pygsheets authorized client from a service account json key
+        file_path: the string path to a service account json file
+        """
+        path = Path(file_path)
+
+        if not path.exists() or path.is_dir():
+            raise Exception('The path to the service account file is incorrect; Could not create client.')
+
+        return pygsheets.authorize(service_account_file=file_path)
+
+    @staticmethod
+    def create_client_with_secret_manager(project, secret_name):
+        """creates a pygsheets authorized client from a secret in gcp
+        project: the numeric google project number
+        secret_name: the name of the secret in secret manager
+        """
+        client = secretmanager.SecretManagerServiceClient()
+        name = client.secret_version_path(project, secret_name, 'latest')
+        secrets = client.access_secret_version(name)
+
+        if secrets is None:
+            raise Exception('The project secret might not exist or is incorrect; Could not create client.')
+
+        scopes = ('https://www.googleapis.com/auth/spreadsheets')
+        secrets = service_account.Credentials.from_service_account_info(
+            json.loads(secrets.payload.data.decode('UTF-8')), scopes=scopes
+        )
+
+        return pygsheets.authorize(custom_credentials=secrets)
+
 
 class TaskChecker:
     """verifies that task boxes have been checked

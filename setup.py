@@ -34,6 +34,7 @@ setup(
     keywords=['gis'],
     install_requires=[
         'colorama==0.*',
+        'docopt==0.*',
         'psycopg2-binary==2.*',
         'PyGithub==1.*',
         'pygsheets==2.*',
@@ -65,7 +66,7 @@ setup(
     entry_points={
         'console_scripts': [
             'conductor = conductor.conductor:startup',
-            'test_conductor = conductor.conductor:local',
+            'test_conductor = conductor.conductor:startup_local',
         ]
     },
 )

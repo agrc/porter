@@ -3,6 +3,16 @@
 """
 conductor.py a script that interacts with github issues, reads some metadata from the issue description,
 searchings our SGID facets for the item in the metadata, and finally posts a comment with the completeness
+
+Usage:
+  test_conductor [--local | --dev | --prod]
+
+Options:
+  -h --help Show this screen.
+  --version Show version.
+  --local   get client secrets from a local file.
+  --dev     get client secrets from development google cloud project.
+  --prod    get client secrets from production google cloud project.
 """
 
 import json
@@ -10,6 +20,7 @@ from collections import namedtuple
 
 import github
 from colorama import Fore, init
+from docopt import docopt
 
 from .checks import (
     ArcGisOnlineChecker, GSheetChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker,
@@ -215,10 +226,14 @@ def _notify_missing_metadata(issue):
     issue.add_to_labels('missing-metadata')
 
 
-def local():
+def startup_local():
     """a way to access local secrets to run conductor locally
     """
     print('starting conductor...')
+    options = docopt(__doc__, version='conductor 1.0.0')
+
+    def noop():
+        return None
 
     try:
         from .connections import SECRETS  # pylint: disable=import-outside-toplevel
@@ -226,5 +241,24 @@ def local():
         from .connections_sample import SECRETS  # pylint: disable=import-outside-toplevel
         print('secrets not found')
 
-    # github.enable_console_debug_logging()
+    SECRETS['client_builder'] = noop
+
+    if options['--local']:
+        local = SECRETS['local']
+        path = local['service_account_file']
+
+        SECRETS['client_builder'] = lambda: GSheetChecker.create_client_with_service_account(path)
+    elif options['--dev']:
+        dev = SECRETS['dev']
+        project = dev['project_id']
+        secret = dev['secret_name']
+
+        SECRETS['client_builder'] = lambda: GSheetChecker.create_client_with_secret_manager(project, secret)
+    elif options['--prod']:
+        prod = SECRETS['prod']
+        project = prod['project_id']
+        secret = prod['secret_name']
+
+        SECRETS['client_builder'] = lambda: GSheetChecker.create_client_with_secret_manager(project, secret)
+
     startup(SECRETS, False)
