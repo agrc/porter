@@ -20,6 +20,8 @@ a bot that checks on the existence of data and required fields
      - `gcloud services enable secretmanager.googleapis.com`
    - cloud compute engine
      - `gcloud services enable compute.googleapis.com`
+   - cloud build api\*
+     - `gcloud services enable cloudbuild.googleapis.com`
 
 1. give google cloud default compute service account view access to stewardship spreadsheet
 1. Request DTS to attach the project to the DTS [dev, prod] Shared VPC
