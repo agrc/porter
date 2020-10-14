@@ -1,0 +1,23 @@
+name: Build and Test
+
+on: [push, pull_request]
+
+jobs:
+  run-tests:
+    name: Setup, Build, and Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install conductor
+      run: pip install .[tests,cloud-run]
+
+    - name: Test with pytest
+      run: pytest
