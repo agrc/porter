@@ -32,6 +32,7 @@ A short summary of the situation...
 - [ ] Open data (assigned to)
 - [ ] Mapserv (assigned to)
 - [ ] Retire application-specific prod and test SQL Databases (assigned to)
+- [ ] AGRC Projects team drive [folder](https://drive.google.com/drive/folders/0AIVByxAYHd4oUk9PVA) (assigned to)
 
 # Copy data to the following areas
 
