@@ -34,10 +34,12 @@ A short summary of the situation...
 - [ ] Retire application-specific prod and test SQL Databases (assigned to)
 - [ ] AGRC Projects team drive [folder](https://drive.google.com/drive/folders/0AIVByxAYHd4oUk9PVA) (assigned to)
 
-# Copy data to the following areas
+# Shelve/Static
 
 - [ ] Upload to UtahAGRC/AGRC_Shelved folder in AGOL (assigned to)
+      or
 - [ ] Move existing AGOL item to AGRC_Shelved AGOL folder (assigned to)
+      or
 - [ ] Upload to appropriate UtahAGRC/{SGID Category} folder in AGOL (for "static" datasets) (assigned to)
 
 # Update information in the following areas
