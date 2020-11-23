@@ -61,9 +61,9 @@ Where do we expect the data to show up. Check [x] all the areas
 # The data should propagate automatically to
 
 - [ ] ArcGIS Online
-- [ ] SGID10
+- [ ] Internal SGID (assigned to)
 - [ ] Open SGID
-- [ ] Open data
+- [ ] Open Data
 - [ ] `SGID.META.ChangeDetection`
 
 # References to the data need to be manually added to
@@ -81,7 +81,6 @@ assign yourself or someone to check that the dataset is live in its area. once v
 
 - [ ] ArcGIS Online (@assigned on ``)
 - [ ] Internal SGID (@assigned on ``)
-- [ ] SGID10 (@assigned on ``)
 - [ ] Open SGID (@assigned on ``)
 - [ ] [Open data](https://opendata.gis.utah.gov) (@assigned on ``)
 - [ ] gis.utah.gov data pages (@assigned on ``)
