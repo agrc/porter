@@ -2,7 +2,7 @@
 name: Introduce data to the SGID
 about: Creation Checklist
 title: Add <dataset name> from <place>
-labels: "introduction"
+labels: "introduction, porter"
 assignees: ""
 ---
 
