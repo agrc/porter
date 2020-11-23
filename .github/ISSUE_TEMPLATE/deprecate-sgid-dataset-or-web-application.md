@@ -78,7 +78,4 @@ A short summary of the situation...
 
 # Notification
 
-- [ ] Blog post (assigned to)
-- [ ] Twitter (@steveoh)
-  - [ ] Intent
-  - [ ] Completed
+- [ ] Intent Twitter (@steveoh)
