@@ -2,7 +2,7 @@
 name: Removing Data From Anywhere
 about: Deprecation Checklist
 title: Remove <web app/dataset name> from <place>
-labels: "deprecation"
+labels: "deprecation, porter"
 assignees: ""
 ---
 
