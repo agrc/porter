@@ -546,6 +546,31 @@ def test_gather_issues_skips_reminders(mocker):
     assert len(issues) == 0
 
 
+def test_gather_issues_skips_blocked(mocker):
+    title = 'this should be included'
+    issue = mocker.Mock(**{
+        'title': title,
+        'labels': [Label(REQUESTER, {}, {'name': 'introduction'}, True)],
+    })
+
+    skip_issue = mocker.Mock(
+        **{
+            'title': 'this should be skipped',
+            'labels': [
+                Label(REQUESTER, {}, {'name': 'introduction'}, True),
+                Label(REQUESTER, {}, {'name': 'blocked'}, True)
+            ],
+        }
+    )
+
+    porter = mocker.Mock(**{'get_issues.return_value': [issue, skip_issue]})
+
+    issues = conductor.gather_issues(porter)
+
+    assert len(issues) == 1
+    assert issues[0].issue.title == title
+
+
 def test_gather_issues_skips_find_introductions_and_deprecations(mocker):
     reminder_issue = mocker.Mock(
         **{

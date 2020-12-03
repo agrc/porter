@@ -63,15 +63,14 @@ def gather_issues(porter):
 
     conductor_issues = []
     ConductorIssue = namedtuple('ConductorIssue', 'issue introduction')
+    skip_labels = ['reminder', 'scheduled', 'blocked']
 
     for issue in issues:
         labels = [label.name for label in issue.labels]
         introduction = False
         capture = False
 
-        if 'reminder' in labels:
-            continue
-        if 'scheduled' in labels:
+        if any(label in labels for label in skip_labels):
             continue
 
         if 'introduction' in labels:
