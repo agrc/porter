@@ -22,3 +22,4 @@ When the champion from your team has completed the triage, check [x] the checkbo
 - [ ] Cadastre Team Triage (@rkelson)
 
 - [ ] Another task (@steveoh )
+- [ ] Yet Another task (assigned @stdavis )
