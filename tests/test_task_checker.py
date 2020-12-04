@@ -22,7 +22,7 @@ def test_get_users_task_statuses():
     tasks = get_users_task_statuses(body_mocks['simple'])
 
     assert len(tasks) == 4
-    assert tasks == [('@gregbunce', 1, 1), ('@steveoh', 2, 0), ('@rkelson', 1, 0), ('@stdavis', 1, 0)]
+    assert tasks == [('@gregbunce', 1, 1), ('@steveoh', 3, 1), ('@rkelson', 1, 0), ('@stdavis', 1, 0)]
 
     tasks = get_users_task_statuses(body_mocks['strikethrough'])
 
