@@ -624,7 +624,7 @@ def test_gather_issues_skips_find_introductions_and_deprecations(mocker):
     assert len(issues) == 2
 
 
-def test_write_report(mocker):
+def test_write_reports(mocker):
     GitHubIssue = namedtuple('GitHubIssue', 'body number title')
     ConductorIssue = namedtuple('ConductorIssue', 'issue introduction')
     MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
@@ -633,6 +633,8 @@ def test_write_report(mocker):
     conductor.extract_metadata_from_issue_body = mocker.MagicMock(
         side_effect=[None, {
             'no table': ''
+        }, {
+            'table': 'fake.table'
         }, {
             'table': 'fake.table'
         }]
@@ -658,10 +660,11 @@ def test_write_report(mocker):
     reports = conductor.write_reports([
         ConductorIssue(GitHubIssue('issue body text', 1, 'issue title'), True),
         ConductorIssue(GitHubIssue('issue body text', 1, 'issue title'), True),
-        ConductorIssue(GitHubIssue('issue body text', 1, 'issue title'), True)
+        ConductorIssue(GitHubIssue('issue body text', 1, 'issue title'), True),
+        ConductorIssue(GitHubIssue('issue body text with - [ ] a task (@stdavis)', 1, 'issue title'), True)
     ], SECRETS)
 
-    assert len(reports) == 1
+    assert len(reports) == 2
     assert len(reports['fake.table']) == 7
 
 
