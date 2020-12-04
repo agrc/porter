@@ -470,7 +470,7 @@ def get_users_task_statuses(issue_body):
     the number of completed tasks
     """
     users = {}
-    expression = r'(?P<strikethrough>~?)- \[(?P<is_completed>[x| ]?)\] .* \(*?(?P<user>@\S*\b).*\)'
+    expression = r'(?P<strikethrough>~?)- \[(?P<is_completed>[x| ]?)\] .* \(*?(?P<user>@..*?\b).*\)'
 
     for match in re.finditer(expression, issue_body, re.MULTILINE):
         user = match.group('user')
