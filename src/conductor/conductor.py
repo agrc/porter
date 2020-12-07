@@ -229,7 +229,7 @@ def startup_local():
     """a way to access local secrets to run conductor locally
     """
     print('starting conductor...')
-    options = docopt(__doc__, version='conductor 1.0.0')
+    options = docopt(__doc__, version='conductor 1.1.0')
 
     def noop():
         return None
