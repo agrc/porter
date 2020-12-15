@@ -205,7 +205,7 @@ def publish_grades(all_grades, is_production):
             issue.create_comment(comment)
             print(f'comment left on issue {Fore.CYAN}{issue.title}{Fore.RESET}')
         else:
-            print(f'comment below would be posted to issue: "{issue.title}" in production')
+            print(f'\ncomment below would be posted to issue: "{issue.title}" in production')
             print(comment)
 
     return comments
