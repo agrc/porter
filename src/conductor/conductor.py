@@ -17,6 +17,8 @@ Options:
 
 import json
 from collections import namedtuple
+from contextlib import contextmanager
+from traceback import print_exc
 
 import github
 from colorama import Fore, init
@@ -89,6 +91,9 @@ def gather_issues(porter):
     return conductor_issues
 
 
+Report = namedtuple('Report', 'check issue report grader')
+
+
 def write_reports(conductor_issues, secrets):
     """
     checks that the data has been added to the expected areas
@@ -97,8 +102,6 @@ def write_reports(conductor_issues, secrets):
     reports = {}
 
     for issue in conductor_issues:
-        Report = namedtuple('Report', 'check issue report grader')
-
         task_key = f'tasks - {issue.issue.number}'
         print(f'punching ticket for {Fore.CYAN}{task_key}{Fore.RESET}')
         for user, completed, total in get_users_task_statuses(issue.issue.body):
@@ -118,37 +121,52 @@ def write_reports(conductor_issues, secrets):
             print(f'punching ticket for {Fore.CYAN}{table}{Fore.RESET}')
             reports[table] = []
 
-            check = MSSqlTableChecker(table, secrets['internalsgid'])
-            reports[table].append(Report('internal sgid', issue, check.exists(), MSSqlTableChecker.grade))
-            print(f'{Fore.GREEN}internal sgid{Fore.RESET} punched')
+            def error_report_grader(_, report_value):
+                return report_value
 
-            check = MetaTableChecker(f'sgid.{metadata["table"]}', secrets['internalsgid'])
-            reports[table].append(Report('meta table', issue, check.exists(), MetaTableChecker.grade))
-            meta_table_data = check.data
-            print(f'{Fore.GREEN}meta table{Fore.RESET} punched')
+            @contextmanager
+            def exception_catcher(report_name):
+                # pylint: disable=cell-var-from-loop
+                try:
+                    yield
+                except Exception as exception:
+                    print_exc()
+                    reports[table].append(Report(report_name, issue, str(exception), error_report_grader))
+                finally:
+                    print(f'{Fore.GREEN}{report_name}{Fore.RESET} punched')
 
-            if meta_table_data.exists:
+            with exception_catcher('internal sgid'):
+                check = MSSqlTableChecker(table, secrets['internalsgid'])
+                reports[table].append(Report('internal sgid', issue, check.exists(), MSSqlTableChecker.grade))
+
+            meta_table_data = None
+            with exception_catcher('meta table'):
+                check = MetaTableChecker(f'sgid.{metadata["table"]}', secrets['internalsgid'])
+                reports[table].append(Report('meta table', issue, check.exists(), MetaTableChecker.grade))
+                meta_table_data = check.data
+
+            if meta_table_data is not None and meta_table_data.exists:
                 if meta_table_data.exists != 'missing item name':
-                    check = PGSqlTableChecker(table, secrets['opensgid'])
-                    check.table = PGSqlTableChecker.postgresize(meta_table_data.item_name)
-                    reports[table].append(Report('open sgid', issue, check.exists(), PGSqlTableChecker.grade))
-                    print(f'{Fore.GREEN}open sgid{Fore.RESET} punched')
+                    with exception_catcher('open sgid'):
+                        check = PGSqlTableChecker(table, secrets['opensgid'])
+                        check.table = PGSqlTableChecker.postgresize(meta_table_data.item_name)
+                        reports[table].append(Report('open sgid', issue, check.exists(), PGSqlTableChecker.grade))
 
-                    check = OpenDataChecker(meta_table_data.item_name)
-                    reports[table].append(Report('open data', issue, check.exists(), OpenDataChecker.grade))
-                    print(f'{Fore.GREEN}open data{Fore.RESET} punched')
+                    with exception_catcher('open data'):
+                        check = OpenDataChecker(meta_table_data.item_name)
+                        reports[table].append(Report('open data', issue, check.exists(), OpenDataChecker.grade))
 
                 if meta_table_data.exists != 'missing item id':
-                    check = ArcGisOnlineChecker(meta_table_data.item_id)
-                    reports[table].append(Report('arcgis online', issue, check.exists(), ArcGisOnlineChecker.grade))
-                    print(f'{Fore.GREEN}arcgis online{Fore.RESET} punched')
+                    with exception_catcher('arcgis online'):
+                        check = ArcGisOnlineChecker(meta_table_data.item_id)
+                        reports[table].append(Report('arcgis online', issue, check.exists(), ArcGisOnlineChecker.grade))
 
-            check = GSheetChecker(
-                table, '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info',
-                secrets['client_builder']
-            )
-            reports[table].append(Report('stewardship', issue, check.exists(), GSheetChecker.grade))
-            print(f'{Fore.GREEN}stewardship sheet{Fore.RESET} punched')
+            with exception_catcher('stewardship'):
+                check = GSheetChecker(
+                    table, '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info',
+                    secrets['client_builder']
+                )
+                reports[table].append(Report('stewardship', issue, check.exists(), GSheetChecker.grade))
 
     return reports
 
