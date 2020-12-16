@@ -4,3 +4,4 @@ max-line-length=120
 disable=bad-continuation,broad-except
 ignore-patterns=test_.*?py
 ignore=connections_sample.py
+max-statements=55
