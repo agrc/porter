@@ -41,7 +41,6 @@ you can strike them out. They are available if for some reason the internal sgid
 -->
 
 - [ ] Internal SGID
-- [ ] SGID10
 - [ ] ArcGIS Online
 
 <!--
