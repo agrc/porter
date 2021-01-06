@@ -26,7 +26,6 @@ A short summary of the situation...
 
 - [ ] ArcGIS Online (assigned to)
 - [ ] Internal SGID (assigned to)
-- [ ] SGID10 (assigned to)
 - [ ] Open SGID (assigned to)
 - [ ] Google Drive (assigned to)
 - [ ] Open data (assigned to)
