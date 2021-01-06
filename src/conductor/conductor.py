@@ -122,10 +122,6 @@ def write_reports(conductor_issues, secrets):
             reports[table].append(Report('internal sgid', issue, check.exists(), MSSqlTableChecker.grade))
             print(f'{Fore.GREEN}internal sgid{Fore.RESET} punched')
 
-            check = MSSqlTableChecker(table, secrets['sgid10'])
-            reports[table].append(Report('sgid10', issue, check.exists(), MSSqlTableChecker.grade))
-            print(f'{Fore.GREEN}sgid 10{Fore.RESET} punched')
-
             check = MetaTableChecker(f'sgid.{metadata["table"]}', secrets['internalsgid'])
             reports[table].append(Report('meta table', issue, check.exists(), MetaTableChecker.grade))
             meta_table_data = check.data
