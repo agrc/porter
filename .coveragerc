@@ -1,6 +1,6 @@
 [run]
 omit =
-    */connection_sample.py
+    */connections_sample.py
     */__init__.py
     */connections.py
     */server.py
