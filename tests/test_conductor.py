@@ -665,7 +665,7 @@ def test_write_reports(mocker):
     ], SECRETS)
 
     assert len(reports) == 2
-    assert len(reports['fake.table']) == 7
+    assert len(reports['fake.table']) == 6
 
 
 def test_write_report_without_item_id(mocker):
@@ -707,7 +707,7 @@ def test_write_report_without_item_id(mocker):
     ], SECRETS)
 
     assert len(reports) == 1
-    assert len(reports['fake.table']) == 6
+    assert len(reports['fake.table']) == 5
 
 
 def test_startup_with_no_issues_returns(mocker):
