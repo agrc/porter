@@ -421,7 +421,7 @@ class GSheetChecker():
         if secrets is None:
             raise Exception('The project secret might not exist or is incorrect; Could not create client.')
 
-        scopes = ('https://www.googleapis.com/auth/spreadsheets')
+        scopes = ('https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive')
         secrets = service_account.Credentials.from_service_account_info(
             json.loads(secrets.payload.data.decode('UTF-8')), scopes=scopes
         )
