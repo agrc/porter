@@ -14,13 +14,6 @@ SECRETS = {
         'password': '',
         'driver': '{ODBC Driver 17 for SQL Server}'
     },
-    'sgid10': {
-        'server': '',
-        'database': '',
-        'user': '',
-        'password': '',
-        'driver': '{ODBC Driver 17 for SQL Server}'
-    },
     'opensgid': {
         'host': 'opensgid.agrc.utah.gov',
         'database': 'opensgid',
