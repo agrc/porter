@@ -14,8 +14,8 @@ import sys
 from flask import Flask, request
 from google.cloud import secretmanager
 
+from .checks import GSheetChecker
 from .conductor import startup
-from .conductor.checks import GSheetChecker
 
 app = Flask(__name__)
 
