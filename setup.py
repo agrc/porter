@@ -11,7 +11,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='conductor',
-    version='2.0.2',
+    version='2.0.3',
     license='MIT',
     description='A bot to check on the status of a porter issue.',
     author='AGRC',
