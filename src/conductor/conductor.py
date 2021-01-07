@@ -129,7 +129,7 @@ def write_reports(conductor_issues, secrets):
                 # pylint: disable=cell-var-from-loop
                 try:
                     yield
-                except Exception as exception:
+                except Exception:
                     print_exc()
                     reports[table].append(Report(report_name, issue, 'Exception was thrown!', error_report_grader))
                 finally:
