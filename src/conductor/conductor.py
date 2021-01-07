@@ -131,7 +131,7 @@ def write_reports(conductor_issues, secrets):
                     yield
                 except Exception as exception:
                     print_exc()
-                    reports[table].append(Report(report_name, issue, str(exception), error_report_grader))
+                    reports[table].append(Report(report_name, issue, 'Exception was thrown!', error_report_grader))
                 finally:
                     print(f'{Fore.GREEN}{report_name}{Fore.RESET} punched')
 
