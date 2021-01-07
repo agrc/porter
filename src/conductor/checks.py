@@ -373,10 +373,10 @@ class GSheetChecker():
         """grades the report
             report - SheetResponse
         """
-        if add:
-            if not report_value.valid:
-                return f':no_entry: {report_value.messages}'
+        if not report_value.valid:
+            return f':no_entry: {report_value.messages}'
 
+        if add:
             failures = ''.join([
                 f'\n| - {key} | :no_entry: |' for key in report_value.messages
                 if not report_value.messages[key] and key != 'Deprecated'
