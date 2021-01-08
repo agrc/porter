@@ -162,7 +162,7 @@ class PGSqlTableChecker(TableChecker):
 class MetaTableChecker(TableChecker):
     """meta table row checker
     """
-    sql = '''SELECT AGOL_ITEM_ID, AGOL_PUBLISHED_NAME
+    sql = '''SELECT AGOL_ITEM_ID, AGOL_PUBLISHED_NAME, GEOMETRY_TYPE
             FROM
                 SGID.META.AGOLITEMS
             WHERE
@@ -178,27 +178,34 @@ class MetaTableChecker(TableChecker):
         """
         item_id = None
         item_name = None
-        MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
+        geometry_Type = None
+        MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name geometry_type')
 
         TableChecker.get_data(self, (self.original_table))
 
         if self.data is None:
-            self.data = MetaResponse(False, item_id, item_name)
+            self.data = MetaResponse(False, item_id, item_name, geometry_type)
 
-            return MetaResponse(False, item_id, item_name)
+            return MetaResponse(False, item_id, item_name, geometry_type)
 
-        item_id, item_name = self.data
+        item_id, item_name, geometry_type = self.data
         response = True
 
-        if not item_id and not item_name:
-            response = False
-        elif not item_id:
-            response = 'missing item id'
+        if not item_id and not item_name and not geometry_type:
+            return MetaResponse(response, item_id, item_name, geometry_type)
+        
+        errors = []
+        if not item_id:
+            errors.append('missing item id')
         elif not item_name:
-            response = 'missing item name'
-        #: TODO: add geometry type
-
-        self.data = MetaResponse(response, item_id, item_name)
+            errors.append('missing item name')
+        elif not geometry_type:
+            errors.append('missing geometry type')
+            
+        if len(errors) > 0:
+            response = ', '.join(errors)
+            
+        self.data = MetaResponse(response, item_id, item_name, geometry_type)
 
         return self.data
 
