@@ -1,5 +1,5 @@
 ---
-name: Removing application
+name: Removing an application
 about: Application Checklist
 title: Deprecate <application>
 labels: "deprecation, porter"

@@ -1,5 +1,5 @@
 ---
-name: Introduce data to the SGID
+name: Introducing data to the SGID
 about: Creation Checklist
 title: Add <dataset name> from <source>
 labels: "introduction, porter"
