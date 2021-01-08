@@ -161,7 +161,7 @@ def test_missing_item_id_returns_correct_string(mocker):
     mocker.patch('conductor.checks.TableChecker.get_data')
 
     patient = MetaTableChecker('sgid.fake.table', SECRETS['internalsgid'])
-    patient.data = (None, 'Agol Published Name')
+    patient.data = (None, 'Agol Published Name', 'geometry type')
 
     response = patient.exists()
 
@@ -172,17 +172,28 @@ def test_missing_item_name_returns_correct_string(mocker):
     mocker.patch('conductor.checks.TableChecker.get_data')
 
     patient = MetaTableChecker('sgid.fake.table', SECRETS['internalsgid'])
-    patient.data = ('some-guid', None)
+    patient.data = ('some-guid', None, 'geometry type')
 
     response = patient.exists()
 
     assert response.exists == 'missing item name'
 
 
-def test_missing_both_returns_correct_string(mocker):
+def test_missing_geometry_type_returns_correct_string(mocker):
+    mocker.patch('conductor.checks.TableChecker.get_data')
+
+    patient = MetaTableChecker('sgid.fake.table', SECRETS['internalsgid'])
+    patient.data = ('some-guid', 'agol name', None)
+
+    response = patient.exists()
+
+    assert response.exists == 'missing geometry type'
+
+
+def test_missing_all_returns_correct_string(mocker):
     mocker.patch('conductor.checks.TableChecker.get_data')
     patient = MetaTableChecker('sgid.fake.table', SECRETS['internalsgid'])
-    patient.data = (None, None)
+    patient.data = (None, None, None)
 
     response = patient.exists()
 
