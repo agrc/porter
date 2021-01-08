@@ -178,7 +178,7 @@ class MetaTableChecker(TableChecker):
         """
         item_id = None
         item_name = None
-        geometry_Type = None
+        geometry_type = None
         MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name geometry_type')
 
         TableChecker.get_data(self, (self.original_table))
@@ -192,8 +192,8 @@ class MetaTableChecker(TableChecker):
         response = True
 
         if not item_id and not item_name and not geometry_type:
-            return MetaResponse(response, item_id, item_name, geometry_type)
-        
+            return MetaResponse(False, item_id, item_name, geometry_type)
+
         errors = []
         if not item_id:
             errors.append('missing item id')
@@ -201,10 +201,10 @@ class MetaTableChecker(TableChecker):
             errors.append('missing item name')
         elif not geometry_type:
             errors.append('missing geometry type')
-            
+
         if len(errors) > 0:
             response = ', '.join(errors)
-            
+
         self.data = MetaResponse(response, item_id, item_name, geometry_type)
 
         return self.data
@@ -214,16 +214,25 @@ class MetaTableChecker(TableChecker):
         """overrides the basic grading
         """
         if add:
-            if not report_value.item_id and not report_value.item_name:
-                return ' |\n| - item id | :no_entry: |\n| - item name | :no_entry:'
-
+            grade = ''
             if not report_value.item_id:
-                return ' |\n| - item id | :no_entry: |\n| - item name | :+1:'
+                grade += ' |\n| - item id | :no_entry: |'
+            else:
+                grade += ' |\n| - item id | :+1: |'
 
             if not report_value.item_name:
-                return ' |\n| - item id | :+1: |\n| - item name | :no_entry:'
+                grade += ' |\n| - item name | :no_entry: |'
+            else:
+                grade += ' |\n| - item name | :+1: |'
 
-            return ' |\n| - item id | :+1: |\n| - item name | :+1:'
+            if not report_value.geometry_type:
+                grade += ' |\n| - geometry type | :no_entry: |'
+            else:
+                grade += ' |\n| - geometry type | :+1: |'
+
+            grade = grade.replace('| |', '|').rstrip(' |')
+
+            return grade
 
         #: deletions should not contain a row
         if report_value.exists:
