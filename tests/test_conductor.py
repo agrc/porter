@@ -373,9 +373,10 @@ def test_table_checker_grade_integration_remove_fail(mocker):
 
 
 def test_metatable_checker_grade_integration_add_success(mocker):
-    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
+    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name geometry_type')
     Grade = namedtuple('Grade', 'check grade issue')
-    grade = MetaTableChecker('table.name', {}).grade(add=True, report_value=MetaResponse(True, 'item id', 'item name'))
+    grade = MetaTableChecker('table.name', {}
+                            ).grade(add=True, report_value=MetaResponse(True, 'item id', 'item name', 'geometry type'))
 
     attributes = {}
     issue = Issue(REQUESTER, {}, attributes, True)
@@ -390,14 +391,15 @@ def test_metatable_checker_grade_integration_add_success(mocker):
 | - | :-: |
 | meta table |  |
 | - item id | :+1: |
-| - item name | :+1: |'''
+| - item name | :+1: |
+| - geometry type | :+1: |'''
     )
 
 
 def test_metatable_checker_grade_integration_add_mixed(mocker):
-    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
+    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name geometry_type')
     Grade = namedtuple('Grade', 'check grade issue')
-    grade = MetaTableChecker('table.name', {}).grade(add=True, report_value=MetaResponse(True, None, 'item name'))
+    grade = MetaTableChecker('table.name', {}).grade(add=True, report_value=MetaResponse(True, None, 'item name', None))
 
     attributes = {}
     issue = Issue(REQUESTER, {}, attributes, True)
@@ -412,14 +414,15 @@ def test_metatable_checker_grade_integration_add_mixed(mocker):
 | - | :-: |
 | meta table |  |
 | - item id | :no_entry: |
-| - item name | :+1: |'''
+| - item name | :+1: |
+| - geometry type | :no_entry: |'''
     )
 
 
 def test_metatable_checker_grade_integration_add_mixed_2(mocker):
-    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
+    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name geometry_type')
     Grade = namedtuple('Grade', 'check grade issue')
-    grade = MetaTableChecker('table.name', {}).grade(add=True, report_value=MetaResponse(True, 'item id', None))
+    grade = MetaTableChecker('table.name', {}).grade(add=True, report_value=MetaResponse(True, 'item id', None, None))
 
     attributes = {}
     issue = Issue(REQUESTER, {}, attributes, True)
@@ -434,14 +437,15 @@ def test_metatable_checker_grade_integration_add_mixed_2(mocker):
 | - | :-: |
 | meta table |  |
 | - item id | :+1: |
-| - item name | :no_entry: |'''
+| - item name | :no_entry: |
+| - geometry type | :no_entry: |'''
     )
 
 
 def test_metatable_checker_grade_integration_add_fail(mocker):
-    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
+    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name geometry_type')
     Grade = namedtuple('Grade', 'check grade issue')
-    grade = MetaTableChecker('table.name', {}).grade(add=True, report_value=MetaResponse(True, None, None))
+    grade = MetaTableChecker('table.name', {}).grade(add=True, report_value=MetaResponse(True, None, None, None))
 
     attributes = {}
     issue = Issue(REQUESTER, {}, attributes, True)
@@ -456,14 +460,15 @@ def test_metatable_checker_grade_integration_add_fail(mocker):
 | - | :-: |
 | meta table |  |
 | - item id | :no_entry: |
-| - item name | :no_entry: |'''
+| - item name | :no_entry: |
+| - geometry type | :no_entry: |'''
     )
 
 
 def test_metatable_checker_grade_integration_remove_success(mocker):
-    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
+    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name geometry_type')
     Grade = namedtuple('Grade', 'check grade issue')
-    grade = MetaTableChecker('table.name', {}).grade(add=False, report_value=MetaResponse(False, None, None))
+    grade = MetaTableChecker('table.name', {}).grade(add=False, report_value=MetaResponse(False, None, None, None))
 
     attributes = {}
     issue = Issue(REQUESTER, {}, attributes, True)
@@ -481,9 +486,9 @@ def test_metatable_checker_grade_integration_remove_success(mocker):
 
 
 def test_metatable_checker_grade_integration_remove_fail(mocker):
-    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name')
+    MetaResponse = namedtuple('MetaResponse', 'exists item_id item_name geometry_type')
     Grade = namedtuple('Grade', 'check grade issue')
-    grade = MetaTableChecker('table.name', {}).grade(add=False, report_value=MetaResponse(True, None, None))
+    grade = MetaTableChecker('table.name', {}).grade(add=False, report_value=MetaResponse(True, None, None, None))
 
     attributes = {}
     issue = Issue(REQUESTER, {}, attributes, True)
