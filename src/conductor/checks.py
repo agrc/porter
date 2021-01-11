@@ -197,9 +197,11 @@ class MetaTableChecker(TableChecker):
         errors = []
         if not item_id:
             errors.append('missing item id')
-        elif not item_name:
+
+        if not item_name:
             errors.append('missing item name')
-        elif not geometry_type:
+
+        if not geometry_type:
             errors.append('missing geometry type')
 
         if len(errors) > 0:
