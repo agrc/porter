@@ -16,7 +16,7 @@ _A short summary of the situation._
 
 ## Action items
 
-1. _Assign a person who should complete the task._
+1. _Assign a person who should complete the task by replacing `name` with their github `@name`._
 1. _Check [x] the box when the task is completed and add the date of completion._
 1. _~Strike~ out all items that do not apply._
 
@@ -48,7 +48,7 @@ _Choose one._
 
 ## :robot: Automation validation
 
-1. _Assign yourself or someone to check the item._
+1. _Assign yourself or someone to check the item by replacing `name` with their github `@name`._
 1. _Check [x] the box and add the date of verification `2020/01/01` when the task is verified._
 1. _~Strike~ out all items that do not apply._
 
