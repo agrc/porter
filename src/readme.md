@@ -60,8 +60,10 @@ docker push gcr.io/ut-dts-agrc-porter-prod/conductor
 1. Request timeout: `300`
 1. Maximum instances: `10`
 1. enable shared VPC connector
-   - `gcloud run services update conductor --vpc-connector projects/ut-dts-shared-vpc-dev/locations/us-central1/connectors/dts-shared-vpc-connector`
-   - `gcloud alpha run services update conductor --vpc-connector=projects/ut-dts-shared-vpc-dev/locations/us-central1/connectors/dts-shared-vpc-connector --vpc-egress=all --platform managed --zone us-central1`
+   - `gcloud run services update conductor --vpc-connector <VPC Path>`
+   - `gcloud alpha run services update conductor --vpc-connector=<VPC Path> --vpc-egress=all --platform managed --zone us-central1`
+      - dev: `projects/ut-dts-shared-vpc-dev/locations/us-central1/connectors/dts-shared-vpc-connector`
+      - prod: `projects/ut-dts-sharedvpc-prod/locations/us-central1/connectors/dts-sharedvpc-connector`
 1. copy cloud run url for the subscription
 
 ### subscriptions
