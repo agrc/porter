@@ -23,8 +23,6 @@ a bot that checks on the existence of data and required fields
      - `gcloud services enable secretmanager.googleapis.com`
    - cloud compute engine
      - `gcloud services enable compute.googleapis.com`
-   - cloud build api\*
-     - `gcloud services enable cloudbuild.googleapis.com`
 
 1. give google cloud default compute service account view access to stewardship spreadsheet
 1. Request DTS to attach the project to the DTS [dev, prod] Shared VPC
@@ -54,16 +52,18 @@ docker push gcr.io/ut-dts-agrc-porter-prod/conductor
 ### cloud run
 
 1. create a service named `conductor`
-1. authentication: `require authentication`
 1. choose latest container image
-   - `gcr.io/ut-dts-agrc-porter-prod/conductor@latest`
+   - `gcr.io/ut-dts-agrc-porter-prod/conductor@sha256...`
+1. Service Account: `conductor-cloud-run` or an account with the `Secret Manager Secret Accessor` role
+1. Memory allocated: `512Mi`
 1. Request timeout: `300`
 1. Maximum instances: `10`
-1. enable shared VPC connector
-   - `gcloud run services update conductor --vpc-connector <VPC Path>`
-   - `gcloud alpha run services update conductor --vpc-connector=<VPC Path> --vpc-egress=all --platform managed --zone us-central1`
-      - dev: `projects/ut-dts-shared-vpc-dev/locations/us-central1/connectors/dts-shared-vpc-connector`
-      - prod: `projects/ut-dts-sharedvpc-prod/locations/us-central1/connectors/dts-sharedvpc-connector`
+1. VPC Connector: `custom`
+   - Route all traffic through the VPC connector
+     - dev: `projects/ut-dts-shared-vpc-dev/locations/us-central1/connectors/dts-shared-vpc-connector`
+     - prod: `projects/ut-dts-sharedvpc-prod/locations/us-central1/connectors/dts-sharedvpc-connector`
+1. Ingress: `Allow all traffic`
+1. Authentication: `require authentication`
 1. copy cloud run url for the subscription
 
 ### subscriptions
