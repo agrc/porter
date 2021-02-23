@@ -14,6 +14,10 @@ assignees: "@steveoh, @gregbunce, @rkelson"
 
 _A short summary of the situation._
 
+## Migration Guide
+
+_A short summary of how users affected by this deprecation can modify their workflows and projects to continue to get similar or improved functionality_
+
 ## Action items
 
 1. _Assign a person who should complete the task by replacing `name` with their github `@name`._
