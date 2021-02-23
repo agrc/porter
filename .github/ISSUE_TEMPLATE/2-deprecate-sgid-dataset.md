@@ -18,6 +18,11 @@ _A short summary of the situation._
 
 _A short summary of how users affected by this deprecation can modify their workflows and projects to continue to get similar or improved functionality_
 
+<!-- this is here to help the writing juices flow. feel free to completely replace this or simply fill in the blanks -->
+
+This dataset has ben replaced by () which is named () in the Open SGID and () in the SGID Open Data. 
+The replaced data is still accessible via our shelved policy in AGOL (a link to the shelved item).
+
 ## Action items
 
 1. _Assign a person who should complete the task by replacing `name` with their github `@name`._
