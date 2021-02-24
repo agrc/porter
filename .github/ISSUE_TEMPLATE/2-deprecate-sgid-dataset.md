@@ -20,7 +20,7 @@ _A short summary of how users affected by this deprecation can modify their work
 
 <!-- this is here to help the writing juices flow. feel free to completely replace this or simply fill in the blanks -->
 
-This dataset has ben replaced by () which is named () in the Open SGID and () in the SGID Open Data. 
+This dataset has ben replaced by () which is named () in the Open SGID and () in the SGID Open Data.
 The replaced data is still accessible via our shelved policy in AGOL (a link to the shelved item).
 
 ## Action items
@@ -30,15 +30,19 @@ The replaced data is still accessible via our shelved policy in AGOL (a link to 
 1. _~Strike~ out all items that do not apply._
 
 - [ ] Remove data from the Internal SGID (name, completed: `2021/00/00`)
+- [ ] Deprecate ArcGIS Online item in preparation for future deletion (name, completed: `2021/00/00`)
+  - [ ] Add `Deprecated` to `AGOL_PUBLISHED_NAME` in `SGID.META.AGOLItems` (name, completed: `2021/00/00`)
+  - [ ] Change `Authoritative` to `d` in `SGID.META.AGOLItems` to set the `Deprecated` AGOL flag (name, completed: `2021/00/00`)
+  - [ ] Add note to ArcGIS Online description noting when layer will be deleted and any replacement layer (name, completed: `2021/00/00`)
 - [ ] Delete ArcGIS Online item (name, completed: `2021/00/00`)
-  - [ ] Add `deprecated` tag to ArcGIS Online item (name, completed: `2021/00/00`)
-  - [ ] Add `Deprecated` to ArcGIS Online item title(name, completed: `2021/00/00`)
 - [ ] Unshare item from Open Data (name, completed: `2021/00/00`)
+  - currently achieved by either deleting the AGOL item, changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to something other than an Item ID and manually removing the item from all SGID groups, or shelving the data.
 - [ ] Remove Farm from AGOL connection (name, completed: `2021/00/00`)
 - [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/data) data pages (name, completed: `2021/00/00`)
 - [ ] Add this porter url to the `Deprecated` field of the [Stewardship](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1) record (name, completed: `2021/00/00`)
 - [ ] Update `SGID.META.AGOLItems` table (name, completed: `2021/00/00`)
   - delete row if removing from both
+  - cut and paste row to `AGOLItems_shelved` table if shelving (see below)
   - set the `AGOL_ITEM_ID` field to `hosted by <agency>` for Farm from AGOL
   - set the `AGOL_ITEM_ID` field to `exclude from AGOL` to not publish to ArcGIS Online
 - [ ] Delete Google Drive data (name, completed: `2021/00/00`)
@@ -49,11 +53,15 @@ The replaced data is still accessible via our shelved policy in AGOL (a link to 
 
 ### Shelve/Static
 
-_Choose one._
+_Choose one based on situation._
 
-- [ ] Upload to `UtahAGRC/AGRC_Shelved` folder in AGOL (name, completed: `2021/00/00`)
-- [ ] Move existing AGOL item to `AGRC_Shelved` AGOL folder (name, completed: `2021/00/00`)
+- [ ] Upload to `UtahAGRC/AGRC_Shelved` folder in AGOL (New shelved item not already in AGOL) (name, completed: `2021/00/00`)
+- [ ] Move existing AGOL item to `AGRC_Shelved` AGOL folder (shelving an item already in AGOL) (name, completed: `2021/00/00`)
 - [ ] Upload to appropriate `UtahAGRC/{SGID Category}` folder in AGOL (for `static` datasets) (name, completed: `2021/00/00`)
+
+_Add record to table._
+
+- [ ] Add record to `AGOLItems_shelved` [table](https://utah.maps.arcgis.com/home/item.html?id=1760fbedbc7e49429aa6c0c3ab1442ec) in ArcGIS Online  with `shelved` or `static` in the `CATEGORY` field (name, completed: `2021/00/00`)
 
 ## :robot: Automation validation
 
@@ -63,6 +71,7 @@ _Choose one._
 
 - [ ] Remove data from Open SGID (name on `2021/00/00`)
 - [ ] [sgid-index](https://gis.utah.gov/data/sgid-index) (@steveoh on `2021/00/00`)
+- [ ] Auditor sets appropriate `shelved`/`static`/`Deprecated` information (@jacobdadams on `2021/00/00`)
 
 ## Are there service dependencies
 
