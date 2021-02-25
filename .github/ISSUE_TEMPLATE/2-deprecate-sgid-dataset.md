@@ -31,7 +31,6 @@ The replaced data is still accessible via our shelved policy in AGOL (a link to 
 
 - [ ] Remove data from the Internal SGID (name, completed: `2021/00/00`)
 - [ ] Mark ArcGIS Online item as deprecated in preparation for future deletion (name, completed: `2021/00/00`)
-  - [ ] Add `Deprecated` to `AGOL_PUBLISHED_NAME` in `SGID.META.AGOLItems` (name, completed: `2021/00/00`)
   - [ ] Change `Authoritative` field to `d` in `SGID.META.AGOLItems` to set the `Deprecated` AGOL flag (name, completed: `2021/00/00`)
   - [ ] Add note to ArcGIS Online description noting when layer will be deleted and any replacement layer (name, completed: `2021/00/00`)
 - [ ] Delete ArcGIS Online item (name, completed: `2021/00/00`)
