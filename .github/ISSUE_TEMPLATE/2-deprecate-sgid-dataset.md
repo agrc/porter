@@ -20,7 +20,7 @@ _A short summary of how users affected by this deprecation can modify their work
 
 <!-- this is here to help the writing juices flow. feel free to completely replace this or simply fill in the blanks -->
 
-This dataset has ben replaced by () which is named () in the Open SGID and () in the SGID Open Data.
+This dataset has been replaced by () which is named () in the Open SGID and () in the SGID Open Data.
 The replaced data is still accessible via our shelved policy in AGOL (a link to the shelved item).
 
 ## Action items
@@ -29,18 +29,31 @@ The replaced data is still accessible via our shelved policy in AGOL (a link to 
 1. _Check [x] the box when the task is completed and add the date of completion._
 1. _~Strike~ out all items that do not apply._
 
-- [ ] Remove data from the Internal SGID (name, completed: `2021/00/00`)
+### Soft Delete
+
+_The purpose of the soft delete is to ensure that all of our users and applications have gracefully migrated off of the dataset. Soft deletes will remain in effect for 14 days. During this time, you will have the ability to restore the dataset to its original SGID offering(s). Once the 14 pass, the item is then eligible for a hard delete._
+
+If this dataset is being replaced, then wait until the new data is publicly available before completing these steps:
+
 - [ ] Mark ArcGIS Online item as deprecated in preparation for future deletion (name, completed: `2021/00/00`)
   - [ ] Change `Authoritative` field to `d` in `SGID.META.AGOLItems` to set the `Deprecated` AGOL flag (name, completed: `2021/00/00`)
   - [ ] Add note to ArcGIS Online description noting when layer will be deleted and any replacement layer (name, completed: `2021/00/00`)
-- [ ] Delete ArcGIS Online item (name, completed: `2021/00/00`)
 - [ ] Unshare item from Open Data (name, completed: `2021/00/00`)
+- [ ] Remove the SGID Index item (name, completed: `2021/00/00`)
+- [ ] Update the `AGOL_ITEM_ID` field in the `SGID.META.AGOLItems` table to a non-GUID text (ie: `Removed from AGOL` or `Replaced by abc from xyz`). Allow this new text to exist though on [Auditor](https://github.com/agrc/auditor) run - Auditor currently runs daily at 5:00am (name, completed: `2021/00/00`)
+  - [ ] After one successful Auditor run, remove the row from the `SGID.META.AGOLItems` table (name, completed: `2021/00/00`)
+
+### Hard Delete
+
+_Hard deletes are final. It is recommend to complete the the soft delete process before moving on to these steps. If you decide to skip the soft delete, note that you will need to incorporate some of those steps here._
+
+- [ ] Remove data from the Internal SGID (name, completed: `2021/00/00`)
+- [ ] Delete ArcGIS Online item (name, completed: `2021/00/00`)
   - currently achieved by either deleting the AGOL item, changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to something other than an Item ID and manually removing the item from all SGID groups, or shelving the data.
 - [ ] Remove Farm from AGOL connection (name, completed: `2021/00/00`)
 - [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/data) data pages (name, completed: `2021/00/00`)
 - [ ] Add this porter url to the `Deprecated` field of the [Stewardship](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1) record (name, completed: `2021/00/00`)
 - [ ] Update `SGID.META.AGOLItems` table (name, completed: `2021/00/00`)
-  - delete row if removing from both
   - cut and paste row to `AGOLItems_shelved` table if shelving (see below)
   - set the `AGOL_ITEM_ID` field to `hosted by <agency>` for Farm from AGOL
   - set the `AGOL_ITEM_ID` field to `exclude from AGOL` to not publish to ArcGIS Online
