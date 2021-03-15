@@ -31,7 +31,7 @@ The replaced data is still accessible via our shelved policy in AGOL (a link to 
 
 ### Soft Delete
 
-_The purpose of the soft delete is to ensure that all of our users and applications have gracefully migrated off of the dataset. Soft deletes will remain in effect for 14 days. During this time, you will have the ability to restore the dataset to its original SGID offering(s). Once the 14 pass, the item is then eligible for a hard delete._
+_The purpose of the soft delete is to ensure that all of our users and applications have gracefully migrated off of the dataset. Soft deletes will remain in effect for 14 days. During this time, we will have the ability to restore the dataset to its original SGID offering(s). After these 14 days, the item is then ready for a hard delete._
 
 If this dataset is being replaced, then wait until the new data is publicly available before completing these steps:
 
