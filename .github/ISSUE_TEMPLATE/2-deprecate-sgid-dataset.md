@@ -33,7 +33,7 @@ The replaced data is still accessible via our shelved policy in AGOL (a link to 
 
 _The purpose of the soft delete is to ensure that all of our users and applications have gracefully migrated off of the dataset. Soft deletes will remain in effect for 14 days. During this time, we will have the ability to restore the dataset to its original SGID offering(s). After these 14 days, the item is then ready for a hard delete._
 
-If this dataset is being replaced, then wait until the new data is publicly available before completing these steps:
+Note: If this dataset is being replaced, then wait until the new data is publicly available before completing these steps:
 
 - [ ] Mark ArcGIS Online item as deprecated in preparation for future deletion (name, completed: `2021/00/00`)
   - [ ] Change `Authoritative` field to `d` in `SGID.META.AGOLItems` to set the `Deprecated` AGOL flag (name, completed: `2021/00/00`)
