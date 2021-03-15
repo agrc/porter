@@ -40,8 +40,8 @@ If this dataset is being replaced, then wait until the new data is publicly avai
   - [ ] Add note to ArcGIS Online description noting when layer will be deleted and any replacement layer (name, completed: `2021/00/00`)
 - [ ] Unshare item from Open Data (name, completed: `2021/00/00`)
 - [ ] Remove the SGID Index item (name, completed: `2021/00/00`)
-- [ ] Update the `AGOL_ITEM_ID` field in the `SGID.META.AGOLItems` table to a non-GUID text (ie: `Removed from AGOL` or `Replaced by abc from xyz`). Allow this new text to exist though on [Auditor](https://github.com/agrc/auditor) run - Auditor currently runs daily at 5:00am (name, completed: `2021/00/00`)
-  - [ ] After one successful Auditor run, remove the row from the `SGID.META.AGOLItems` table (name, completed: `2021/00/00`)
+- [ ] Update the `AGOL_ITEM_ID` field in the `SGID.META.AGOLItems` table to a non-GUID text (ie: `Removed from AGOL` or `Replaced by abc from xyz`). Allow this updated text to persist though one run of [Auditor](https://github.com/agrc/auditor) - currently, Auditor runs daily at 5:00am (name, completed: `2021/00/00`)
+  - [ ] After one successful run of Auditor, remove the row from the `SGID.META.AGOLItems` table. This will trigger the removal of this item in Open SGID (name, completed: `2021/00/00`)
 
 ### Hard Delete
 
