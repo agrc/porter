@@ -47,9 +47,9 @@ Note: If this dataset is being replaced, then wait until the new data is publicl
 
 _Hard deletes are final. It is recommend to complete the soft delete process before moving on to these steps. If you decide to skip the soft delete, note that you will need to incorporate some of those steps here._
 
-- [ ] Remove data from the Internal SGID (name, completed: `2021/00/00`)
+- [ ] Manually remove data from the Internal SGID (name, completed: `2021/00/00`)
   - Deprecated database layers can be backup up on Google Drive > AGRC Share > Team Projects > SGID > [deprecated layers]
-- [ ] Delete ArcGIS Online item (name, completed: `2021/00/00`)
+- [ ] Manually delete ArcGIS Online item (name, completed: `2021/00/00`)
   - currently achieved by either deleting the AGOL item, changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to something other than an Item ID and manually removing the item from all SGID groups, or shelving the data. 
   - Deprecated AGOL items can be backup on Google Drive > AGRC Share > Team Projects > SGID > [deprecated layers](https://drive.google.com/drive/u/1/folders/1JT4XzZz3wX95nJc95iOcQ2T3Zd_4GtAS). 
 - [ ] Remove Farm from AGOL connection (name, completed: `2021/00/00`)
