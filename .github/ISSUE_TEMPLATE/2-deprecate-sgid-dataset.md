@@ -48,8 +48,12 @@ _Hard deletes are final. It is recommend to complete the soft delete process bef
 
 - [ ] Manually remove data from the Internal SGID (name, completed: `2021/00/00`)
   - Deprecated database layers can be backup up on Google Drive > AGRC Share > Team Projects > SGID > [deprecated layers]
-- [ ] Manually delete ArcGIS Online item (name, completed: `2021/00/00`)
-  - currently achieved by either deleting the AGOL item, changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to something other than an Item ID and manually removing the item from all SGID groups, or shelving the data. 
+- [ ] Remove ArcGIS Online item: (name, completed: `2021/00/00`)
+  - Manually delete the AGOL item
+  -  -OR- 
+  - Unshare by changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to something other than an Item ID and manaually changing the sharing settings (remove the item from all SGID groups, remove Public sharing),
+  - -OR-
+  - Shelve the data by copying the row from `SGID.META.AGOLItems` to the `AGOLItems_shelved` table in AGOL and changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to `shelved` or some other note. 
   - Deprecated AGOL items can be backup on Google Drive > AGRC Share > Team Projects > SGID > [deprecated layers](https://drive.google.com/drive/u/1/folders/1JT4XzZz3wX95nJc95iOcQ2T3Zd_4GtAS). 
 - [ ] Remove Farm from AGOL connection (name, completed: `2021/00/00`)
 - [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/data) data pages (name, completed: `2021/00/00`)
