@@ -44,7 +44,7 @@ Note: If this dataset is being replaced, then wait until the new data is publicl
 
 ### Hard Delete
 
-_Hard deletes are final. It is recommend to complete the soft delete process before moving on to these steps. If you decide to skip the soft delete, note that you will need to incorporate some of those steps here._
+_Hard deletes are final. It is recommended to complete the soft delete process before moving on to these steps. If you decide to skip the soft delete, note that you will need to incorporate some of those steps here._
 
 - [ ] Manually remove data from the Internal SGID (name, completed: `2021/00/00`)
   - Deprecated database layers can be backup up on Google Drive > AGRC Share > Team Projects > SGID > [deprecated layers]
