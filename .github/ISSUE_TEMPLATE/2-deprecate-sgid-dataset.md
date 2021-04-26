@@ -39,7 +39,7 @@ Note: If this dataset is being replaced, then wait until the new data is publicl
 - [ ] Unshare item from Open Data (name, completed: `2021/00/00`)
 - [ ] Update the [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1) row as deprecated by pasting the related Porter issue URL in the Deprecated field (name, completed: `2021/00/00`)
 - [ ] Mark ArcGIS Online item as deprecated in preparation for future deletion (name, completed: `2021/00/00`)
-  - [ ] Change `Authoritative` field to `d` in `SGID.META.AGOLItems` to automatically set the `Deprecated` AGOL flag. Allow the `d` to persist though one run of [Auditor](https://github.com/agrc/auditor) - currently, Auditor runs daily at 5:00am (name, completed: `2021/00/00`)
+  - [ ] Change `Authoritative` field to `d` in `SGID.META.AGOLItems` to automatically set the `Deprecated` AGOL flag. Allow the `d` to persist through one run of [Auditor](https://github.com/agrc/auditor) - currently, Auditor runs daily at 5:00am (name, completed: `2021/00/00`)
     - [ ] After one successful run of Auditor, remove the row from the `SGID.META.AGOLItems` table. This will trigger the removal of this item in Open SGID (name, completed: `2021/00/00`)
 
 ### Hard Delete
