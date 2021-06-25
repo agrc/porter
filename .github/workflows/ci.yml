@@ -4,11 +4,11 @@ on:
   push:
     paths:
     - 'src/conductor/**'
-    - '.github/workflows/*.yml'
+    - '.github/workflows/ci.yml'
   pull_request:
-    paths: 
+    paths:
     - 'src/conductor/**'
-    - '.github/workflows/*.yml'
+    - '.github/workflows/ci.yml'
 
 jobs:
   test:
