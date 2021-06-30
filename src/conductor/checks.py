@@ -499,8 +499,7 @@ def get_users_task_statuses(issue_body):
         users.setdefault(user, []).append(is_complete)
 
     tasks = []
-    for user in users:
-        task_results = users[user]
+    for user, task_results in users.items():
         tasks.append((user, len(task_results), task_results.count(True)))
 
     return tasks
