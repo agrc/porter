@@ -45,7 +45,7 @@ def schedule():
 
     client = secretmanager.SecretManagerServiceClient()
     name = client.secret_version_path(PROD_PROJECT, 'conductor-connections', 'latest')
-    secrets = client.access_secret_version(name)
+    secrets = client.access_secret_version(request = {'name': name})
     secrets = json.loads(secrets.payload.data.decode('UTF-8'))
     secrets['client_builder'] = lambda: GSheetChecker.create_client_with_secret_manager(PROD_PROJECT, 'stewardship-sa')
 

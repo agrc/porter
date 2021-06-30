@@ -434,7 +434,7 @@ class GSheetChecker():
         """
         client = secretmanager.SecretManagerServiceClient()
         name = client.secret_version_path(project, secret_name, 'latest')
-        secrets = client.access_secret_version(name)
+        secrets = client.access_secret_version(request = {'name': name})
 
         if secrets is None:
             raise Exception('The project secret might not exist or is incorrect; Could not create client.')
