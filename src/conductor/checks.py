@@ -488,13 +488,14 @@ def get_users_task_statuses(issue_body):
     the number of completed tasks
     """
     users = {}
-    expression = r'(?P<strikethrough>~?)- \[(?P<is_completed>[x| ]?)\] .* \(*?(?P<user>@..*?\b).*\)'
+    expression = r'\s- \[(?P<is_completed>[x| ]?)\] .* \(*?(?P<user>@..*?\b).*\)~?'
+    strike_expression = r'~.*~'
 
     for match in re.finditer(expression, issue_body, re.MULTILINE):
         user = match.group('user')
-        if match.group('strikethrough') or user == '@assigned':
+        if re.search(strike_expression, match.group()) or user == '@assigned':
             continue
-        is_complete = match.group('is_completed').strip().lower() == 'x' or len(match.group('strikethrough')) > 0
+        is_complete = match.group('is_completed').strip().lower() == 'x'
         users.setdefault(user, []).append(is_complete)
 
     tasks = []

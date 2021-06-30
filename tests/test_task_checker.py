@@ -5,7 +5,6 @@ test_triage_checker.py
 A module that contains tests for the TaskChecker module.
 """
 
-from collections import namedtuple
 from pathlib import Path
 
 from conductor.checks import TaskChecker, get_users_task_statuses
