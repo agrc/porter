@@ -35,7 +35,7 @@ setup(
     install_requires=[
         'colorama==0.*',
         'docopt==0.*',
-        'flask==2.0.*',
+        'flask==1.*',
         'psycopg2-binary==2.*',
         'PyGithub==1.*',
         'pygsheets==2.*',
