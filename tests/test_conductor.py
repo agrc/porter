@@ -16,7 +16,7 @@ from conductor import conductor
 from conductor.checks import GSheetChecker, MetaTableChecker, TableChecker, UrlChecker
 from conductor.connections_sample import SECRETS
 
-REQUESTER = Requester('token', None, None, 'http://gis.utah.gov', 0, 'client-id', 'secret', '', 1, False, {})
+REQUESTER = Requester('token', None, None, 'http://gis.utah.gov', 0, 'client-id', 'secret', '', 1, False)
 
 
 def noop():
