@@ -21,6 +21,7 @@ When the champion from your team has completed the triage, check [x] the checkbo
 - [ ] Dev Team Triage (@steveoh)
 ~- [ ] Cadastre Team Triage (@rkelson)~
 -~ [ ] Cadastre Team Triage (@rkelson)~
+- [ ] ~Cadastre Team Triage (@rkelson)~
 
 # We are introducing data
 
