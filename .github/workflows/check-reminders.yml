@@ -1,4 +1,4 @@
-name: 'check reminders'
+name: 'look for past due reminders and notify'
 
 on:
   schedule:
