@@ -1,0 +1,31 @@
+name: Remove an Application
+description: An application is needing to be deprecated
+title: "Deprecate: "
+labels: [deprecation, triage]
+assignees:
+  - steveoh
+  - gregbunce
+  - rkelson
+body:
+  - type: input
+    id: application_name
+    attributes:
+      label: Application Name
+      description: What is the name of the application being deprecated
+      placeholder: ex. the broadband website
+    validations:
+      required: true
+  - type: input
+    id: application_url
+    attributes:
+      label: Application Url
+      description: What is the web address to the application
+      placeholder: ex. https://broadband.utah.gov
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Deprecation Summary
+      description: Describe the situation for why this resource is being deprecated including who requested the change etc.
+    validations:
+      required: true
