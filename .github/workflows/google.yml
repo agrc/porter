@@ -53,15 +53,11 @@ jobs:
 
       - name: Update Cloud Run metadata
         working-directory: src
-        env:
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
-          VPC: ${{ secrets.VPC }}
         run: |
-          sed -i "s@{{IMAGE}}@${{ gcr.io/$PROJECT_ID/conductor:$GITHUB_SHA }}@g" ../cloud-run-deployment.yml
-          sed -i "s@{{SERVICE_ACCOUNT}}@${{ $SERVICE_ACCOUNT }}@g" ../cloud-run-deployment.yml
-          sed -i "s@{{VPC}}@${{ $VPC }}@g" ../cloud-run-deployment.yml
-          cat ../cloud-run-deployment.yml
+          sed -i "s@{{IMAGE}}@gcr.io/${{ secrets.PROJECT_ID }}/conductor:$GITHUB_SHA@g" cloud-run-deployment.yml
+          sed -i "s@{{SERVICE_ACCOUNT}}@${{ secrets.SERVICE_ACCOUNT }}@g" cloud-run-deployment.yml
+          sed -i "s@{{VPC}}@${{ secrets.VPC }}@g" cloud-run-deployment.yml
+          cat cloud-run-deployment.yml
 
       # - name: Deploy to Cloud Run
       #   id: deploy
