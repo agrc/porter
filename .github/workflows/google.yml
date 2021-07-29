@@ -65,9 +65,9 @@ jobs:
       - name: Update Cloud Run metadata
         working-directory: src
         run: |
-          sed -i "s@{{IMAGE}}@gcr.io/${{ secrets.PROJECT_ID }}/conductor:$SHORT_SHA@g" cloud-run-deployment.yml
-          sed -i "s@{{SERVICE_ACCOUNT}}@${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME }}@g" cloud-run-deployment.yml
-          sed -i "s@{{VPC}}@${{ secrets.VPC }}@g" cloud-run-deployment.yml
+          sed -i "s@{IMAGE}@gcr.io/${{ secrets.PROJECT_ID }}/conductor:'$SHORT_SHA'@g" cloud-run-deployment.yml
+          sed -i "s!{SERVICE_ACCOUNT}!${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME }}!g" cloud-run-deployment.yml
+          sed -i "s@{VPC}@${{ secrets.VPC }}@g" cloud-run-deployment.yml
 
       - name: Deploy to Cloud Run
         id: deploy
