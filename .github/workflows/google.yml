@@ -2,17 +2,83 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    paths:
-      - ".github/workflows/google.yml"
-      - "src"
+    tags:
+      - "*"
 
 jobs:
-  setup-build-deploy:
-    name: Setup, Build, and Deploy
+  deploy-dev:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/test'
+    if: github.ref == 'refs/heads/dev'
     environment:
       name: dev
+    env:
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.OS }}-python-${{ hashFiles('setup.py') }}
+
+      - name: Install conductor
+        run: pip install .[tests,cloud-run]
+
+      - name: Test with pytest
+        run: pytest
+
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
+          project_id: ${{ secrets.PROJECT_ID }}
+
+      - name: Configure docker
+        run: |-
+          gcloud --quiet auth configure-docker
+
+      - name: Set short commit hash
+        run: |
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
+      - name: Build Image
+        run: |-
+          docker build \
+            --tag gcr.io/$PROJECT_ID/conductor:$SHORT_SHA \
+            --tag gcr.io/$PROJECT_ID/conductor:latest \
+            .
+
+      # Push the Docker image to Google Container Registry
+      - name: Publish Image
+        run: |-
+          docker push --all-tags gcr.io/$PROJECT_ID/conductor
+
+      - name: Update Cloud Run metadata
+        working-directory: src
+        run: |
+          sed -i "s@{IMAGE}@gcr.io/${{ secrets.PROJECT_ID }}/conductor:$SHORT_SHA@g" cloud-run-deployment.yml
+          sed -i "s!{SERVICE_ACCOUNT}!${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME }}!g" cloud-run-deployment.yml
+          sed -i "s@{VPC}@${{ secrets.VPC }}@g" cloud-run-deployment.yml
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          metadata: "./src/cloud-run-deployment.yml"
+          credentials: ${{ secrets.SERVICE_ACCOUNT }}
+
+  deploy-prod:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: prod
     env:
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
 
