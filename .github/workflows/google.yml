@@ -10,58 +10,63 @@ jobs:
   setup-build-deploy:
     name: Setup, Build, and Deploy
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/test'
     environment:
       name: dev
-    if: github.ref == 'refs/heads/test'
+    env:
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
 
     steps:
-      # - name: Set up Python
-      #   uses: actions/setup-python@v2
-      #   with:
-      #     python-version: 3.8
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
       - name: Checkout
         uses: actions/checkout@v2
 
-      # - name: Install conductor
-      #   run: pip install .[tests,cloud-run]
+      - name: Install conductor
+        run: pip install .[tests,cloud-run]
 
-      # - name: Test with pytest
-      #   run: pytest
+      - name: Test with pytest
+        run: pytest
 
-      # - name: Setup gcloud CLI
-      #   uses: google-github-actions/setup-gcloud@master
-      #   with:
-      #     service_account_key: ${{ secrets.RUN_SA_KEY }}
-      #     project_id: ${{ secrets.PROJECT_ID }}
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
+          project_id: ${{ secrets.PROJECT_ID }}
 
-      # - name: Configure docker
-      #   run: |-
-      #     gcloud --quiet auth configure-docker
+      - name: Configure docker
+        run: |-
+          gcloud --quiet auth configure-docker
 
-      # - name: Build Image
-      #   run: |-
-      #     docker build \
-      #       --tag gcr.io/$PROJECT_ID/conductor:$GITHUB_SHA \
-      #       --tag gcr.io/$PROJECT_ID/conductor:latest \
-      #       .
+      - name: Set short commit hash
+        run: |
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
 
-      # # Push the Docker image to Google Container Registry
-      # - name: Publish Image
-      #   run: |-
-      #     docker push --all-tags gcr.io/$PROJECT_ID/conductor
+      - name: Build Image
+        run: |-
+          docker build \
+            --tag gcr.io/$PROJECT_ID/conductor:$SHORT_SHA \
+            --tag gcr.io/$PROJECT_ID/conductor:latest \
+            .
+
+      # Push the Docker image to Google Container Registry
+      - name: Publish Image
+        run: |-
+          docker push --all-tags gcr.io/$PROJECT_ID/conductor
 
       - name: Update Cloud Run metadata
         working-directory: src
         run: |
-          sed -i "s@{{IMAGE}}@gcr.io/${{ secrets.PROJECT_ID }}/conductor:$GITHUB_SHA@g" cloud-run-deployment.yml
-          sed -i "s@{{SERVICE_ACCOUNT}}@${{ secrets.SERVICE_ACCOUNT }}@g" cloud-run-deployment.yml
+          sed -i "s@{{IMAGE}}@gcr.io/${{ secrets.PROJECT_ID }}/conductor:$SHORT_SHA@g" cloud-run-deployment.yml
+          sed -i "s@{{SERVICE_ACCOUNT}}@${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME }}@g" cloud-run-deployment.yml
           sed -i "s@{{VPC}}@${{ secrets.VPC }}@g" cloud-run-deployment.yml
-          cat cloud-run-deployment.yml
 
-      # - name: Deploy to Cloud Run
-      #   id: deploy
-      #   uses: google-github-actions/deploy-cloudrun@main
-      #   with:
-      #     metadata: "./cloud-run-deployment.yml"
-      #     credentials: ${{ secrets.RUN_SA_KEY }}
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          metadata: "./cloud-run-deployment.yml"
+          credentials: ${{ secrets.SERVICE_ACCOUNT }}
