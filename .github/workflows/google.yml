@@ -25,6 +25,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.OS }}-python-${{ hashFiles('setup.py') }}
+
       - name: Install conductor
         run: pip install .[tests,cloud-run]
 
