@@ -39,6 +39,7 @@ _Choose one._
 
 - [ ] Stop (name, completed: `2021/00/00`)
 - [ ] Delete (name, completed: `2021/00/00`)
+- [ ] Unregister Data Store in ArcGIS Server (name, completed: `2021/00/00`)
 
 ### Is there a forklift pallet?
 
