@@ -28,6 +28,7 @@ _A short summary of the situation._
 
 - [ ] Remove DNS entry (name, completed: `2021/00/00`)
 - [ ] Archive source code repository (name, completed: `2021/00/00`)
+- [ ] Remove app-specific quad word from Discover system (name, completed: `2021/00/00`)
 
 _Choose one._
 
