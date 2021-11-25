@@ -3,35 +3,39 @@ name: Build and Test
 on:
   push:
     paths:
-    - 'src/conductor/**'
-    - '.github/workflows/ci.yml'
+      - "src/conductor/**"
+      - ".github/workflows/ci.yml"
   pull_request:
     paths:
-    - 'src/conductor/**'
-    - '.github/workflows/ci.yml'
+      - "src/conductor/**"
+      - ".github/workflows/ci.yml"
 
 jobs:
   test:
-    name: Setup, Build, and Test
+    name: Unit Tests
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.0
 
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: ⬇️ Set up code
+        uses: actions/checkout@v2
 
-    - name: Install conductor
-      run: pip install .[tests,cloud-run]
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          cache: "pip"
 
-    - name: Test with pytest
-      run: pytest
+      - name: 🏗 Install conductor
+        run: pip install .[tests,cloud-run]
 
-    - name: Report coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./cov.xml
+      - name: 🧪 Run pytest
+        run: pytest
+
+      - name: ⬆️ Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./cov.xml

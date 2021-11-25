@@ -10,13 +10,15 @@
     "${workspaceRoot}/setup.cfg"
   ],
   "cSpell.words": [
-    "AGRC",
     "agol",
+    "AGRC",
     "arcgis",
     "cadastre",
     "cloudb",
+    "Codecov",
     "dotenv",
     "finditer",
+    "gcloud",
     "getenv",
     "gregbunce",
     "gunicorn",
