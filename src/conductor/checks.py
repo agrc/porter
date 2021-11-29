@@ -164,7 +164,7 @@ class MetaTableChecker(TableChecker):
     """
     sql = '''SELECT AGOL_ITEM_ID, AGOL_PUBLISHED_NAME, GEOMETRY_TYPE
             FROM
-                SGID.META.AGOLITEMS
+                SGID.META.AGOLItems_evw
             WHERE
                 LOWER(TABLENAME) = LOWER(?)
             '''
