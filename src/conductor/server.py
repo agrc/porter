@@ -47,8 +47,12 @@ def schedule():
     secrets = json.loads(Path('/secrets/db/connections').read_text())
     secrets['sheets-sa'] = Path('/secrets/sheets/service-account').read_text()
 
+    is_production = True
+    if 'PORTER_DEVELOPMENT' in os.environ:
+        is_production = False
+
     try:
-        startup(secrets, True)
+        startup(secrets, is_production)
     except Exception as error:
         logging.error('conductor failure %s', error)
 

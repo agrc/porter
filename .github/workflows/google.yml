@@ -75,6 +75,8 @@ jobs:
           service: conductor
           image: gcr.io/${{ secrets.PROJECT_ID }}/conductor
           region: us-central1
+          env_vars: |
+            PORTER_DEVELOPMENT=1
           secrets: |
             /secrets/db/connection=conductor-connections:latest
             /secrets/sheets/service-account=stewardship-sa:latest
