@@ -42,6 +42,7 @@ jobs:
         uses: google-github-actions/auth@v0.6.0
         with:
           create_credentials_file: true
+          token_format: access_token
           workload_identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
@@ -146,6 +147,7 @@ jobs:
         uses: google-github-actions/auth@v0.6.0
         with:
           create_credentials_file: true
+          token_format: access_token
           workload_identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
