@@ -36,5 +36,4 @@ arc.dir
 cov.xml
 
 # secrets
-connections.py
-client-secret.json
+src/conductor/secrets/
