@@ -20,7 +20,6 @@ from traceback import print_exc
 
 import github
 from colorama import Fore, init
-from docopt import docopt
 
 from .checks import (
     ArcGisOnlineChecker, GSheetChecker, MetaTableChecker, MSSqlTableChecker, OpenDataChecker, PGSqlTableChecker,
@@ -241,8 +240,6 @@ def startup_local():
     """a way to access local secrets to run conductor locally
     """
     print('starting conductor...')
-    docopt(__doc__, version='conductor 2.1.1')
-
     secrets = json.loads((Path(__file__).parent / 'secrets' / 'db' / 'connections').read_text())
     secrets['sheets-sa'] = (Path(__file__).parent / 'secrets' / 'sheets' / 'service-account').read_text()
 
