@@ -45,7 +45,6 @@ setup(
     extras_require={
         'cloud-run': [
             'flask==1.*',
-            'google-cloud-secret-manager==2.5.*',
             'gunicorn==20.*',
         ],
         'tests': [
@@ -57,7 +56,7 @@ setup(
             'pytest-mock==3.*',
             'pytest-pylint==0.17.*',
             'pytest-watch==4.*',
-            'pytest==6.*',
+            'pytest==7.*',
             'yapf==0.*',
         ]
     },
