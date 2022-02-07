@@ -10,19 +10,15 @@ import json
 import logging
 import os
 import sys
+from pathlib import Path
 
 from flask import Flask, request
-from google.cloud import secretmanager
 
-from .checks import GSheetChecker
 from .conductor import startup
 
 app = Flask(__name__)
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-
-DEV_PROJECT = '746866000386'
-PROD_PROJECT = '174444704019'
 
 
 @app.route('/gcp/schedule', methods=['POST'])
@@ -31,23 +27,25 @@ def schedule():
     """
     logging.debug('request accepted')
     body = request.get_json()
+    logging.debug('scheduler request body: %s', body)
+
     if not body:
-        msg = 'no Pub/Sub message received'
+        msg = 'no message received'
         logging.error('error: %s', msg)
 
         return (f'Bad Request: {msg}', 400)
+
+    secrets = json.loads(Path('/secrets/db/connection').read_text(encoding='utf-8'))
+    secrets['sheets-sa'] = Path('/secrets/sheets/service-account').read_text(encoding='utf-8')
 
     if not isinstance(body, dict) or 'message' not in body:
-        msg = 'invalid Pub/Sub message format'
+        msg = 'invalid post data'
         logging.error('error: %s', msg)
 
         return (f'Bad Request: {msg}', 400)
 
-    client = secretmanager.SecretManagerServiceClient()
-    name = client.secret_version_path(PROD_PROJECT, 'conductor-connections', 'latest')
-    secrets = client.access_secret_version(request = {'name': name})
-    secrets = json.loads(secrets.payload.data.decode('UTF-8'))
-    secrets['client_builder'] = lambda: GSheetChecker.create_client_with_secret_manager(PROD_PROJECT, 'stewardship-sa')
+    secrets = json.loads(Path('/secrets/db/connections').read_text())
+    secrets['sheets-sa'] = Path('/secrets/sheets/service-account').read_text()
 
     try:
         startup(secrets, True)
