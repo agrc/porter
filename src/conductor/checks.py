@@ -5,7 +5,6 @@ checks.py
 a module with classes that check for the existence of things
 """
 
-import json
 import re
 from collections import namedtuple
 from pathlib import Path
@@ -15,7 +14,6 @@ import psycopg2
 import pygsheets
 import pyodbc
 import requests
-from google.cloud import secretmanager
 from google.oauth2 import service_account
 
 
@@ -329,12 +327,13 @@ class GSheetChecker():
     client = None
     worksheet = None
 
-    def __init__(self, table, sheet_id, worksheet_name, client_builder):
+    def __init__(self, table, sheet_id, worksheet_name, service_account_key):
         self.table = table
         self.sheet_id = sheet_id
         self.worksheet_name = worksheet_name
         self.field_index = {}
-        self.client = client_builder()
+        if service_account_key != 'TESTING':
+            self.client = GSheetChecker.create_sheets_client(service_account_key)
 
     def build_header_row_index(self, header_row):
         """builds an column index map to help with finding neighboring cells
@@ -427,22 +426,15 @@ class GSheetChecker():
         return pygsheets.authorize(service_account_file=file_path)
 
     @staticmethod
-    def create_client_with_secret_manager(project, secret_name):
+    def create_sheets_client(service_account_key):
         """creates a pygsheets authorized client from a secret in gcp
-        project: the numeric google project number
-        secret_name: the name of the secret in secret manager
+        service_account_key: the service account key
         """
-        client = secretmanager.SecretManagerServiceClient()
-        name = client.secret_version_path(project, secret_name, 'latest')
-        secrets = client.access_secret_version(request = {'name': name})
-
-        if secrets is None:
+        if service_account_key is None:
             raise Exception('The project secret might not exist or is incorrect; Could not create client.')
 
         scopes = ('https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive')
-        secrets = service_account.Credentials.from_service_account_info(
-            json.loads(secrets.payload.data.decode('UTF-8')), scopes=scopes
-        )
+        secrets = service_account.Credentials.from_service_account_info(service_account_key, scopes=scopes)
 
         return pygsheets.authorize(custom_credentials=secrets)
 
