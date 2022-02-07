@@ -81,7 +81,7 @@ jobs:
           flags: |
             --service-account=${{secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME}}
             --vpc-connector=${{ secrets.VPC }}
-            --concurrency=10
+            --max-instances=10
             --cpu=1000m
             --memory=512Mi
             --timeout=5m
@@ -186,7 +186,7 @@ jobs:
           flags: |
             --service-account=${{secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME}}
             --vpc-connector=${{ secrets.VPC }}
-            --concurrency=10
+            --max-instances=10
             --cpu=1000m
             --memory=512Mi
             --timeout=5m
