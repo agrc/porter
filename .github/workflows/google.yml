@@ -74,7 +74,7 @@ jobs:
         with:
           service: conductor
           image: gcr.io/${{ secrets.PROJECT_ID }}/conductor
-          region: us-west3
+          region: us-central1
           secrets: |
             /secrets/db/connection=conductor-connections:latest
             /secrets/sheets/service-account=stewardship-sa:latest
@@ -179,7 +179,7 @@ jobs:
         with:
           service: conductor
           image: gcr.io/${{ secrets.PROJECT_ID }}/conductor
-          region: us-west3
+          region: us-central1
           secrets: |
             /secrets/db/connection=conductor-connections:latest
             /secrets/sheets/service-account=stewardship-sa:latest
