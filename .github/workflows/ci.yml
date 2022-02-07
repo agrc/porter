@@ -10,15 +10,16 @@ on:
       - "src/conductor/**"
       - ".github/workflows/ci.yml"
 
+concurrency:
+  group: "${{ github.head_ref || github.ref }}"
+  cancel-in-progress: true
+
 jobs:
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.0
-
       - name: ⬇️ Set up code
         uses: actions/checkout@v2
 
@@ -31,6 +32,11 @@ jobs:
 
       - name: 🏗 Install conductor
         run: pip install .[tests,cloud-run]
+
+      - name: 🤐 Create secret file
+        run: |
+          mkdir -p /secrets/db
+          echo "{\"internalsgid\":{}, \"opensgid\":{}, \"github_token\": \"\"}" > /secrets/db/connections
 
       - name: 🧪 Run pytest
         run: pytest

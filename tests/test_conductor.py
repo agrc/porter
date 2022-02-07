@@ -8,6 +8,7 @@ A module that contains tests for the project module.
 
 import json
 from collections import namedtuple
+from os import environ
 from pathlib import Path
 
 from github.Issue import Issue
@@ -17,8 +18,12 @@ from github.Requester import Requester
 from conductor import conductor
 from conductor.checks import GSheetChecker, MetaTableChecker, TableChecker, UrlChecker
 
-SECRETS = json.loads((Path(__file__).parent.parent / 'src' / 'conductor' / 'secrets' / 'db' / 'connections').read_text()
-                    )
+secret_path = Path(__file__).parent.parent / 'src' / 'conductor' / 'secrets' / 'db' / 'connections'
+
+if 'CI' in environ:
+    secret_path = Path('/secrets/db/connections')
+
+SECRETS = json.loads(secret_path.read_text())
 
 REQUESTER = Requester('token', None, None, 'http://gis.utah.gov', 0, 'client-id', 'secret', '', 1, False, retry=False)
 

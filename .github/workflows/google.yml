@@ -34,6 +34,11 @@ jobs:
       - name: 🏗 Install conductor
         run: pip install .[tests,cloud-run]
 
+      - name: 🤐 Create secret file
+        run: |
+          mkdir -p /secrets/db
+          echo "{\"internalsgid\":{}, \"opensgid\":{}, \"github_token\": \"\"}" > /secrets/db/connections
+
       - name: 🧪 Run pytest
         run: pytest
 
@@ -140,6 +145,11 @@ jobs:
 
       - name: 🏗 Install conductor
         run: pip install .[tests,cloud-run]
+
+      - name: 🤐 Create secret file
+        run: |
+          mkdir -p /secrets/db
+          echo "{\"internalsgid\":{}, \"opensgid\":{}, \"github_token\": \"\"}" > /secrets/db/connections
 
       - name: 🧪 Run pytest
         run: pytest
