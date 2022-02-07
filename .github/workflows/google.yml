@@ -6,6 +6,10 @@ on:
       - main
       - dev
 
+concurrency:
+  group: "${{ github.head_ref || github.ref }}"
+  cancel-in-progress: true
+
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
@@ -17,9 +21,6 @@ jobs:
       contents: read
 
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.0
-
       - name: ⬇️ Set up code
         uses: actions/checkout@v2
 
@@ -36,22 +37,20 @@ jobs:
       - name: 🧪 Run pytest
         run: pytest
 
-      - id: auth
-        name: 🗝️ Authenticate to Google Cloud
-        uses: google-github-actions/auth@v0.3.1
+      - name: 🗝️ Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v0.6.0
         with:
           create_credentials_file: true
           workload_identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
-      - name: ☁️ Setup gcloud
-        run: |
-          gcloud auth login --brief --cred-file=${{ steps.auth.outputs.credentials_file_path }}
-          gcloud --quiet config set project ${{ secrets.PROJECT_ID }}
-
       - name: 🐳 Setup docker
-        run: |-
-          gcloud --quiet auth configure-docker
+        uses: docker/login-action@v1
+        with:
+          registry: gcr.io
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
 
       - name: Set short commit hash
         run: |
@@ -68,17 +67,23 @@ jobs:
         run: |-
           docker push --all-tags gcr.io/${{ secrets.PROJECT_ID }}/conductor
 
-      - name: ✏️ Update Cloud Run metadata
-        working-directory: src
-        run: |
-          sed -i "s@{IMAGE}@gcr.io/${{ secrets.PROJECT_ID }}/conductor:$SHORT_SHA@g" cloud-run-deployment.yml
-          sed -i "s!{SERVICE_ACCOUNT}!${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME }}!g" cloud-run-deployment.yml
-          sed -i "s@{VPC}@${{ secrets.VPC }}@g" cloud-run-deployment.yml
-
-      - name: 🚀 Create cloud run revision
-        run: |-
-          gcloud run services replace ./src/cloud-run-deployment.yml \
-            --platform managed --region us-central1
+      - name: 🚀 Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v0.8.0
+        with:
+          service: conductor
+          image: gcr.io/${{ secrets.PROJECT_ID }}/conductor
+          region: us-west3
+          secrets: |
+            /secrets/db/connection=conductor-connections:latest
+            /secrets/sheets/service-account=stewardship-sa:latest
+          flags: |
+            --service-account=${{secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME}}
+            --vpc-connector=${{ secrets.VPC }}
+            --concurrency=10
+            --cpu=1000m
+            --memory=512Mi
+            --timeout=5m
 
       - name: 🕰️ Create cloud scheduler
         run: |
@@ -115,65 +120,101 @@ jobs:
     if: github.ref == 'refs/heads/main'
     environment:
       name: prod
-    env:
-      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
-      - name: Set up Python
+      - name: ⬇️ Set up code
+        uses: actions/checkout@v2
+
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
+          cache: pip
+          cache-dependency-path: setup.py
 
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.OS }}-python-${{ hashFiles('setup.py') }}
-
-      - name: Install conductor
+      - name: 🏗 Install conductor
         run: pip install .[tests,cloud-run]
 
-      - name: Test with pytest
+      - name: 🧪 Run pytest
         run: pytest
 
-      - name: Setup gcloud CLI
-        uses: google-github-actions/setup-gcloud@master
+      - name: 🗝️ Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v0.6.0
         with:
-          service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
-          project_id: ${{ secrets.PROJECT_ID }}
+          create_credentials_file: true
+          workload_identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
-      - name: Configure docker
-        run: |-
-          gcloud --quiet auth configure-docker
+      - name: 🐳 Setup docker
+        uses: docker/login-action@v1
+        with:
+          registry: gcr.io
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
 
       - name: Set short commit hash
         run: |
           echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
 
-      - name: Build Image
+      - name: 📦 Build image
         run: |-
           docker build \
-            --tag gcr.io/$PROJECT_ID/conductor:$SHORT_SHA \
-            --tag gcr.io/$PROJECT_ID/conductor:latest \
+            --tag gcr.io/${{ secrets.PROJECT_ID }}/conductor:$SHORT_SHA \
+            --tag gcr.io/${{ secrets.PROJECT_ID }}/conductor:latest \
             .
 
-      # Push the Docker image to Google Container Registry
-      - name: Publish Image
+      - name: 📤 Publish image
         run: |-
-          docker push --all-tags gcr.io/$PROJECT_ID/conductor
+          docker push --all-tags gcr.io/${{ secrets.PROJECT_ID }}/conductor
 
-      - name: Update Cloud Run metadata
-        working-directory: src
-        run: |
-          sed -i "s@{IMAGE}@gcr.io/${{ secrets.PROJECT_ID }}/conductor:$SHORT_SHA@g" cloud-run-deployment.yml
-          sed -i "s!{SERVICE_ACCOUNT}!${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME }}!g" cloud-run-deployment.yml
-          sed -i "s@{VPC}@${{ secrets.VPC }}@g" cloud-run-deployment.yml
-
-      - name: Deploy to Cloud Run
+      - name: 🚀 Deploy to Cloud Run
         id: deploy
-        uses: google-github-actions/deploy-cloudrun@main
+        uses: google-github-actions/deploy-cloudrun@v0.8.0
         with:
-          metadata: "./src/cloud-run-deployment.yml"
-          credentials: ${{ secrets.SERVICE_ACCOUNT }}
+          service: conductor
+          image: gcr.io/${{ secrets.PROJECT_ID }}/conductor
+          region: us-west3
+          secrets: |
+            /secrets/db/connection=conductor-connections:latest
+            /secrets/sheets/service-account=stewardship-sa:latest
+          flags: |
+            --service-account=${{secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME}}
+            --vpc-connector=${{ secrets.VPC }}
+            --concurrency=10
+            --cpu=1000m
+            --memory=512Mi
+            --timeout=5m
+
+      - name: 🕰️ Create cloud scheduler
+        run: |
+          if [ ! "$(gcloud scheduler jobs list | grep conductor)" ]; then
+            gcloud scheduler jobs create http conductor \
+              --description="Trigger the conductor bot once a week on monday morning" \
+              --schedule="0 9 * * 1" \
+              --time-zone=America/Denver \
+              --uri=$(gcloud run services describe conductor --region us-central1 --format 'value(status.url)') \
+              --http-method=POST \
+              --message-body="{\"now\":true}" \
+              --max-retry-attempts=3 \
+              --min-backoff=1m \
+              --max-backoff=10m \
+              --oidc-service-account-email=cloud-scheduler@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com \
+              --quiet
+          else
+            gcloud scheduler jobs update http conductor \
+              --description="Trigger the conductor bot once a week on monday morning" \
+              --schedule="0 9 * * 1" \
+              --time-zone=America/Denver \
+              --uri=$(gcloud run services describe conductor --region us-central1 --format 'value(status.url)') \
+              --http-method=POST \
+              --message-body="{\"now\":true}" \
+              --max-retry-attempts=3 \
+              --min-backoff=1m \
+              --max-backoff=10m \
+              --oidc-service-account-email=cloud-scheduler@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com \
+              --quiet
+          fi
