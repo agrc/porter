@@ -22,7 +22,7 @@ from conductor.checks import (
 secret_path = Path(__file__).parent.parent / 'src' / 'conductor' / 'secrets' / 'db' / 'connections'
 
 if 'CI' in environ:
-    secret_path = Path('/secrets/db/connections')
+    secret_path = Path.cwd() / 'secrets' / 'db' / 'connections'
 
 SECRETS = json.loads(secret_path.read_text())
 CONNECTION_STRING = ''

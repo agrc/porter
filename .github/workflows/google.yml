@@ -36,8 +36,8 @@ jobs:
 
       - name: 🤐 Create secret file
         run: |
-          mkdir -p /secrets/db
-          echo "{\"internalsgid\":{}, \"opensgid\":{}, \"github_token\": \"\"}" > /secrets/db/connections
+          mkdir -p secrets/db
+          echo "{\"internalsgid\":{}, \"opensgid\":{}, \"github_token\": \"\"}" > secrets/db/connections
 
       - name: 🧪 Run pytest
         run: pytest
@@ -148,8 +148,8 @@ jobs:
 
       - name: 🤐 Create secret file
         run: |
-          mkdir -p /secrets/db
-          echo "{\"internalsgid\":{}, \"opensgid\":{}, \"github_token\": \"\"}" > /secrets/db/connections
+          mkdir -p secrets/db
+          echo "{\"internalsgid\":{}, \"opensgid\":{}, \"github_token\": \"\"}" > secrets/db/connections
 
       - name: 🧪 Run pytest
         run: pytest
