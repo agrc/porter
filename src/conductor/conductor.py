@@ -160,8 +160,7 @@ def write_reports(conductor_issues, secrets):
 
             with exception_catcher('stewardship'):
                 check = GSheetChecker(
-                    table, '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info',
-                    secrets['client_builder']
+                    table, '11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ', 'SGID Stewardship Info', secrets['sheets-sa']
                 )
                 reports[table].append(Report('stewardship', issue, check.exists(), GSheetChecker.grade))
 
