@@ -1,4 +1,4 @@
-FROM python:3.10-buster
+FROM python:3.8-buster
 
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 
