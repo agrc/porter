@@ -240,7 +240,8 @@ def startup_local():
     """a way to access local secrets to run conductor locally
     """
     print('starting conductor...')
-    secrets = json.loads((Path(__file__).parent / 'secrets' / 'db' / 'connections').read_text())
-    secrets['sheets-sa'] = (Path(__file__).parent / 'secrets' / 'sheets' / 'service-account').read_text()
+    secrets = json.loads((Path(__file__).parent / 'secrets' / 'db' / 'connections').read_text(encoding='utf-8'))
+    secrets['sheets-sa'] = (Path(__file__).parent / 'secrets' / 'sheets' /
+                            'service-account').read_text(encoding='utf-8')
 
     startup(secrets, False)

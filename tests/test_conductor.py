@@ -23,9 +23,20 @@ secret_path = Path(__file__).parent.parent / 'src' / 'conductor' / 'secrets' / '
 if 'CI' in environ:
     secret_path = Path.cwd() / 'secrets' / 'db' / 'connections'
 
-SECRETS = json.loads(secret_path.read_text())
+SECRETS = json.loads(secret_path.read_text(encoding='utf-8'))
 
-REQUESTER = Requester('token', None, None, 'http://gis.utah.gov', 0, 'client-id', 'secret', '', 1, False, retry=False)
+REQUESTER = Requester(
+    login_or_token='token',
+    password=None,
+    jwt=None,
+    base_url='http://gis.utah.gov',
+    timeout=100,
+    user_agent='pytest-conductor',
+    per_page=25,
+    verify=False,
+    retry=0,
+    pool_size=1,
+)
 
 
 def test_imports():
