@@ -37,7 +37,7 @@ jobs:
       - name: 🤐 Create secret file
         run: |
           mkdir -p secrets/db
-          echo "{\"internalsgid\":{}, \"opensgid\":{}, \"github_token\": \"\"}" > secrets/db/connections
+          echo "{\"internalsgid\":{},\"opensgid\":{\"host\":\"opensgid.agrc.utah.gov\",\"database\":\"opensgid\",\"user\":\"agrc\",\"password\":\"agrc\"},\"github_token\":\"\"}" > secrets/db/connections
 
       - name: 🧪 Run pytest
         run: pytest
@@ -149,7 +149,7 @@ jobs:
       - name: 🤐 Create secret file
         run: |
           mkdir -p secrets/db
-          echo "{\"internalsgid\":{}, \"opensgid\":{}, \"github_token\": \"\"}" > secrets/db/connections
+          echo "{\"internalsgid\":{},\"opensgid\":{\"host\":\"opensgid.agrc.utah.gov\",\"database\":\"opensgid\",\"user\":\"agrc\",\"password\":\"agrc\"},\"github_token\":\"\"}" > secrets/db/connections
 
       - name: 🧪 Run pytest
         run: pytest
