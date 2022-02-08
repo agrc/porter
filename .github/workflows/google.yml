@@ -42,6 +42,10 @@ jobs:
       - name: 🧪 Run pytest
         run: pytest
 
+      - name: 🤐 Remove secret file
+        run: |
+          rm -rf secrets/db
+
       - name: 🗝️ Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v0.6.0
@@ -152,6 +156,10 @@ jobs:
       - name: 🧪 Run pytest
         run: pytest
 
+      - name: 🤐 Remove secret file
+        run: |
+          rm -rf secrets/db
+
       - name: 🗝️ Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v0.6.0
@@ -210,7 +218,6 @@ jobs:
               --time-zone=America/Denver \
               --uri=$(gcloud run services describe conductor --region us-central1 --format 'value(status.url)')/gcp/schedule \
               --http-method=POST \
-              --message-body="{\"now\":true}" \
               --max-retry-attempts=3 \
               --min-backoff=1m \
               --max-backoff=10m \
@@ -221,9 +228,8 @@ jobs:
               --description="Trigger the conductor bot once a week on monday morning" \
               --schedule="0 9 * * 1" \
               --time-zone=America/Denver \
-              --uri=$(gcloud run services describe conductor --region us-central1 --format 'value(status.url)') \
+              --uri=$(gcloud run services describe conductor --region us-central1 --format 'value(status.url)')/gcp/schedule \
               --http-method=POST \
-              --message-body="{\"now\":true}" \
               --max-retry-attempts=3 \
               --min-backoff=1m \
               --max-backoff=10m \
