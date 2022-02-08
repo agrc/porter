@@ -44,8 +44,8 @@ def schedule():
 
         return (f'Bad Request: {msg}', 400)
 
-    secrets = json.loads(Path('/secrets/db/connections').read_text())
-    secrets['sheets-sa'] = Path('/secrets/sheets/service-account').read_text()
+    secrets = json.loads(Path('/secrets/db/connections').read_text(encoding='utf-8'))
+    secrets['sheets-sa'] = Path('/secrets/sheets/service-account').read_text(encoding='utf-8')
 
     is_production = True
     if 'PORTER_DEVELOPMENT' in os.environ:

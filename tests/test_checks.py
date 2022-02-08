@@ -24,7 +24,7 @@ secret_path = Path(__file__).parent.parent / 'src' / 'conductor' / 'secrets' / '
 if 'CI' in environ:
     secret_path = Path.cwd() / 'secrets' / 'db' / 'connections'
 
-SECRETS = json.loads(secret_path.read_text())
+SECRETS = json.loads(secret_path.read_text(encoding='utf-8'))
 CONNECTION_STRING = ''
 
 
