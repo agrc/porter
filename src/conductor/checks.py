@@ -5,6 +5,7 @@ checks.py
 a module with classes that check for the existence of things
 """
 
+import json
 import re
 from collections import namedtuple
 from pathlib import Path
@@ -434,7 +435,7 @@ class GSheetChecker():
             raise Exception('The project secret might not exist or is incorrect; Could not create client.')
 
         scopes = ('https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive')
-        secrets = service_account.Credentials.from_service_account_info(service_account_key, scopes=scopes)
+        secrets = service_account.Credentials.from_service_account_info(json.loads(service_account_key), scopes=scopes)
 
         return pygsheets.authorize(custom_credentials=secrets)
 
