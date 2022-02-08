@@ -92,6 +92,7 @@ jobs:
           flags: |
             --service-account=${{secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME}}
             --vpc-connector=${{ secrets.VPC }}
+            --vpc-egress=all-traffic
             --max-instances=10
             --cpu=1000m
             --memory=512Mi
@@ -204,6 +205,7 @@ jobs:
           flags: |
             --service-account=${{secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME}}
             --vpc-connector=${{ secrets.VPC }}
+            --vpc-egress=all-traffic
             --max-instances=10
             --cpu=1000m
             --memory=512Mi
