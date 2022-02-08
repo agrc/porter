@@ -12,7 +12,7 @@ import os
 import sys
 from pathlib import Path
 
-from flask import Flask, request
+from flask import Flask
 
 from .conductor import startup
 
@@ -26,25 +26,8 @@ def schedule():
     """ schedule: the post route that gcp pub sub sends when conductor should execute
     """
     logging.debug('request accepted')
-    body = request.get_json()
-    logging.debug('scheduler request body: %s', body)
-
-    if not body:
-        msg = 'no message received'
-        logging.error('error: %s', msg)
-
-        return (f'Bad Request: {msg}', 400)
 
     secrets = json.loads(Path('/secrets/db/connection').read_text(encoding='utf-8'))
-    secrets['sheets-sa'] = Path('/secrets/sheets/service-account').read_text(encoding='utf-8')
-
-    if not isinstance(body, dict) or 'message' not in body:
-        msg = 'invalid post data'
-        logging.error('error: %s', msg)
-
-        return (f'Bad Request: {msg}', 400)
-
-    secrets = json.loads(Path('/secrets/db/connections').read_text(encoding='utf-8'))
     secrets['sheets-sa'] = Path('/secrets/sheets/service-account').read_text(encoding='utf-8')
 
     is_production = True
