@@ -35,8 +35,8 @@ _The purpose of the soft delete is to ensure that all of our users and applicati
 
 Note: If this dataset is being replaced, then wait until the new data is publicly available before completing these steps:
 
-- [ ] Prepend "(Mature Support)" to the end of the item title.
-- [ ] Remove all tags other than "Deprecated".
+- [ ] Prepend "(Mature Support)" to the end of the item title (name, completed: `2021/00/00`)
+- [ ] Remove all tags other than "Deprecated" (name, completed: `2021/00/00`)
 - [ ] Add note to ArcGIS Online description and default popup noting when layer will be deleted and any replacement layer (name, completed: `2021/00/00`)
 - [ ] Unshare item from Open Data (name, completed: `2021/00/00`)
 - [ ] Update the [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1) row as deprecated by pasting the related Porter issue URL in the Deprecated field (name, completed: `2021/00/00`)
