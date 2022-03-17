@@ -47,7 +47,7 @@ _Choose one._
 1. _Check [x] the box when the task is completed and add the date of completion._
 1. _~Strike~ out all items that do not apply._
 
-- [ ] Add data to the Internal SGID (name, completed: `2022/00/00`)
+- [ ] Add data to the [Internal SGID](https://docs.google.com/document/d/1mskEy2iz7AZJadmlfxrsRzD2jfCCdYFf47U-2me2vrg/edit?usp=sharing) (name, completed: `2022/00/00`)
 - [ ] Configure forklift for Farm from AGOL (name, completed: `2022/00/00`)
 - [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/data) data pages (name, completed: `2022/00/00`)
 - [ ] Add a [Stewardship](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1) record (name, completed: `2022/00/00`)
