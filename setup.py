@@ -34,7 +34,7 @@ setup(
     keywords=['gis'],
     install_requires=[
         'colorama==0.*',
-        'flask==1.*',
+        'flask==2.*',
         'psycopg2-binary==2.*',
         'PyGithub==1.*',
         'pygsheets==2.*',
@@ -43,17 +43,17 @@ setup(
     ],
     extras_require={
         'cloud-run': [
-            'flask==1.*',
+            'flask==2.*',
             'gunicorn==20.*',
         ],
         'tests': [
             'pylint-quotes==0.2.*',
             'pylint==2.*',
-            'pytest-cov==2.*',
+            'pytest-cov==3.*',
             'pytest-instafail==0.4.*',
-            'pytest-isort==2.*',
+            'pytest-isort==3.*',
             'pytest-mock==3.*',
-            'pytest-pylint==0.17.*',
+            'pytest-pylint==0.18.*',
             'pytest-watch==4.*',
             'pytest==7.*',
             'yapf==0.*',
