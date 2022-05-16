@@ -37,7 +37,7 @@ Note: If this dataset is being replaced, then wait until the new data is publicl
 
 - [ ] Append "(Mature Support)" to the end of the item title (name, completed: `2022/00/00`)
 - [ ] Remove all tags other than "Deprecated" (name, completed: `2022/00/00`)
-- [ ] Add note to ArcGIS Online description and default popup noting when layer will be deleted and any replacement layer (name, completed: `2022/00/00`)
+- [ ] Add note to ArcGIS Online description noting when layer will be deleted and any replacement layer (name, completed: `2022/00/00`)
 - [ ] Unshare item from Open Data (name, completed: `2022/00/00`)
 - [ ] Update the [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1) row as deprecated by pasting the related Porter issue URL in the Deprecated field (name, completed: `2022/00/00`)
 - [ ] Mark ArcGIS Online item as deprecated in preparation for future deletion (name, completed: `2022/00/00`)
