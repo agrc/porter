@@ -23,6 +23,7 @@ _A short summary of the situation._
 - [ ] Remove forklift pallet (name, completed: `2022/00/00`)
 - [ ] Remove application-specific Databases (name, completed: `2022/00/00`)
 - [ ] AGRC Projects team drive [folder](https://drive.google.com/drive/folders/0AIVByxAYHd4oUk9PVA) (name, completed: `2022/00/00`)
+- [ ] Remove from Application Porfolio Management ("Business Applications" in ServiceNow) (name, completed: `2022/00/00`)
 
 ### Is there a website?
 
