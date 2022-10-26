@@ -9,7 +9,9 @@ assignees: "@steveoh, @gregbunce, @rkelson"
 # Summary
 
 - **Application Name**:
-- **Application Url**:
+- **Application Urls**
+  - Staging: 
+  - Production: 
 
 _A short summary of the situation._
 
