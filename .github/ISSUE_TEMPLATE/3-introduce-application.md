@@ -10,8 +10,8 @@ assignees: "@steveoh, @gregbunce, @rkelson"
 
 - **Application Name**:
 - **Application Urls**
-  - Staging: 
-  - Production: 
+  - Staging:
+  - Production:
 
 _A short summary of the situation._
 
@@ -21,10 +21,16 @@ _A short summary of the situation._
 1. _Check [x] the box when the task is completed and add the date of completion._
 1. _~Strike~ out all items that do not apply._
 
+- [ ] SOW or similar agreement (name, completed: `2022/00/00`)
 - [ ] Add to [gis.utah.gov](https://gis.utah.gov/developer/application) (name, completed: `2022/00/00`)
+- [ ] Create Archer security diagram (name, completed: `2022/00/00`)
 - [ ] Add to Application Porfolio Management ("Business Applications" in ServiceNow) (name, completed: `2022/00/00`)
 - [ ] Create maintenance contract (name, completed: `2022/00/00`)
-- [ ] Create Archer security diagram (name, completed: `2022/00/00`)
+- [ ] Maintenance contract (name, completed: `2022/00/00`)
+- [ ] Service Now task (name, completed: `2022/00/00`)
+- [ ] GitHub repo (name, completed: `2022/00/00`)
+  - Repo URL:
+- [ ] Primary client contact (name, completed: `2022/00/00`)
 
 ## Notification
 
