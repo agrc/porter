@@ -3,7 +3,7 @@ name: Adding an application
 about: Application Checklist
 title: Introduce <application>
 labels: "introduction, porter"
-assignees: "@steveoh, @gregbunce, @rkelson"
+assignees: "@nathankota"
 ---
 
 # Summary
