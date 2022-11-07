@@ -26,7 +26,6 @@ _A short summary of the situation._
 - [ ] Create Archer security diagram (@nathankota, completed: `2022/00/00`)
 - [ ] Add to Application Porfolio Management ("Business Applications" in ServiceNow) (@nathankota, completed: `2022/00/00`)
 - [ ] Create maintenance contract (@nathankota, completed: `2022/00/00`)
-- [ ] Maintenance contract (@nathankota, completed: `2022/00/00`)
 - [ ] Service Now task (@nathankota, completed: `2022/00/00`)
 - [ ] GitHub repo (name, completed: `2022/00/00`)
   - Repo URL:
