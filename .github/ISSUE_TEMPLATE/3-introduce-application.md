@@ -23,7 +23,8 @@ _A short summary of the situation._
 
 - [ ] SOW or similar agreement (@nathankota, completed: `2022/00/00`)
 - [ ] Add to [gis.utah.gov](https://gis.utah.gov/developer/application) (name, completed: `2022/00/00`)
-- [ ] Create Archer security diagram (@nathankota, completed: `2022/00/00`)
+- [ ] Create Archer security diagrams (name, completed: `2022/00/00`)
+- [ ] Create Archer security package (@nathankota, completed: `2022/00/00`)
 - [ ] Add to Application Porfolio Management ("Business Applications" in ServiceNow) (@nathankota, completed: `2022/00/00`)
 - [ ] Create maintenance contract (@nathankota, completed: `2022/00/00`)
 - [ ] Service Now task (@nathankota, completed: `2022/00/00`)
