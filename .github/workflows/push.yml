@@ -7,7 +7,7 @@ on:
       - dev
 
 concurrency:
-  group: "${{ github.head_ref || github.ref }}"
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -22,10 +22,10 @@ jobs:
 
     steps:
       - name: ⬇️ Set up code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: 🐍 Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: 3.8
           cache: pip
@@ -48,7 +48,7 @@ jobs:
 
       - name: 🗝️ Authenticate to Google Cloud
         id: auth
-        uses: google-github-actions/auth@v0.6.0
+        uses: google-github-actions/auth@v0
         with:
           create_credentials_file: true
           token_format: access_token
@@ -56,7 +56,7 @@ jobs:
           service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
       - name: 🐳 Setup docker
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: gcr.io
           username: oauth2accesstoken
@@ -79,7 +79,7 @@ jobs:
 
       - name: 🚀 Deploy to Cloud Run
         id: deploy
-        uses: google-github-actions/deploy-cloudrun@v0.8.0
+        uses: google-github-actions/deploy-cloudrun@v0
         with:
           service: conductor
           image: gcr.io/${{ secrets.PROJECT_ID }}/conductor
@@ -137,10 +137,10 @@ jobs:
 
     steps:
       - name: ⬇️ Set up code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: 🐍 Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: 3.8
           cache: pip
@@ -163,7 +163,7 @@ jobs:
 
       - name: 🗝️ Authenticate to Google Cloud
         id: auth
-        uses: google-github-actions/auth@v0.6.0
+        uses: google-github-actions/auth@v0
         with:
           create_credentials_file: true
           token_format: access_token
@@ -171,7 +171,7 @@ jobs:
           service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
       - name: 🐳 Setup docker
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: gcr.io
           username: oauth2accesstoken
@@ -194,7 +194,7 @@ jobs:
 
       - name: 🚀 Deploy to Cloud Run
         id: deploy
-        uses: google-github-actions/deploy-cloudrun@v0.8.0
+        uses: google-github-actions/deploy-cloudrun@v0
         with:
           service: conductor
           image: gcr.io/${{ secrets.PROJECT_ID }}/conductor
