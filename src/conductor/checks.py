@@ -251,7 +251,7 @@ class UrlChecker():  # pylint: disable=too-few-public-methods
     def get_data(self, args=None):
         """requests the data from the url
         """
-        self.data = requests.get(self.url, params=args, allow_redirects=False)
+        self.data = requests.get(self.url, params=args, allow_redirects=False, timeout=30)
 
     @staticmethod
     def grade(add, report_value):
