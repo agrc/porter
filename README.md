@@ -65,7 +65,7 @@ https://github.com/agrc/porter/issues/#
 
 ```md
 
-🌱🌱The SGID is getting larger🌳🌳
+🌱🌱The SGID is growing🌳🌳
 
 Dataset from Agency coming soon!
 
@@ -80,9 +80,9 @@ Follow along and comment if you are interested!
 
 ```md
 
-🌱🌱The SGID is larger🌳🌳
+🌱🌱The SGID has grown🌳🌳
 
-Dataset from Agency coming soon!
+Dataset from Agency is live in the SGID!
 
 https://github.com/agrc/porter/issues/#
 
