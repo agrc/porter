@@ -95,7 +95,7 @@ _Add record to table._
 
 - [ ] Does an application depend on this data?
 - [ ] Are clients querying this data with the WebAPI?
-- [ ] Is this data used in the Next-Generation 911 Motorola Aware Map? (@eneemann on `2022/00/00`)
+- [ ] Is this data used in the Next-Generation 911 Motorola Aware Map? (@eneemann on `2023/00/00`)
     - If so, notify Josh Nielson (josh.nielson at motorolasolutions.com)
 
 ## Notification
