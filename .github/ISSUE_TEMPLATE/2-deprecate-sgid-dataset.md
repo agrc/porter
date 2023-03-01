@@ -35,14 +35,14 @@ _The purpose of the soft delete is to ensure that all of our users and applicati
 
 Note: If this dataset is being replaced, then wait until the new data is publicly available before completing these steps:
 
-- [ ] Append "(Mature Support)" to the end of the item title (name, completed: `2022/00/00`)
-- [ ] Remove all tags other than "Deprecated" (name, completed: `2022/00/00`)
-- [ ] Add note to ArcGIS Online description noting when layer will be deleted and any replacement layer (name, completed: `2022/00/00`)
-- [ ] Unshare item from Open Data (name, completed: `2022/00/00`)
+- [ ] Append "(Mature Support)" to the end of the item title in the `SGID.META.AGOLItems` table (name, completed: `2022/00/00`)
+- [ ] Remove all tags other than "Deprecated" in the SDE metadata (name, completed: `2022/00/00`)
+- [ ] Add note to SDE description noting when layer will be deleted and any replacement layer (name, completed: `2022/00/00`)
 - [ ] Update the [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1) row as deprecated by pasting the related Porter issue URL in the Deprecated field (name, completed: `2022/00/00`)
-- [ ] Mark ArcGIS Online item as deprecated in preparation for future deletion (name, completed: `2022/00/00`)
-  - [ ] Change `Authoritative` field to `d` in `SGID.META.AGOLItems` to automatically set the `Deprecated` AGOL flag. Allow the `d` to persist through one run of [Auditor](https://github.com/agrc/auditor) - currently, Auditor runs daily at 5:00am (name, completed: `2022/00/00`)
-    - [ ] After one successful run of Auditor, remove the row from the `SGID.META.AGOLItems` table. This will trigger the removal of this item in Open SGID (name, completed: `2022/00/00`)
+- [ ] Change `Authoritative` field to `d` in `SGID.META.AGOLItems` to automatically set the `Deprecated` AGOL flag. Allow the `d` to persist through one run of [Auditor](https://github.com/agrc/auditor) - currently, Auditor runs daily at 5:00am (name, completed: `2022/00/00`)
+  - After at least one successful run of Auditor:
+    - [ ] Remove the row from the `SGID.META.AGOLItems` table. This will trigger the removal of this item in Open SGID (name, completed: `2022/00/00`)
+    - [ ] Unshare the item from its SGID group, which will remove it from Open Data (name, completed: `2022/00/00`)
 
 ### Hard Delete
 
@@ -52,7 +52,7 @@ _Hard deletes are final. It is recommended to complete the soft delete process b
   - Deprecated database layers can be backup up on Google Drive > AGRC Share > Team Projects > SGID > [deprecated layers]
 - [ ] Remove ArcGIS Online item: (name, completed: `2022/00/00`)
   - Manually delete the AGOL item
-  -  -OR-
+  - -OR-
   - Unshare by changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to something other than an Item ID and manaually changing the sharing settings (remove the item from all SGID groups, remove Public sharing),
   - -OR-
   - Shelve the data by copying the row from `SGID.META.AGOLItems` to the `AGOLItems_shelved` table in AGOL and changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to `shelved` or some other note.
