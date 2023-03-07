@@ -22,7 +22,6 @@ _A short summary of the situation._
 1. _~Strike~ out all items that do not apply._
 
 - [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/developer/application) application pages (name, completed: `2022/00/00`)
-- [ ] Remove forklift pallet (name, completed: `2022/00/00`)
 - [ ] Remove application-specific Databases (name, completed: `2022/00/00`)
 - [ ] AGRC Projects team drive [folder](https://drive.google.com/drive/folders/0AIVByxAYHd4oUk9PVA) (name, completed: `2022/00/00`)
 - [ ] Remove from Application Porfolio Management ("Business Applications" in ServiceNow) (name, completed: `2022/00/00`)
@@ -48,6 +47,7 @@ _Choose one._
 ### Is there a forklift pallet?
 
 - [ ] Remove repo (name, completed: `2022/00/00`)
+  - don't forget to remove the pallet from the current packing slip in receiving!
 - [ ] Remove stale data from forklift hashing and receiving (name, completed: `2022/00/00`)
 - [ ] Remove row from `data/hashed/changedetection.gdb/TableHashes` (name, completed: `2022/00/00`)
 
