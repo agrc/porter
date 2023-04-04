@@ -49,14 +49,14 @@ Note: If this dataset is being replaced, then wait until the new data is publicl
 _Hard deletes are final. It is recommended to complete the soft delete process before moving on to these steps. If you decide to skip the soft delete, note that you will need to incorporate some of those steps here._
 
 - [ ] Manually remove data from the Internal SGID (name, completed: `2023/00/00`)
-  - Deprecated database layers can be backup up on Google Drive > AGRC Share > Team Projects > SGID > [deprecated layers]
+  - [ ] Deprecated database layers should be backed up on Google Drive > AGRC Projects > SGID > deprecated layers > [internal_db_sgid_layers](https://drive.google.com/drive/u/0/folders/10Fk8NI2UpEUnAbgvhjlN18pyvSFDWyIq).
 - [ ] Remove ArcGIS Online item: (name, completed: `2023/00/00`)
   - Manually delete the AGOL item
   - -OR-
   - Unshare by changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to something other than an Item ID and manaually changing the sharing settings (remove the item from all SGID groups, remove Public sharing),
   - -OR-
   - Shelve the data by copying the row from `SGID.META.AGOLItems` to the `AGOLItems_shelved` table in AGOL and changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to `shelved` or some other note.
-  - Deprecated AGOL items can be backup on Google Drive > AGRC Share > Team Projects > SGID > [deprecated layers](https://drive.google.com/drive/u/1/folders/1JT4XzZz3wX95nJc95iOcQ2T3Zd_4GtAS).
+  - Deprecated AGOL items can be backed up on Google Drive > AGRC Projects > SGID > deprecated layers > [agol_sgid_layers](https://drive.google.com/drive/u/0/folders/1xwSxiDNIH-9Hhmn6I7NfKBhm4SbYonX5).
 - [ ] Remove Farm from AGOL connection (name, completed: `2023/00/00`)
 - [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/data) data pages (name, completed: `2023/00/00`)
 - [ ] Add this porter url to the `Deprecated` field of the [Stewardship](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1) record (name, completed: `2023/00/00`)
