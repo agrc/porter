@@ -13,6 +13,9 @@ inputs:
   vpc:
     description: gcp vpc name
     required: true
+  environment_variables:
+    description: key=value pairs to pass to cloud run
+    required: false
   repo_token:
     description: GitHub token (e.g. secrets.GITHUB_TOKEN). This is only required if preview == 'yes' or if you are passing a value to service_now_system_id.
     required: false
@@ -91,8 +94,7 @@ runs:
         service: conductor
         image: ${{ env.IMAGE_ID }}
         region: us-central1
-        env_vars: |
-          PORTER_DEVELOPMENT=1
+        env_vars: ${{ inputs.environment_variables }}
         secrets: |
           /secrets/db/connection=conductor-connections:latest
           /secrets/sheets/service-account=stewardship-sa:latest
