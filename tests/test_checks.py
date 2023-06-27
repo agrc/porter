@@ -12,8 +12,6 @@ from pathlib import Path
 
 import psycopg2
 import pytest
-from pygsheets import Cell
-
 from conductor.checks import (
     ArcGisOnlineChecker,
     GSheetChecker,
@@ -23,6 +21,7 @@ from conductor.checks import (
     PGSqlTableChecker,
     TableChecker,
 )
+from pygsheets import Cell
 
 secret_path = Path(__file__).parent.parent / "src" / "conductor" / "secrets" / "db" / "connections"
 
@@ -104,7 +103,7 @@ def test_mssql_table_can_connect():
 def test_pgsql_table_exists_returns_true():
     patient = PGSqlTableChecker("boundaries.municipal_boundaries", SECRETS["opensgid"])
 
-    assert patient.exists() == True
+    assert patient.exists() is True
 
     patient.connection.close()
 
@@ -113,7 +112,7 @@ def test_pgsql_table_exists_returns_true():
 def test_mssql_table_exists_returns_true():
     patient = MSSqlTableChecker("boundaries.municipalities", SECRETS["sgid10"])
 
-    assert patient.exists() == True
+    assert patient.exists() is True
 
     patient.connection.close()
 
@@ -121,7 +120,7 @@ def test_mssql_table_exists_returns_true():
 def test_pgsql_table_does_not_exist_returns_false():
     patient = PGSqlTableChecker("fake.table", SECRETS["opensgid"])
 
-    assert patient.exists() == False
+    assert patient.exists() is False
 
     patient.connection.close()
 
@@ -130,7 +129,7 @@ def test_pgsql_table_does_not_exist_returns_false():
 def test_mssql_table_does_not_exist_returns_false():
     patient = MSSqlTableChecker("fake.table", SECRETS["sgid10"])
 
-    assert patient.exists() == False
+    assert patient.exists() is False
 
     patient.connection.close()
 
@@ -140,7 +139,7 @@ def test_metatable_response_returns_true_when_exists():
     patient = MetaTableChecker("sgid.boundaries.municipalities", SECRETS["internalsgid"])
     response = patient.exists()
 
-    assert response.exists == True
+    assert response.exists is True
     assert patient.data.item_id == "543fa1f073714198a3dbf8a292bdf30c"
     assert patient.data.item_name == "Utah Municipal Boundaries"
 
@@ -150,7 +149,7 @@ def test_response_returns_completely_missing_for_fake_table():
     patient = MetaTableChecker("sgid.fake.table", SECRETS["internalsgid"])
     response = patient.exists()
 
-    assert response.exists == False
+    assert response.exists is False
 
 
 def test_empty_row_returns_false(mocker):
@@ -159,7 +158,7 @@ def test_empty_row_returns_false(mocker):
     patient = MetaTableChecker("sgid.fake.table", SECRETS["internalsgid"])
     response = patient.exists()
 
-    assert response.exists == False
+    assert response.exists is False
 
 
 def test_missing_item_id_returns_correct_string(mocker):
@@ -202,7 +201,7 @@ def test_missing_all_returns_correct_string(mocker):
 
     response = patient.exists()
 
-    assert response.exists == False
+    assert response.exists is False
 
 
 def test_arcgis_online_url_creation():
@@ -230,7 +229,7 @@ def test_arcgis_online_exists_when_json_contains_owner(mocker):
         }
     )
 
-    assert patient.exists() == True
+    assert patient.exists() is True
 
 
 def test_arcgis_online_does_not_exist(mocker):
@@ -249,7 +248,7 @@ def test_arcgis_online_does_not_exist(mocker):
         }
     )
 
-    assert patient.exists() == False
+    assert patient.exists() is False
 
 
 def test_open_data_url_creation():
@@ -270,7 +269,7 @@ def test_open_data_for_existence_with_200(mocker):
     patient.data = mocker.Mock()
     patient.data.status_code = 200
 
-    assert patient.exists() == True
+    assert patient.exists() is True
 
 
 def test_open_data_for_missing_with_301(mocker):
@@ -280,7 +279,7 @@ def test_open_data_for_missing_with_301(mocker):
     patient.data = mocker.Mock()
     patient.data.status_code = 301
 
-    assert patient.exists() == False
+    assert patient.exists() is False
 
 
 def test_sheets_build_header_row_index():
@@ -332,7 +331,7 @@ def test_sheets_with_duplicate_cells_returns_false(mocker):
 
     response = patient.exists()
 
-    assert response.valid == False
+    assert response.valid is False
     assert response.messages == "There are multiple items with this name on rows 1, 2. Please remove the duplicates."
 
 
@@ -342,7 +341,7 @@ def test_sheets_with_no_matches_returns_false(mocker):
 
     response = patient.exists()
 
-    assert response.valid == False
+    assert response.valid is False
     assert response.messages == "Did not find fake.table in the worksheet"
 
 
@@ -384,7 +383,7 @@ def test_sheets_returns_false_for_empty_values(mocker):
 
     response = patient.exists()
 
-    assert response.valid == True
+    assert response.valid is True
     assert response.messages == {
         "Description": False,
         "Data Source": False,
@@ -443,7 +442,7 @@ def test_sheets_handles_partial_values(mocker):
 
     response = patient.exists()
 
-    assert response.valid == True
+    assert response.valid is True
     assert response.messages == {
         "Description": True,
         "Data Source": False,
@@ -502,7 +501,7 @@ def test_sheets_returns_true_if_neighbors_all_have_values(mocker):
 
     response = patient.exists()
 
-    assert response.valid == True
+    assert response.valid is True
     assert response.messages == {
         "Description": True,
         "Data Source": True,
@@ -548,7 +547,7 @@ def test_sheets_exists_returns_true_for_known_layer():
 
     response = patient.exists()
 
-    assert response.valid == True
+    assert response.valid is True
     assert response.messages == {
         "Description": True,
         "Data Source": True,

@@ -11,14 +11,12 @@ from collections import namedtuple
 from os import environ
 from pathlib import Path
 
+from conductor import conductor
+from conductor.checks import GSheetChecker, MetaTableChecker, TableChecker, UrlChecker
 from github.Auth import Token
 from github.Issue import Issue
 from github.Label import Label
 from github.Requester import Requester
-
-from conductor import conductor
-from conductor.checks import (GSheetChecker, MetaTableChecker, TableChecker,
-                              UrlChecker)
 
 secret_path = Path(__file__).parent.parent / "src" / "conductor" / "secrets" / "db" / "connections"
 
