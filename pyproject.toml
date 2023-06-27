@@ -1,0 +1,13 @@
+[tool.isort]
+profile = "black"
+[tool.ruff]
+line-length = 120
+ignore = ["E501"]
+[tool.black]
+line-length = 120
+[tool.pytest]
+testpaths = "tests src"
+norecursedirs = ".env data maps .github .vscode"
+minversion = 3.5
+console_output_style = "count"
+addopts = "--pylint --cov-branch --cov=conductor --cov-report term --cov-report xml:cov.xml --instafail --isort"

@@ -1,17 +1,10 @@
 {
   "python.linting.enabled": true,
-  "python.linting.pylintEnabled": true,
-  "python.linting.flake8Enabled": false,
   "python.linting.pycodestyleEnabled": false,
-  "python.formatting.provider": "yapf",
-  "python.formatting.yapfPath": "yapf",
-  "python.formatting.yapfArgs": [
-    "--style",
-    "${workspaceRoot}/setup.cfg"
-  ],
+  "python.formatting.provider": "black",
   "cSpell.words": [
     "agol",
-    "AGRC",
+    "agrc",
     "arcgis",
     "cadastre",
     "cloudb",
@@ -23,13 +16,16 @@
     "gregbunce",
     "gunicorn",
     "instafail",
+    "internalsgid",
     "isort",
     "jacobdadams",
     "mapserv",
     "metatable",
     "mssql",
     "neighbour",
+    "ODBC",
     "pgsql",
+    "postgresize",
     "psycopg",
     "pygsheets",
     "pylint",
@@ -40,7 +36,10 @@
     "sgid",
     "stdavis",
     "steveoh",
-    "yapf"
+    "triager",
+    "triagers",
+    "UGRC",
+    "venv"
   ],
   "editor.formatOnSave": true,
   "editor.rulers": [
