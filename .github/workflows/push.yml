@@ -16,8 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      id-token: write
-      deployments: write
       pull-requests: write
     outputs:
       release_created: ${{ steps.release-please.outputs.release_created }}
