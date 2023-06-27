@@ -59,7 +59,7 @@ runs:
       uses: docker/metadata-action@v4
       id: meta
       with:
-        images: us-central1-docker.pkg.dev/${{ inputs.project_id }}/conductor
+        images: us-central1-docker.pkg.dev/${{ inputs.project_id }}/images/conductor
         tags: |
           type=ref,suffix=-{{sha}},event=branch
           type=ref,prefix=pr-,suffix=-{{sha}},event=pr
