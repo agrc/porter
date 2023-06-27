@@ -5,11 +5,11 @@ A porter is person that
 - carries things, such as bags
 - performs routine cleaning, likely on a train, taking care of the sleeping berths.
 
-AGRC tracks the additions, replacements, and deletions of SGID items (in the broadest sense of add, replace, or delete) through issues in this repository.
+UGRC tracks the additions, replacements, and deletions of SGID items (in the broadest sense of add, replace, or delete) through issues in this repository.
 
 ## How to use
 
-1. [Create a new issue](https://github.com/agrc/cemetery/issues/new/choose) when an application, dataset, or both needs to be added, deleted, or moved to a different long-term storage
+1. [Create a new issue](https://github.com/agrc/porter/issues/new/choose) when an application, dataset, or both needs to be added, deleted, or moved to a different long-term storage
 1. Choose the `Removing Data From Anywhere` (for moving or deleting data) or `Introduce data to the SGID` (for adding data) template from the buttons
 1. Tag the three triagers (one from each team) in the triage section:
    - [ ] Data Team Triage (@gregbunce)
@@ -24,8 +24,6 @@ AGRC tracks the additions, replacements, and deletions of SGID items (in the bro
 1. Once all boxes are checked, the person who first opened the issue should close it.
 
 ## Data Flow for New SGID Datasets
-
-Data in the internal SGID will automatically be added to the SGID10 with via the swapper pallet.
 
 If there is a record added to `SGID.META.AGOLItems`, the corresponding dataset will automatically be added to:
 
