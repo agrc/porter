@@ -49,7 +49,6 @@ setup(
         "tests": [
             "pytest-cov==4.*",
             "pytest-instafail==0.5.*",
-            "pytest-isort==3.*",
             "pytest-mock==3.*",
             "pytest-ruff==0.*",
             "pytest-watch==4.*",
