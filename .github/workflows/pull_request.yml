@@ -32,7 +32,7 @@ jobs:
       - name: 🤐 Create secret file
         run: |
           mkdir -p secrets/db
-          echo ${{ secrets.DB_CONNECTIONS }} > secrets/db/connections
+          echo ${{ secrets.TESTING_DB_CONNECTIONS }} > secrets/db/connections
 
       - name: 🧪 Run pytest
         run: pytest
