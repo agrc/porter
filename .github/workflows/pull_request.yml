@@ -1,21 +1,17 @@
-name: Build and Test
+name: Pull Request Events
 
 on:
-  push:
-    paths:
-      - "src/conductor/**"
-      - ".github/workflows/ci.yml"
   pull_request:
     paths:
       - "src/conductor/**"
-      - ".github/workflows/ci.yml"
+      - ".github/workflows/*.yml"
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  test:
+  test-unit:
     name: Unit Tests
     runs-on: ubuntu-latest
 
@@ -24,9 +20,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: 🐍 Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: "3.10"
           cache: pip
           cache-dependency-path: setup.py
 
@@ -36,7 +32,7 @@ jobs:
       - name: 🤐 Create secret file
         run: |
           mkdir -p secrets/db
-          echo "{\"internalsgid\":{},\"opensgid\":{\"host\":\"opensgid.agrc.utah.gov\",\"database\":\"opensgid\",\"user\":\"agrc\",\"password\":\"agrc\"},\"github_token\":\"\"}" > secrets/db/connections
+          echo ${{ secrets.DB_CONNECTIONS }} > secrets/db/connections
 
       - name: 🧪 Run pytest
         run: pytest
