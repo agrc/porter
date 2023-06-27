@@ -135,7 +135,7 @@ runs:
 
     - name: 🔔 Publish deployment worknote
       uses: agrc/service-now-worknote-action@v1
-      if: ${{ inputs.service_now_system_id != '' inputs.notify == 'yes'}}
+      if: ${{ inputs.service_now_system_id != '' && inputs.notify == 'yes'}}
       with:
         repo-token: ${{ inputs.repo_token }}
         username: ${{ inputs.service_now_username }}
