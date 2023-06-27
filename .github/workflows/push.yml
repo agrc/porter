@@ -53,6 +53,7 @@ jobs:
           service_account_email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
           project_id: ${{ secrets.PROJECT_ID }}
           vpc: ${{ secrets.VPC }}
+          environment_variables: PORTER_DEVELOPMENT=1
 
   deploy-prod:
     runs-on: ubuntu-latest
