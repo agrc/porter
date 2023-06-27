@@ -108,6 +108,9 @@ docker push gcr.io/ut-dts-agrc-porter-prod/conductor
 
 ## Development
 
+1. create new python environment: `python -m venv venv`
+1. activate new environment: `source venv/bin/activate` (On Windows: `.env\Scripts\activate`)
+1. install dependencies and editable project: `pip install -e ".[tests]"`
 1. use `test_conductor` as the entry point
 1. install the Microsoft ODBC driver for SQL Server for [Windows](https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server) or [macOS](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos)
 1. create a copy of `src/conductor/connections_sample.py` as `src/conductor/connections.py`
