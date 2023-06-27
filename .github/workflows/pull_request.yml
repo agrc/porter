@@ -10,6 +10,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   test-unit:
     name: Unit Tests
@@ -28,6 +30,9 @@ jobs:
 
       - name: 🏗 Install conductor
         run: pip install .[tests,cloud-run]
+
+      - name: Create folders
+        run: mkdir -p secrets/db
 
       - name: 🤐 Create secret file
         uses: jsdaniell/create-json@v1.2.2

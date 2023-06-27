@@ -6,14 +6,43 @@ on:
       - main
       - dev
 
+permissions:
+  contents: write
+  id-token: write
+  deployments: write
+  pull-requests: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  release-please:
+    name: Create release
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release-please.outputs.release_created }}
+
+    steps:
+      - name: 👁 Monitor permissions
+        uses: GitHubSecurityLab/actions-permissions/monitor@v1
+
+      - name: 🚀 Create Release
+        id: release-please
+        uses: agrc/release-composite-action@v1
+        with:
+          release-type: python
+          prerelease: ${{ github.ref_name == 'dev' }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          github-app-id: ${{ secrets.UGRC_RELEASE_BOT_APP_ID }}
+          github-app-key: ${{ secrets.UGRC_RELEASE_BOT_APP_KEY }}
+          github-app-name: ${{ secrets.UGRC_RELEASE_BOT_NAME }}
+          github-app-email: ${{ secrets.UGRC_RELEASE_BOT_EMAIL }}
+
   deploy-dev:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
+    needs: release-please
+    if: github.ref == 'refs/heads/dev' && needs.release-please.outputs.release_created
     environment:
       name: dev
     permissions:
@@ -21,141 +50,24 @@ jobs:
       contents: read
 
     steps:
+      - name: 👁 Monitor permissions
+        uses: GitHubSecurityLab/actions-permissions/monitor@v1
+
       - name: ⬇️ Set up code
         uses: actions/checkout@v3
 
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v4
+      - name: 🚀 Deploy
+        uses: ./.github/actions/deploy
         with:
-          python-version: "3.10"
-          cache: pip
-          cache-dependency-path: setup.py
-
-      - name: 🏗 Install conductor
-        run: pip install .[tests,cloud-run]
-
-      - name: 🤐 Create secret file
-        run: |
-          mkdir -p secrets/db
-          echo "{\"internalsgid\":{},\"opensgid\":{\"host\":\"opensgid.agrc.utah.gov\",\"database\":\"opensgid\",\"user\":\"agrc\",\"password\":\"agrc\"},\"github_token\":\"\"}" > secrets/db/connections
-
-      - name: 🧪 Run pytest
-        run: pytest
-
-      - name: 🤐 Remove secret file
-        run: |
-          rm -rf secrets/db
-
-      - name: 🐳 Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-        id: builder
-
-      - name: 🗝️ Authenticate Docker to Google Cloud
-        uses: docker/login-action@v2
-        with:
-          registry: us-central1-docker.pkg.dev
-          username: oauth2accesstoken
-          password: ${{ steps.auth.outputs.access_token }}
-
-      - name: 🏷️ Extract tags from GitHub
-        uses: docker/metadata-action@v4
-        id: meta
-        with:
-          images: us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/conductor
-          tags: |
-            type=ref,suffix=-{{sha}},event=branch
-            type=ref,prefix=pr-,suffix=-{{sha}},event=pr
-            type=semver,pattern={{version}}
-            type=raw,value=latest
-
-      - name: 📦 Build and push image
-        uses: docker/build-push-action@v4
-        with:
-          file: ./Dockerfile
-          context: .
-          builder: ${{ steps.builder.outputs.name }}
-          tags: ${{ steps.meta.outputs.tags }}
-          push: true
-          provenance: false
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: 🗝️ Authenticate to Google Cloud
-        id: auth
-        uses: google-github-actions/auth@v1
-        with:
-          workload_identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
-          service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
-          create_credentials_file: true
-
-      - name: 🔍️ Set Image Name
-        run: |
-          IMAGE_ID=$(echo $DOCKER_METADATA_OUTPUT_TAGS | cut -d ' ' -f 1)
-          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
-
-      - name: 🚀 Deploy to Cloud Run
-        id: deploy
-        uses: google-github-actions/deploy-cloudrun@v1
-        with:
-          service: conductor
-          image: ${{ env.IMAGE_ID }}
-          region: us-central1
-          env_vars: |
-            PORTER_DEVELOPMENT=1
-          secrets: |
-            /secrets/db/connection=conductor-connections:latest
-            /secrets/sheets/service-account=stewardship-sa:latest
-          flags: |
-            --service-account=${{secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME}}
-            --vpc-connector=${{ secrets.VPC }}
-            --vpc-egress=all-traffic
-            --max-instances=10
-            --cpu=1000m
-            --memory=512Mi
-            --timeout=5m
-
-      - name: 🕰️ Create cloud scheduler
-        run: |
-          if [ ! "$(gcloud scheduler jobs list | grep conductor)" ]; then
-            gcloud scheduler jobs create http conductor \
-              --description="Trigger the conductor bot once a week on monday morning" \
-              --schedule="0 9 * * 1" \
-              --time-zone=America/Denver \
-              --uri=$(gcloud run services describe conductor --region us-central1 --format 'value(status.url)')/gcp/schedule \
-              --http-method=POST \
-              --max-retry-attempts=3 \
-              --min-backoff=1m \
-              --max-backoff=10m \
-              --oidc-service-account-email=cloud-scheduler@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com \
-              --quiet
-          else
-            gcloud scheduler jobs update http conductor \
-              --description="Trigger the conductor bot once a week on monday morning" \
-              --schedule="0 9 * * 1" \
-              --time-zone=America/Denver \
-              --uri=$(gcloud run services describe conductor --region us-central1 --format 'value(status.url)')/gcp/schedule \
-              --http-method=POST \
-              --max-retry-attempts=3 \
-              --min-backoff=1m \
-              --max-backoff=10m \
-              --oidc-service-account-email=cloud-scheduler@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com \
-              --quiet
-          fi
-
-      - name: 🔔 Publish deployment worknote
-        uses: agrc/service-now-worknote-action@v1
-        if: ${{ inputs.service-now-system-id != '' && inputs.preview != 'yes' }}
-        with:
-          repo-token: ${{ inputs.repo-token }}
-          username: ${{ inputs.service-now-username }}
-          password: ${{ inputs.service-now-password }}
-          instance-name: ${{ inputs.service-now-instance }}
-          table-name: ${{ inputs.service-now-table }}
-          system-id: ${{ inputs.service-now-system-id }}
+          identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
+          service_account_email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          vpc: ${{ secrets.VPC }}
 
   deploy-prod:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    needs: release-please
+    if: github.ref == 'refs/heads/main' && needs.release-please.outputs.release_created
     environment:
       name: prod
     permissions:
@@ -163,105 +75,16 @@ jobs:
       contents: read
 
     steps:
+      - name: 👁 Monitor permissions
+        uses: GitHubSecurityLab/actions-permissions/monitor@v1
+
       - name: ⬇️ Set up code
         uses: actions/checkout@v3
 
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v3
+      - name: 🚀 Deploy
+        uses: ./.github/actions/deploy
         with:
-          python-version: 3.8
-          cache: pip
-          cache-dependency-path: setup.py
-
-      - name: 🏗 Install conductor
-        run: pip install .[tests,cloud-run]
-
-      - name: 🤐 Create secret file
-        run: |
-          mkdir -p secrets/db
-          echo "{\"internalsgid\":{},\"opensgid\":{\"host\":\"opensgid.agrc.utah.gov\",\"database\":\"opensgid\",\"user\":\"agrc\",\"password\":\"agrc\"},\"github_token\":\"\"}" > secrets/db/connections
-
-      - name: 🧪 Run pytest
-        run: pytest
-
-      - name: 🤐 Remove secret file
-        run: |
-          rm -rf secrets/db
-
-      - name: 🗝️ Authenticate to Google Cloud
-        id: auth
-        uses: google-github-actions/auth@v0
-        with:
-          create_credentials_file: true
-          token_format: access_token
-          workload_identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
-          service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
-
-      - name: 🐳 Setup docker
-        uses: docker/login-action@v2
-        with:
-          registry: gcr.io
-          username: oauth2accesstoken
-          password: ${{ steps.auth.outputs.access_token }}
-
-      - name: Set short commit hash
-        run: |
-          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
-
-      - name: 📦 Build image
-        run: |-
-          docker build \
-            --tag gcr.io/${{ secrets.PROJECT_ID }}/conductor:$SHORT_SHA \
-            --tag gcr.io/${{ secrets.PROJECT_ID }}/conductor:latest \
-            .
-
-      - name: 📤 Publish image
-        run: |-
-          docker push --all-tags gcr.io/${{ secrets.PROJECT_ID }}/conductor
-
-      - name: 🚀 Deploy to Cloud Run
-        id: deploy
-        uses: google-github-actions/deploy-cloudrun@v0
-        with:
-          service: conductor
-          image: gcr.io/${{ secrets.PROJECT_ID }}/conductor
-          region: us-central1
-          secrets: |
-            /secrets/db/connection=conductor-connections:latest
-            /secrets/sheets/service-account=stewardship-sa:latest
-          flags: |
-            --service-account=${{secrets.CLOUD_RUN_SERVICE_ACCOUNT_NAME}}
-            --vpc-connector=${{ secrets.VPC }}
-            --vpc-egress=all-traffic
-            --max-instances=10
-            --cpu=1000m
-            --memory=512Mi
-            --timeout=5m
-
-      - name: 🕰️ Create cloud scheduler
-        run: |
-          if [ ! "$(gcloud scheduler jobs list | grep conductor)" ]; then
-            gcloud scheduler jobs create http conductor \
-              --description="Trigger the conductor bot once a week on monday morning" \
-              --schedule="0 9 * * 1" \
-              --time-zone=America/Denver \
-              --uri=$(gcloud run services describe conductor --region us-central1 --format 'value(status.url)')/gcp/schedule \
-              --http-method=POST \
-              --max-retry-attempts=3 \
-              --min-backoff=1m \
-              --max-backoff=10m \
-              --oidc-service-account-email=cloud-scheduler@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com \
-              --quiet
-          else
-            gcloud scheduler jobs update http conductor \
-              --description="Trigger the conductor bot once a week on monday morning" \
-              --schedule="0 9 * * 1" \
-              --time-zone=America/Denver \
-              --uri=$(gcloud run services describe conductor --region us-central1 --format 'value(status.url)')/gcp/schedule \
-              --http-method=POST \
-              --max-retry-attempts=3 \
-              --min-backoff=1m \
-              --max-backoff=10m \
-              --oidc-service-account-email=cloud-scheduler@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com \
-              --quiet
-          fi
+          identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
+          service_account_email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          vpc: ${{ secrets.VPC }}
