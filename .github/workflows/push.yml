@@ -6,12 +6,6 @@ on:
       - main
       - dev
 
-permissions:
-  contents: write
-  id-token: write
-  deployments: write
-  pull-requests: write
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -20,6 +14,11 @@ jobs:
   release-please:
     name: Create release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      deployments: write
+      pull-requests: write
     outputs:
       release_created: ${{ steps.release-please.outputs.release_created }}
 
@@ -47,12 +46,8 @@ jobs:
       name: dev
     permissions:
       id-token: write
-      contents: read
 
     steps:
-      - name: 👁 Monitor permissions
-        uses: GitHubSecurityLab/actions-permissions/monitor@v1
-
       - name: ⬇️ Set up code
         uses: actions/checkout@v3
 
@@ -72,12 +67,8 @@ jobs:
       name: prod
     permissions:
       id-token: write
-      contents: read
 
     steps:
-      - name: 👁 Monitor permissions
-        uses: GitHubSecurityLab/actions-permissions/monitor@v1
-
       - name: ⬇️ Set up code
         uses: actions/checkout@v3
 
