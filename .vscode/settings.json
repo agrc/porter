@@ -1,7 +1,7 @@
 {
   "python.linting.enabled": true,
   "python.linting.pycodestyleEnabled": false,
-  "python.formatting.provider": "black",
+  "python.formatting.provider": "none",
   "cSpell.words": [
     "agol",
     "agrc",
@@ -58,5 +58,9 @@
   ],
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
   }
 }
