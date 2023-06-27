@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0-2](https://github.com/agrc/porter/compare/v2.3.0-1...v2.3.0-2) (2023-06-27)
+
+
+### 🐛 Bug Fixes
+
+* **ci:** correct registry url ([e51f97f](https://github.com/agrc/porter/commit/e51f97f6664e97bc42a5a22f567ea797525210e1))
+
 ## [2.3.0-1](https://github.com/agrc/porter/compare/v2.3.0-0...v2.3.0-1) (2023-06-27)
 
 
