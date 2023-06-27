@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0-5](https://github.com/agrc/porter/compare/v2.3.0-4...v2.3.0-5) (2023-06-27)
+
+
+### 🐛 Bug Fixes
+
+* **ci:** allow environment variables to flow into cloud run ([4119b3f](https://github.com/agrc/porter/commit/4119b3f50c13cb778c74da177b3c16409ff91ddb))
+
 ## [2.3.0-4](https://github.com/agrc/porter/compare/v2.3.0-3...v2.3.0-4) (2023-06-27)
 
 
