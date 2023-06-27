@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0-4](https://github.com/agrc/porter/compare/v2.3.0-3...v2.3.0-4) (2023-06-27)
+
+
+### 🐛 Bug Fixes
+
+* **ci:** least privilege ([3f2e92d](https://github.com/agrc/porter/commit/3f2e92df8a85d36c7c4fc698f4594ab59b7d410c))
+
 ## [2.3.0-3](https://github.com/agrc/porter/compare/v2.3.0-2...v2.3.0-3) (2023-06-27)
 
 
