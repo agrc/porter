@@ -29,6 +29,9 @@ jobs:
       - name: 🏗 Install conductor
         run: pip install .[tests,cloud-run]
 
+      - name: Create folders
+          mkdir -p secrets/db
+
       - name: 🤐 Create secret file
         uses: jsdaniell/create-json@v1.2.2
         with:
