@@ -30,9 +30,10 @@ jobs:
         run: pip install .[tests,cloud-run]
 
       - name: 🤐 Create secret file
-        run: |
-          mkdir -p secrets/db
-          echo ${{ secrets.TESTING_DB_CONNECTIONS }} > secrets/db/connections
+        uses: jsdaniell/create-json@v1.2.2
+        with:
+          name: "secrets/db/connections"
+          json: ${{ secrets.TESTING_DB_CONNECTIONS }}
 
       - name: 🧪 Run pytest
         run: pytest
