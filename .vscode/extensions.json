@@ -6,7 +6,6 @@
         "editorconfig.editorconfig",
         "njpwerner.autodocstring",
         "ms-python.black-formatter",
-        "ms-python.isort",
         "ms-python.vscode-pylance",
         "ms-python.python",
         "donjayamanne.python-environment-manager",
