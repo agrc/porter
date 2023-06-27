@@ -21,9 +21,6 @@ jobs:
       release_created: ${{ steps.release-please.outputs.release_created }}
 
     steps:
-      - name: 👁 Monitor permissions
-        uses: GitHubSecurityLab/actions-permissions/monitor@v1
-
       - name: 🚀 Create Release
         id: release-please
         uses: agrc/release-composite-action@v1
