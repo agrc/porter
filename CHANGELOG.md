@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0-1](https://github.com/agrc/porter/compare/v2.3.0-0...v2.3.0-1) (2023-06-27)
+
+
+### 🐛 Bug Fixes
+
+* **ci:** update spelling and token format ([cdc77f1](https://github.com/agrc/porter/commit/cdc77f1df6c28525a3948ece058a486a88570d82))
+
 ## [2.3.0-0](https://github.com/agrc/porter/compare/v2.1.1...v2.3.0-0) (2023-06-27)
 
 
