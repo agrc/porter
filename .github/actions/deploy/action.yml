@@ -10,8 +10,8 @@ inputs:
   project_id:
     description: gcp project id
     required: true
-  vcp:
-    description: gcp vcp name
+  vpc:
+    description: gcp vpc name
     required: true
   repo_token:
     description: GitHub token (e.g. secrets.GITHUB_TOKEN). This is only required if preview == 'yes' or if you are passing a value to service_now_system_id.
@@ -39,9 +39,10 @@ runs:
       id: auth
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: ${{ inputs.identity_provider }}
-        service_account: ${{ inputs.service_account_email }}
+        token_format: 'access_token'
         create_credentials_file: true
+        service_account: ${{ inputs.service_account_email }}
+        workload_identity_provider: ${{ inputs.identity_provider }}
 
     - name: 🐳 Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
