@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0-6](https://github.com/agrc/porter/compare/v2.3.0-5...v2.3.0-6) (2023-06-27)
+
+
+### 🐛 Bug Fixes
+
+* correct pytest configuration ([9d7c1a7](https://github.com/agrc/porter/commit/9d7c1a7a4f305b9b08c67f2f60a1e6603bfe71b1))
+
 ## [2.3.0-5](https://github.com/agrc/porter/compare/v2.3.0-4...v2.3.0-5) (2023-06-27)
 
 
