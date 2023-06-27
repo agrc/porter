@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 👁 Monitor permissions
+        uses: GitHubSecurityLab/actions-permissions/monitor@v1
+
       - name: ⬇️ Set up code
         uses: actions/checkout@v3
 
