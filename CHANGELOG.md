@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/agrc/porter/compare/v2.3.0...v2.4.0) (2023-09-26)
+
+
+### 🚀 Features
+
+* 2023 update  ([ea46eab](https://github.com/agrc/porter/commit/ea46eab788c777cb684a73734477269099b850f0))
+
 ## [2.3.0](https://github.com/agrc/porter/compare/v2.1.1...v2.3.0) (2023-06-28)
 
 
