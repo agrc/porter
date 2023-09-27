@@ -52,6 +52,7 @@ _Choose one._
 - [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/data) data pages (name, completed: `2023/00/00`)
 - [ ] Add a [Stewardship](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1) record (name, completed: `2023/00/00`)
 - [ ] Complete a `SGID.META.AGOLItems` record (name, completed: `2023/00/00`)
+  - `AGOL_ITEM_ID` will be populated by Forklift after it publishes the new AGOL item.
 - [ ] Complete an [AGOLItems_shelved](http://utah.maps.arcgis.com/home/item.html?id=1760fbedbc7e49429aa6c0c3ab1442ec) record for any `static` or `shelved` item (name, completed: `2023/00/00`)
 - [ ] Define a record set with archives (@brigsz, completed: `2023/00/00`)
 
