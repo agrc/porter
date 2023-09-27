@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.4.0](https://github.com/agrc/porter/compare/v2.3.0...v2.4.0) (2023-09-27)
+
+
+### 🚀 Features
+
+* 2023 update  ([ea46eab](https://github.com/agrc/porter/commit/ea46eab788c777cb684a73734477269099b850f0))
+
+
+### 📖 Documentation Improvements
+
+* add note about agol item id field ([4d830aa](https://github.com/agrc/porter/commit/4d830aabb12eb0286d154647b2fb8c75f71dfabe))
+
 ## [2.3.0](https://github.com/agrc/porter/compare/v2.1.1...v2.3.0) (2023-06-28)
 
 
