@@ -36,7 +36,7 @@ setup(
         "colorama==0.*",
         "flask==2.*",
         "psycopg2-binary==2.*",
-        "PyGithub==1.*",
+        "PyGithub>=1,<3",
         "pygsheets==2.*",
         "pyodbc==4.*",
         "requests==2.*",
