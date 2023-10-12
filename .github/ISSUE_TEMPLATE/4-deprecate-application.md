@@ -25,6 +25,7 @@ _A short summary of the situation._
 - [ ] Remove application-specific Databases (name, completed: `2023/00/00`)
 - [ ] AGRC Projects team drive [folder](https://drive.google.com/drive/folders/0AIVByxAYHd4oUk9PVA) (name, completed: `2023/00/00`)
 - [ ] Remove from Application Portfolio Management ("Business Applications" in ServiceNow) (name, completed: `2023/00/00`)
+- [ ] Remove Google Analytics property (name, completed: `2023/00/00`)
 
 ### Is there a website?
 
