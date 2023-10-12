@@ -34,7 +34,7 @@ setup(
     keywords=["gis"],
     install_requires=[
         "colorama==0.*",
-        "flask==2.*",
+        "flask>=2,<4",
         "psycopg2-binary==2.*",
         "PyGithub==2.*",
         "pygsheets==2.*",
