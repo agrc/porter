@@ -45,6 +45,8 @@ jobs:
     steps:
       - name: ⬇️ Set up code
         uses: actions/checkout@v4
+        with:
+          show-progress: false
 
       - name: 🚀 Deploy
         uses: ./.github/actions/deploy
@@ -67,6 +69,8 @@ jobs:
     steps:
       - name: ⬇️ Set up code
         uses: actions/checkout@v4
+        with:
+          show-progress: false
 
       - name: 🚀 Deploy
         uses: ./.github/actions/deploy
