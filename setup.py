@@ -36,15 +36,15 @@ setup(
         "colorama==0.*",
         "flask==2.*",
         "psycopg2-binary==2.*",
-        "PyGithub==1.*",
+        "PyGithub==2.*",
         "pygsheets==2.*",
         "pyodbc==4.*",
         "requests==2.*",
     ],
     extras_require={
         "cloud-run": [
-            "flask==2.*",
-            "gunicorn==20.*",
+            "flask==3.*",
+            "gunicorn==21.*",
         ],
         "tests": [
             "pytest-cov==4.*",
@@ -53,7 +53,7 @@ setup(
             "pytest-ruff==0.*",
             "pytest-watch==4.*",
             "pytest==7.*",
-            "black==23.3.*",
+            "black==23.*",
             "ruff==0.0.*",
         ],
     },
