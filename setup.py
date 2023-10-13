@@ -38,7 +38,7 @@ setup(
         "psycopg2-binary==2.*",
         "PyGithub==2.*",
         "pygsheets==2.*",
-        "pyodbc==4.*",
+        "pyodbc>=4,<6",
         "requests==2.*",
     ],
     extras_require={
