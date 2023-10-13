@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.4.0](https://github.com/agrc/porter/compare/v2.3.0...v2.4.0) (2023-10-13)
+
+
+### 🚀 Features
+
+* 2023 update  ([ea46eab](https://github.com/agrc/porter/commit/ea46eab788c777cb684a73734477269099b850f0))
+
+
+### 🐛 Bug Fixes
+
+* add missing analytics cleanup step ([2aa080d](https://github.com/agrc/porter/commit/2aa080d406cf928d8427894249328a46b811878e))
+
+
+### 🌲 Dependencies
+
+* 2023 Q4 updates ([20a85e5](https://github.com/agrc/porter/commit/20a85e54c99699d0f857f4d61270d4b3d183b6f6))
+* update flask to 3 to match cloud run requirements ([ea70432](https://github.com/agrc/porter/commit/ea70432ec49cbc077178c026c90e7a183b2cfa70))
+
+
+### 📖 Documentation Improvements
+
+* add note about agol item id field ([4d830aa](https://github.com/agrc/porter/commit/4d830aabb12eb0286d154647b2fb8c75f71dfabe))
+
 ## [2.3.0](https://github.com/agrc/porter/compare/v2.1.1...v2.3.0) (2023-06-28)
 
 
