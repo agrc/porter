@@ -5,6 +5,7 @@ on:
     paths:
       - "src/conductor/**"
       - ".github/workflows/*.yml"
+      - "setup.py"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
