@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.1](https://github.com/agrc/porter/compare/v2.4.0...v2.4.1) (2023-10-13)
+
+
+### 🌲 Dependencies
+
+* bump the major-dependencies group with 1 update ([acb18ee](https://github.com/agrc/porter/commit/acb18eefe074439cb17858ce3066b5d4be300f85))
+
 ## [2.4.0](https://github.com/agrc/porter/compare/v2.3.0...v2.4.0) (2023-10-13)
 
 
