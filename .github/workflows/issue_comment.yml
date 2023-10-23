@@ -4,14 +4,13 @@ on:
   issue_comment:
     types: [created, edited]
 
-permissions:
-  issues: read
-  pull-requests: read
-
 jobs:
   reminder:
     runs-on: ubuntu-latest
 
     steps:
-      - name: check for reminder
+      - name: 👁 Monitor permissions
+        uses: GitHubSecurityLab/actions-permissions/monitor@v1
+        
+      - name: 👀 check for reminder
         uses: agrc/create-reminder-action@v1
