@@ -4,6 +4,10 @@ on:
   issue_comment:
     types: [created, edited]
 
+permissions:
+  issues: read
+  pull-requests: read
+
 jobs:
   reminder:
     runs-on: ubuntu-latest
