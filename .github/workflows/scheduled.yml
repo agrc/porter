@@ -5,6 +5,9 @@ on:
     - cron: "0 9-17/2 * * 1-5"
   workflow_dispatch:
 
+permissions:
+  issues: write
+
 jobs:
   reminder:
     runs-on: ubuntu-latest
