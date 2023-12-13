@@ -41,7 +41,7 @@ _Choose one._
 - [ ] Replace app with a static page with information (name, completed: `2023/00/00`)
 - [ ] Redirect somewhere else (name, completed: `2023/00/00`)
 
-### Is there a map service?
+### Is there a map service or AGOL item?
 
 - [ ] Stop (name, completed: `2023/00/00`)
 - [ ] Delete (name, completed: `2023/00/00`)
@@ -57,7 +57,7 @@ _Choose one._
 ### Are there service dependencies?
 
 - [ ] Validate that the web api does not query it (name, completed: `2023/00/00`)
-- [ ] Validate that AGRC or applications widgets do not reference it (name, completed: `2023/00/00`)
+- [ ] Validate that UGRC or applications do not reference it (name, completed: `2023/00/00`)
 
 ## Notification
 
