@@ -32,6 +32,7 @@ _A short summary of the situation._
 - [ ] Remove DNS entry (name, completed: `2023/00/00`)
 - [ ] Archive source code repository (name, completed: `2023/00/00`)
 - [ ] Remove app-specific quad word from Discover system (name, completed: `2023/00/00`)
+- [ ] Remove app-specific api key from UGRC API (name, completed: `2023/00/00`)
 - [ ] Remove cloud project (name, completed: `2023/00/00`)
 - [ ] Remove terraform infrastructure (name, completed: `2023/00/00`)
 
