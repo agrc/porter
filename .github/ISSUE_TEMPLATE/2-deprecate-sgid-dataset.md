@@ -94,7 +94,7 @@ _Add record to table._
 ## Are there service dependencies
 
 - [ ] Are clients querying this data with the WebAPI?
-- [ ] Notify Josh Nielson (josh.nielson at motorolasolutions.com) if the data is in the Next-Generation 911 Motorola Aware Map? (@gregbunce on `2023/00/00`)
+- [ ] Notify Don Jackson (don.jackson1 at motorolasolutions.com) if the data is in the Next-Generation 911 Motorola Aware Map? (@gregbunce on `2023/00/00`)
 - [ ] Does any other application depend on this data?
 
 ## Notification
