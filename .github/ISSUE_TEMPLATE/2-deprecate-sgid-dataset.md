@@ -43,7 +43,7 @@ Note: If this dataset is being replaced, then wait until the new data is publicl
   - After at least one successful run of Auditor:
     - [ ] Remove the row from the `SGID.META.AGOLItems` table. This will trigger the removal of this item in Open SGID (name, completed: `2023/00/00`)
     - [ ] Unshare the item from its SGID group, which will remove it from Open Data (name, completed: `2023/00/00`)
-    - [ ] Check if this layer in the base maps. If so, work with Zach to develop a path forward before you proceed with a Hard Delete (name, completed: `2023/00/00`).
+- [ ] Check if this layer in the base maps. If so, work with Zach to develop a path forward before you proceed with a Hard Delete (name, completed: `2023/00/00`).
 
 ### Hard Delete
 
