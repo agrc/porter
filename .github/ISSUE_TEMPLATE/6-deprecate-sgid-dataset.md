@@ -50,6 +50,8 @@ Note: If this dataset is being replaced, then wait until the new data is publicl
 
 #### Hard Delete
 
+**Target Date:** 2024/00/00
+
 _Hard deletes are final. It is recommended to complete the soft delete process before moving on to these steps. If you decide to skip the soft delete, note that you will need to incorporate some of those steps here._
 
 - [ ] Hard delete target date (name, set: `2024/00/00`)
