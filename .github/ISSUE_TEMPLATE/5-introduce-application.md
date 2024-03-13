@@ -1,5 +1,5 @@
 ---
-name: (🔐 UGRC internal use) Building an application
+name: (🔐 UGRC internal use) New application
 about: A new application is being developed by the UGRC
 title: Introduce <application>
 labels: "introduction, porter"
