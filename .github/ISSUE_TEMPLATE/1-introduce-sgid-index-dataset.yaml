@@ -1,0 +1,146 @@
+name: Request addition to the SGID Index
+description: Request the addition of a new dataset to the SGID Index.
+title: 🌱 Request for addition to the SGID Index
+labels: ["introduction", "porter"]
+assignees:
+  - steveoh
+  - gregbunce
+  - rkelson
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Incorporating data into the SGID Index is a great way to be a part of and help improve the awesome statewide product that is the SGID.
+
+        Please use this form to introduce your data, answering questions like where does it comes from and why do you think it's a good addition.
+  - type: input
+    id: name
+    attributes:
+      label: Dataset Name
+      description: What is the dataset's display name or title?
+      placeholder: ex. Utah Address Points
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Dataset location
+      description: Where is the dataset currently available or hosted?
+      placeholder: ex. https://opendata.gis.utah.gov/datasets/utah-address-points
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: SGID category
+      multiple: true
+      description: What categories do you think the data best fits into? Please select up to two categories.
+      options:
+        - Address
+        - Aerial-Photography
+        - Bioscience
+        - Boundaries
+        - Cadastre
+        - Climate
+        - Contours
+        - Demographic
+        - Economy
+        - Elevation
+        - Emergency
+        - Energy
+        - Environment
+        - Farming
+        - Geoscience
+        - Health
+        - History
+        - Indices
+        - Location
+        - Planning
+        - Political
+        - Recreation
+        - Society
+        - Topo
+        - Transportation
+        - Utilities
+        - Water
+      default: 0
+    validations:
+      required: true
+  - type: input
+    id: agency
+    attributes:
+      label: Authoritative source
+      description: What entity is the authoritative source of the data?
+      placeholder: ex. DNR
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Primary dataset contact
+      description: Who is the primary contact?
+      placeholder: ex. me, John Smith
+    validations:
+      required: true
+  - type: dropdown
+    id: update
+    attributes:
+      label: Update frequency
+      description: How often is the data updated?
+      options:
+        - Daily
+        - Weekly
+        - Monthly
+        - Quarterly
+        - Semi-annually
+        - Annually
+        - Static
+        - Other
+      default: 0
+    validations:
+      required: true
+  - type: input
+    id: update-other
+    attributes:
+      label: Other value
+      description: What update schedule does your data fit in to?
+      placeholder: ex. As needed
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: Data description
+      description: Explain the data in 1-3 sentences as if we were in 5th grade
+      placeholder: ex. Polygons representing areas to encourage economic growth by providing tax breaks to development projects.
+    validations:
+      required: true
+  - type: textarea
+    id: other
+    attributes:
+      label: Other information
+      description: Is there anything else you would like to say?
+    validations:
+      required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: SGID Index qualifications
+      description: By submitting this issue, you agree to have read the SGID Index [qualifications](https://gis.utah.gov/documentation/policy/sgid/#sgid-index-qualifications) and the SGID [sharing](https://gis.utah.gov/documentation/sgid/sharing/) documentation.
+      options:
+        - label: This data meets the SGID Index qualifications
+          required: true
+        - label: I have read the SGID sharing documentation
+          required: true
+  - type: markdown
+    attributes:
+      value: |
+        > [!Tip]
+        > 🙈🙈🙈 Please ignore everything below this line.
+  - type: input
+    id: type
+    attributes:
+      label: <!---->
+      value: <!-- porter = {"type":"sgid-index"} -->
+    validations:
+      required: true

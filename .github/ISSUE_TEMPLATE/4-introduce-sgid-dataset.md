@@ -1,12 +1,14 @@
 ---
-name: Introducing data to the SGID
+name: "UGRC Internal: Introduce data to the SGID"
 about: Creation Checklist
 title: Add <dataset name> from <source>
 labels: "introduction, porter"
 assignees: "@steveoh, @gregbunce, @rkelson"
 ---
 
-# Summary
+## Summary
+
+<!-- conductor = {"table":"category.internaltablename"} -->
 
 - **Proposed Readable Name**: Utah FooBar <!-- AGOL_PUBLISHED_NAME -->
 - **Proposed Internal Dataset Name**: FooBar
@@ -19,7 +21,7 @@ assignees: "@steveoh, @gregbunce, @rkelson"
 
 _Introduce your data, where it comes from, why it is being added etc._
 
-## The data should be available in
+### The data should be available in
 
 1 _Check [x] all the areas where you expect the data to show up._
 
@@ -28,20 +30,20 @@ _Introduce your data, where it comes from, why it is being added etc._
 - [ ] ArcGIS Online
 - [ ] Open Data
 
-## The data is of high quality
+### The data is of high quality
 
 - [ ] Sweeper checks have run and passed (name on `2024/00/00`)
 - [ ] The minimum requirements for [metadata](https://gis.utah.gov/about/policy/sgid/) are populated (name on `2024/00/00`)
 - [ ] The data complies with our [domain rules](https://gis.utah.gov/about/policy/sgid/) (name on `2024/00/00`)
 
-## Where is the data source
+### Where is the data source
 
 _Choose one._
 
 - [ ] Internal SGID
 - [ ] Farm from AGOL ([agol item url](??))
 
-## Action items
+### Action items
 
 1. _Assign a person who should complete the task by replacing `name` with their github `@name`._
 1. _Check [x] the box when the task is completed and add the date of completion._
@@ -56,7 +58,7 @@ _Choose one._
 - [ ] Complete an [AGOLItems_shelved](http://utah.maps.arcgis.com/home/item.html?id=1760fbedbc7e49429aa6c0c3ab1442ec) record for any `static` or `shelved` item (name, completed: `2024/00/00`)
 - [ ] Define a record set with archives (@brigsz, completed: `2024/00/00`)
 
-## :robot: Automation validation
+### :robot: Automation validation
 
 1. _Assign yourself or someone to check the item by replacing `name` with their github `@name`._
 1. _Check [x] the box and add the date of verification `2020/01/01` when the task is verified._
@@ -65,15 +67,15 @@ _Choose one._
 - [ ] Open SGID via cloudb (@steveoh on `2024/00/00`)
 - [ ] ArcGIS Online via forklift (@stdavis on `2024/00/00`)
 - [ ] [Auditor](https://github.com/agrc/Auditor) ran successfully (@jacobdadams on `2024/00/00`)
-- [ ] [Open Data](https://opendata.gis.utah.gov) (name on `2024/00/00`)
+- [ ] [SGID on ArcGIS](https://opendata.gis.utah.gov) (name on `2024/00/00`)
 - [ ] [gis.utah.gov](https://gis.utah.gov/data) data pages (name on `2024/00/00`)
 - [ ] [sgid-index](https://gis.utah.gov/data/sgid-index) (@steveoh on `2024/00/00`)
 
-## Notification
+### Notification
 
 - [ ] Twitter (@steveoh)
 
-## Group Task Assignments
+### Group Task Assignments
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 

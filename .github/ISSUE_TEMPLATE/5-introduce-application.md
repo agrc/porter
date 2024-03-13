@@ -6,7 +6,7 @@ labels: "introduction, porter"
 assignees: "@nathankota"
 ---
 
-# Summary
+## Summary
 
 - **Application Name**:
 - **Application Urls**
@@ -15,7 +15,7 @@ assignees: "@nathankota"
 
 _A short summary of the situation._
 
-## Action items
+### Action items
 
 1. _Assign a person who should complete the task by replacing `name` with their github `@name`._
 1. _Check [x] the box when the task is completed and add the date of completion._
@@ -24,22 +24,22 @@ _A short summary of the situation._
 - [ ] SOW or similar agreement (@nathankota, completed: `2022/00/00`)
 - [ ] Add to [gis.utah.gov](https://gis.utah.gov/developer/application) (name, completed: `2022/00/00`)
 - [ ] Create Archer security diagram (name, completed: `2022/00/00`)
-  - Diagram URL: 
+  - Diagram URL:
 - [ ] Add to Application Portfolio Management ("Business Applications" in ServiceNow) (@nathankota, completed: `2022/00/00`)
-  - Id: 
+  - Id:
 - [ ] Create maintenance contract (@nathankota, completed: `2022/00/00`)
 - [ ] Service Now task (@nathankota, completed: `2022/00/00`)
-  - Name: 
+  - Name:
 - [ ] GitHub repo (name, completed: `2022/00/00`)
-  - Repo URL: 
+  - Repo URL:
 - [ ] Primary client contact (@nathankota, completed: `2022/00/00`)
-  - Name: 
+  - Name:
 
-## Notification
+### Notification
 
 - [ ] Twitter (@steveoh)
 
-## Group Task Assignments
+### Group Task Assignments
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 
