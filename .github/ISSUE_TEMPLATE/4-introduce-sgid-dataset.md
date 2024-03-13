@@ -1,6 +1,6 @@
 ---
-name: "UGRC Internal: Introduce data to the SGID"
-about: Creation Checklist
+name: (UGRC internal use) Introduce data to the SGID
+about: A new SGID dataset is being proposed for inclusion in the SGID
 title: Add <dataset name> from <source>
 labels: "introduction, porter"
 assignees: "@steveoh, @gregbunce, @rkelson"

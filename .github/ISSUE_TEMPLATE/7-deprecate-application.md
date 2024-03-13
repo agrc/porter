@@ -1,6 +1,6 @@
 ---
-name: Removing an application
-about: Application Checklist
+name: (UGRC internal use) Removing an application
+about: An application is no longer maintained, useful, or is being replaced
 title: Deprecate <application>
 labels: "deprecation, porter"
 assignees: "@steveoh, @gregbunce, @rkelson"
