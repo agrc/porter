@@ -1,6 +1,6 @@
 ---
-name: (UGRC internal use) Remove data from the SGID
-about: This SGID data is no longer relevant or has been replaced
+name: (🔐 UGRC internal use) SGID deprecation
+about: SGID data is no longer relevant or has been replaced
 title: Remove <dataset name> from SGID
 labels: "deprecation, porter"
 assignees: "@steveoh, @gregbunce, @rkelson"

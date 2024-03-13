@@ -1,5 +1,5 @@
 ---
-name: (UGRC internal use) Removing an application
+name: (🔐 UGRC internal use) Application deprecation
 about: An application is no longer maintained, useful, or is being replaced
 title: Deprecate <application>
 labels: "deprecation, porter"

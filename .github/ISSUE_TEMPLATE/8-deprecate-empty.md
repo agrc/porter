@@ -1,6 +1,6 @@
 ---
-name: (UGRC internal use) Removing something from somewhere else
-about: Other Deprecation Checklist
+name: (🔐 UGRC internal use) Other deprecation
+about: Deprecating non data or application that requires a history
 title: Remove <thing> from <place>
 labels: "deprecation, porter"
 assignees: "@steveoh, @gregbunce, @rkelson"

@@ -1,5 +1,5 @@
 ---
-name: (UGRC internal use) Introduce data to the SGID
+name: (🔐 UGRC internal use) SGID addition
 about: A new SGID dataset is being proposed for inclusion in the SGID
 title: Add <dataset name> from <source>
 labels: "introduction, porter"
