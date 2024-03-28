@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.2](https://github.com/agrc/porter/compare/v2.4.1...v2.4.2) (2024-03-28)
+
+
+### 🐛 Bug Fixes
+
+* updates for new sgid index ([7d68ebb](https://github.com/agrc/porter/commit/7d68ebb7c6d16b4319ab7ef266017cbd1730577a))
+
 ## [2.4.1](https://github.com/agrc/porter/compare/v2.4.0...v2.4.1) (2023-10-13)
 
 
