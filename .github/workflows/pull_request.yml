@@ -38,7 +38,7 @@ jobs:
         run: mkdir -p secrets/db
 
       - name: 🤐 Create secret file
-        uses: jsdaniell/create-json@v1.2.2
+        uses: jsdaniell/create-json@v1.2.3
         with:
           name: "secrets/db/connections"
           json: ${{ secrets.TESTING_DB_CONNECTIONS }}
@@ -47,7 +47,7 @@ jobs:
         run: pytest
 
       - name: ⬆️ Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./cov.xml
