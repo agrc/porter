@@ -377,6 +377,7 @@ class GSheetChecker:
 
             if key == "productPage":
                 product_page = value
+                continue
             elif key == "itemId":
                 item_id = value
                 continue
