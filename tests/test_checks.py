@@ -282,46 +282,52 @@ def test_open_data_for_missing_with_301(mocker):
     assert patient.exists() is False
 
 
+header_row = [
+    "id",
+    "indexStatus",
+    "displayName",
+    "description",
+    "justification",
+    "category",
+    "categorySecondary",
+    "productType",
+    "refreshCycle",
+    "storageType",
+    "tableName",
+    "productPage",
+    "inActionUrl",
+    "ugrcSteward",
+    "hostedBy",
+    "hostContactName",
+    "hostContactEmail",
+    "dataSource",
+    "dataContactEmail",
+    "dataContactName",
+    "itemId",
+    "hubName",
+    "hubOrganization",
+    "serverHost",
+    "serverServiceName",
+    "serverLayerId",
+    "arcGisOnline",
+    "openSgid",
+    "openSgidTableName",
+    "confidenceRating",
+    "porterUrl",
+]
+
+
 def test_sheets_build_header_row_index():
     patient = GSheetChecker("fake.table", "sheet_id", "worksheet_name", "TESTING")
 
-    header_row = [
-        "Issue",
-        "Authoritative Access From",
-        "SGID Data Layer",
-        "Refresh Cycle (Days)",
-        "Last Update",
-        "Days From Last Refresh",
-        "Days to Refresh",
-        "Description",
-        "Data Source",
-        "Use Restrictions",
-        "Website URL",
-        "Anchor",
-        "Data Type",
-        "PEL Layer",
-        "PEL Status",
-        "Governance/Agreement",
-        "PEL Inclusion",
-        "Agency Contact Name",
-        "Agency Contact Email",
-        "SGID Coordination",
-        "Archival Schedule",
-        "Endpoint",
-        "Tier",
-        "Webapp",
-        "Notes",
-        "Deprecated",
-    ]
-
     patient.required_fields = [
-        "Issue",
-        "Notes",
-        "Deprecated",
+        "displayName",
+        "productPage",
+        "porterUrl",
     ]  #: shorten the list to make the testing simpler
     patient.build_header_row_index(header_row)
 
-    assert patient.field_index == {"Issue": 0, "Notes": 24, "Deprecated": 25}
+    assert patient.field_index == {"displayName": 2, "productPage": 11, "porterUrl": 30}
 
 
 def test_sheets_with_duplicate_cells_returns_false(mocker):
@@ -347,37 +353,8 @@ def test_sheets_with_no_matches_returns_false(mocker):
 
 def test_sheets_returns_false_for_empty_values(mocker):
     patient = GSheetChecker("fake.table", "sheet_id", "worksheet_name", "TESTING")
-    patient.build_header_row_index(
-        [
-            "Issue",
-            "Authoritative Access From",
-            "SGID Data Layer",
-            "Refresh Cycle (Days)",
-            "Last Update",
-            "Days From Last Refresh",
-            "Days to Refresh",
-            "Description",
-            "Data Source",
-            "Use Restrictions",
-            "Website URL",
-            "Anchor",
-            "Data Type",
-            "PEL Layer",
-            "PEL Status",
-            "Governance/Agreement",
-            "PEL Inclusion",
-            "Agency Contact Name",
-            "Agency Contact Email",
-            "SGID Coordination",
-            "Archival Schedule",
-            "Endpoint",
-            "Tier",
-            "Webapp",
-            "Notes",
-            "Deprecated",
-        ]
-    )
-    patient._get_data = mocker.Mock(return_value=[Cell("A1", "fake.table")])
+    patient.build_header_row_index(header_row)
+    patient._get_data = mocker.Mock(return_value=[Cell("A1", "table")])
     mocker.patch("pygsheets.Cell.link")
     mocker.patch("pygsheets.Cell.neighbour", return_value=Cell("A2"))
 
@@ -385,47 +362,37 @@ def test_sheets_returns_false_for_empty_values(mocker):
 
     assert response.valid is True
     assert response.messages == {
-        "Description": False,
-        "Data Source": False,
-        "Website URL": False,
-        "Data Type": False,
-        "Endpoint": False,
-        "Deprecated": False,
+        "displayName": False,
+        "description": False,
+        "justification": False,
+        "category": False,
+        "productType": False,
+        "ugrcSteward": False,
+        "dataContactEmail": False,
+        "dataContactName": False,
+        "porterUrl": False,
+        "productPage": False,
+        "itemId": False,
     }
+
+
+def test_sheets_requires_product_page_or_item_id(mocker):
+    patient = GSheetChecker("fake.table", "sheet_id", "worksheet_name", "TESTING")
+    patient.build_header_row_index(header_row)
+    patient._get_data = mocker.Mock(return_value=[Cell("A1", "table")])
+    mocker.patch("pygsheets.Cell.link")
+    mocker.patch("pygsheets.Cell.neighbour", return_value=Cell("A2"))
+
+    response = patient.exists()
+
+    assert response.valid is True
+    assert response.messages["productPage"] is False
+    assert response.messages["itemId"] is False
 
 
 def test_sheets_handles_partial_values(mocker):
     patient = GSheetChecker("fake.table", "sheet_id", "worksheet_name", "TESTING")
-    patient.build_header_row_index(
-        [
-            "Issue",
-            "Authoritative Access From",
-            "SGID Data Layer",
-            "Refresh Cycle (Days)",
-            "Last Update",
-            "Days From Last Refresh",
-            "Days to Refresh",
-            "Description",
-            "Data Source",
-            "Use Restrictions",
-            "Website URL",
-            "Anchor",
-            "Data Type",
-            "PEL Layer",
-            "PEL Status",
-            "Governance/Agreement",
-            "PEL Inclusion",
-            "Agency Contact Name",
-            "Agency Contact Email",
-            "SGID Coordination",
-            "Archival Schedule",
-            "Endpoint",
-            "Tier",
-            "Webapp",
-            "Notes",
-            "Deprecated",
-        ]
-    )
+    patient.build_header_row_index(header_row)
     patient._get_data = mocker.Mock(return_value=[Cell("A1", "fake.table")])
     mocker.patch("pygsheets.Cell.link")
     mocker.patch(
@@ -437,6 +404,11 @@ def test_sheets_handles_partial_values(mocker):
             Cell("A5", val="   "),
             Cell("A6", val=" true "),
             Cell("A7", val=" "),
+            Cell("A8", val=" "),
+            Cell("A9", val=" "),
+            Cell("A10", val=" "),
+            Cell("A11", val=" "),
+            Cell("A12", val=" "),
         ],
     )
 
@@ -444,47 +416,23 @@ def test_sheets_handles_partial_values(mocker):
 
     assert response.valid is True
     assert response.messages == {
-        "Description": True,
-        "Data Source": False,
-        "Website URL": True,
-        "Data Type": False,
-        "Endpoint": True,
-        "Deprecated": False,
+        "displayName": True,
+        "description": False,
+        "justification": True,
+        "category": False,
+        "productType": True,
+        "ugrcSteward": False,
+        "dataContactEmail": False,
+        "dataContactName": False,
+        "porterUrl": False,
+        "productPage": False,
+        "itemId": False,
     }
 
 
 def test_sheets_returns_true_if_neighbors_all_have_values(mocker):
     patient = GSheetChecker("fake.table", "sheet_id", "worksheet_name", "TESTING")
-    patient.build_header_row_index(
-        [
-            "Issue",
-            "Authoritative Access From",
-            "SGID Data Layer",
-            "Refresh Cycle (Days)",
-            "Last Update",
-            "Days From Last Refresh",
-            "Days to Refresh",
-            "Description",
-            "Data Source",
-            "Use Restrictions",
-            "Website URL",
-            "Anchor",
-            "Data Type",
-            "PEL Layer",
-            "PEL Status",
-            "Governance/Agreement",
-            "PEL Inclusion",
-            "Agency Contact Name",
-            "Agency Contact Email",
-            "SGID Coordination",
-            "Archival Schedule",
-            "Endpoint",
-            "Tier",
-            "Webapp",
-            "Notes",
-            "Deprecated",
-        ]
-    )
+    patient.build_header_row_index(header_row)
     patient._get_data = mocker.Mock(return_value=[Cell("A1", "fake.table")])
     mocker.patch("pygsheets.Cell.link")
     mocker.patch(
@@ -496,6 +444,12 @@ def test_sheets_returns_true_if_neighbors_all_have_values(mocker):
             Cell("A5", val="also not empty"),
             Cell("A6", val="also not empty"),
             Cell("A7", val="also not empty"),
+            Cell("A8", val="also not empty"),
+            Cell("A9", val="also not empty"),
+            Cell("A10", val="also not empty"),
+            Cell("A11", val="also not empty"),
+            Cell("A12", val="also not empty"),
+            Cell("A13", val="also not empty"),
         ],
     )
 
@@ -503,12 +457,15 @@ def test_sheets_returns_true_if_neighbors_all_have_values(mocker):
 
     assert response.valid is True
     assert response.messages == {
-        "Description": True,
-        "Data Source": True,
-        "Website URL": True,
-        "Data Type": True,
-        "Endpoint": True,
-        "Deprecated": True,
+        "displayName": True,
+        "description": True,
+        "justification": True,
+        "category": True,
+        "productType": True,
+        "ugrcSteward": True,
+        "dataContactEmail": True,
+        "dataContactName": True,
+        "porterUrl": True,
     }
 
 
@@ -549,12 +506,17 @@ def test_sheets_exists_returns_true_for_known_layer():
 
     assert response.valid is True
     assert response.messages == {
-        "Description": True,
-        "Data Source": True,
-        "Website URL": True,
-        "Data Type": True,
-        "Endpoint": True,
-        "Deprecated": False,
+        "displayName": True,
+        "description": True,
+        "justification": True,
+        "category": True,
+        "productType": True,
+        "ugrcSteward": True,
+        "dataContactEmail": True,
+        "dataContactName": True,
+        "porterUrl": True,
+        "productPage": True,
+        "itemId": True,
     }
 
 
@@ -584,45 +546,44 @@ def test_sheet_grade_returns_false_for_multiple_row_for_add():
 def test_sheet_grade_returns_false_for_missing_field_for_add():
     SheetResponse = namedtuple("SheetResponse", "valid messages")
     grades = {
-        "Description": False,
-        "Data Source": True,
-        "Deprecated": False,
+        "displayName": False,
+        "description": True,
     }
     grade = GSheetChecker("fake.table", "id", "name", "TESTING").grade(
         add=True, report_value=SheetResponse(True, grades)
     )
 
-    assert grade == " |\n| - Description | :no_entry: |\n| - Data Source | :+1:"
+    assert grade == " |\n| - displayName | :no_entry: |\n| - description | :+1:"
 
 
 def test_sheet_grade_returns_true_for_deprecation_field_for_remove():
     SheetResponse = namedtuple("SheetResponse", "valid messages")
     grades = {
-        "Description": False,
-        "Data Source": True,
-        "Deprecated": True,
+        "displayName": False,
+        "description": True,
+        "porterUrl": True,
     }
     grade = GSheetChecker("fake.table", "id", "name", "TESTING").grade(
         add=False, report_value=SheetResponse(True, grades)
     )
 
-    assert grade == " |\n| - deprecation issue link | :+1:"
+    assert grade == " |\n| - porter issue link | :+1:"
 
 
 def test_sheet_grade_returns_false_for_deprecation_field_for_remove():
     SheetResponse = namedtuple("SheetResponse", "valid messages")
     grades = {
-        "Description": False,
-        "Data Source": True,
-        "Deprecated": False,
+        "displayName": False,
+        "description": True,
+        "porterUrl": False,
     }
     grade = GSheetChecker("fake.table", "id", "name", "TESTING").grade(
         add=False, report_value=SheetResponse(True, grades)
     )
 
-    assert grade == " |\n| - deprecation issue link | :no_entry:"
+    assert grade == " |\n| - porter issue link | :no_entry:"
     grade = GSheetChecker("fake.table", "id", "name", "TESTING").grade(
         add=False, report_value=SheetResponse(True, grades)
     )
 
-    assert grade == " |\n| - deprecation issue link | :no_entry:"
+    assert grade == " |\n| - porter issue link | :no_entry:"

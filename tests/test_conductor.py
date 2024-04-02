@@ -11,12 +11,13 @@ from collections import namedtuple
 from os import environ
 from pathlib import Path
 
-from conductor import conductor
-from conductor.checks import GSheetChecker, MetaTableChecker, TableChecker, UrlChecker
 from github.Auth import Token
 from github.Issue import Issue
 from github.Label import Label
 from github.Requester import Requester
+
+from conductor import conductor
+from conductor.checks import GSheetChecker, MetaTableChecker, TableChecker, UrlChecker
 
 secret_path = Path(__file__).parent.parent / "src" / "conductor" / "secrets" / "db" / "connections"
 
@@ -98,9 +99,9 @@ def test_publish_sheets_integration_test_add_mixed(mocker):
     Grade = namedtuple("Grade", "check grade issue")
 
     grades = {
-        "Description": False,
-        "Data Source": True,
-        "Deprecated": False,
+        "displayName": False,
+        "description": True,
+        "porterUrl": False,
     }
     grade = GSheetChecker("fake.table", "id", "name", "TESTING").grade(
         add=True, report_value=SheetResponse(True, grades)
@@ -118,8 +119,8 @@ def test_publish_sheets_integration_test_add_mixed(mocker):
 | check | status |
 | - | :-: |
 | sheetchecker |  |
-| - Description | :no_entry: |
-| - Data Source | :+1: |"""
+| - displayName | :no_entry: |
+| - description | :+1: |"""
     )
 
 
@@ -128,9 +129,9 @@ def test_publish_sheets_integration_test_add_all_success(mocker):
     Grade = namedtuple("Grade", "check grade issue")
 
     grades = {
-        "Description": True,
-        "Data Source": True,
-        "Deprecated": False,
+        "displayName": True,
+        "description": True,
+        "porterUrl": False,
     }
     grade = GSheetChecker("fake.table", "id", "name", "TESTING").grade(
         add=True, report_value=SheetResponse(True, grades)
@@ -148,8 +149,8 @@ def test_publish_sheets_integration_test_add_all_success(mocker):
 | check | status |
 | - | :-: |
 | sheetchecker |  |
-| - Description | :+1: |
-| - Data Source | :+1: |"""
+| - displayName | :+1: |
+| - description | :+1: |"""
     )
 
 
@@ -158,9 +159,9 @@ def test_publish_sheets_integration_test_add_all_fail(mocker):
     Grade = namedtuple("Grade", "check grade issue")
 
     grades = {
-        "Description": False,
-        "Data Source": False,
-        "Deprecated": False,
+        "displayName": False,
+        "description": False,
+        "porterUrl": False,
     }
     grade = GSheetChecker("fake.table", "id", "name", "TESTING").grade(
         add=True, report_value=SheetResponse(True, grades)
@@ -178,8 +179,8 @@ def test_publish_sheets_integration_test_add_all_fail(mocker):
 | check | status |
 | - | :-: |
 | sheetchecker |  |
-| - Description | :no_entry: |
-| - Data Source | :no_entry: |"""
+| - displayName | :no_entry: |
+| - description | :no_entry: |"""
     )
 
 
@@ -188,9 +189,9 @@ def test_publish_sheets_integration_test_remove_all_fail(mocker):
     Grade = namedtuple("Grade", "check grade issue")
 
     grades = {
-        "Description": True,
-        "Data Source": True,
-        "Deprecated": False,
+        "displayName": True,
+        "description": True,
+        "porterUrl": False,
     }
     grade = GSheetChecker("fake.table", "id", "name", "TESTING").grade(
         add=False, report_value=SheetResponse(True, grades)
@@ -208,7 +209,7 @@ def test_publish_sheets_integration_test_remove_all_fail(mocker):
 | check | status |
 | - | :-: |
 | sheetchecker |  |
-| - deprecation issue link | :no_entry: |"""
+| - porter issue link | :no_entry: |"""
     )
 
 
@@ -217,9 +218,9 @@ def test_publish_sheets_integration_test_remove_all_pass(mocker):
     Grade = namedtuple("Grade", "check grade issue")
 
     grades = {
-        "Description": True,
-        "Data Source": True,
-        "Deprecated": True,
+        "displayName": True,
+        "description": True,
+        "porterUrl": True,
     }
     grade = GSheetChecker("fake.table", "id", "name", "TESTING").grade(
         add=False, report_value=SheetResponse(True, grades)
@@ -237,7 +238,7 @@ def test_publish_sheets_integration_test_remove_all_pass(mocker):
 | check | status |
 | - | :-: |
 | sheetchecker |  |
-| - deprecation issue link | :+1: |"""
+| - porter issue link | :+1: |"""
     )
 
 
@@ -679,7 +680,7 @@ def test_write_reports(mocker):
         return_value=SheetResponse(
             True,
             {
-                "Data source": True,
+                "description": True,
                 "Deprecation": False,
             },
         ),
@@ -730,7 +731,7 @@ def test_write_report_without_item_id(mocker):
         return_value=SheetResponse(
             True,
             {
-                "Data source": True,
+                "description": True,
                 "Deprecation": False,
             },
         ),
