@@ -309,12 +309,17 @@ class GSheetChecker:
     """look for a record and attributes in the stewardship worksheet"""
 
     required_fields = [
-        "Description",
-        "Data Source",
-        "Website URL",
-        "Data Type",
-        "Endpoint",
-        "Deprecated",
+        "displayName",
+        "description",
+        "justification",
+        "category",
+        "productType",
+        "ugrcSteward",
+        "dataContactEmail",
+        "dataContactName",
+        "porterUrl",
+        "productPage",
+        "itemId",
     ]
     client = None
     worksheet = None
@@ -339,7 +344,7 @@ class GSheetChecker:
         header_row = self.worksheet.get_row(1)
         self.build_header_row_index(header_row)
 
-        return self.worksheet.find(self.table, matchEntireCell=True)
+        return self.worksheet.find(self.table.split(".")[1], matchEntireCell=True, cols=(1, 12))
 
     def exists(self):
         """tests for if the row exists in the sheet"""
@@ -364,14 +369,25 @@ class GSheetChecker:
         fields = self.field_index
         starting_position = cell.col
 
+        product_page = None
+        item_id = None
         for key, position in fields.items():
-            status[key] = False
-
             delta = (0, (position + 1) - starting_position)
             value = cell.neighbour(delta).value.strip()
 
+            if key == "productPage":
+                product_page = value
+            elif key == "itemId":
+                item_id = value
+                continue
+
+            status[key] = False
             if value:
                 status[key] = True
+
+        if not item_id and not product_page:
+            status["productPage"] = False
+            status["itemId"] = False
 
         return SheetResponse(True, status)
 
@@ -388,26 +404,26 @@ class GSheetChecker:
                 [
                     f"\n| - {key} | :no_entry: |"
                     for key in report_value.messages
-                    if not report_value.messages[key] and key != "Deprecated"
+                    if not report_value.messages[key] and key != "porterUrl"
                 ]
             )
             success = "".join(
                 [
                     f"\n| - {key} | :+1: |"
                     for key in report_value.messages
-                    if report_value.messages[key] and key != "Deprecated"
+                    if report_value.messages[key] and key != "porterUrl"
                 ]
             )
 
             return f" |{failures}{success}".rstrip(" |").strip("\n\n")
 
         #: removal
-        has_linked_deprecation_issue = report_value.messages["Deprecated"]
+        has_linked_deprecation_issue = report_value.messages["porterUrl"]
 
         if not has_linked_deprecation_issue:
-            return " |\n| - deprecation issue link | :no_entry:"
+            return " |\n| - porter issue link | :no_entry:"
 
-        return " |\n| - deprecation issue link | :+1:"
+        return " |\n| - porter issue link | :+1:"
 
     @staticmethod
     def create_client_with_service_account(file_path):

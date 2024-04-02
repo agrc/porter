@@ -1,7 +1,4 @@
 {
-  "python.linting.enabled": true,
-  "python.linting.pycodestyleEnabled": false,
-  "python.formatting.provider": "none",
   "cSpell.words": [
     "accesstoken",
     "agol",
