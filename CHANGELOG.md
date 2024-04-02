@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.5.1](https://github.com/agrc/porter/compare/v2.5.0...v2.5.1) (2024-04-02)
+
+
+### 🐛 Bug Fixes
+
+* migrate to new SGID Index spreadsheet ([9221507](https://github.com/agrc/porter/commit/922150753397e67a40762fff25e440a6edfc42b9))
+* unit tests ([e4fa051](https://github.com/agrc/porter/commit/e4fa051f2a7e4b6d958690920afd722a982fac2b))
+* updates related to new SGID Index page ([0b73038](https://github.com/agrc/porter/commit/0b730389f2bbce538654668dc934c1ff6c241585))
+
 ## [2.5.0](https://github.com/agrc/porter/compare/v2.4.1...v2.5.0) (2024-04-02)
 
 
