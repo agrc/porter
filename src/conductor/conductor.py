@@ -203,7 +203,7 @@ def write_reports(conductor_issues, secrets):
                 check = GSheetChecker(
                     table,
                     "11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ",
-                    "SGID Stewardship Info",
+                    "SGID Index",
                     secrets["sheets-sa"],
                 )
                 reports[table].append(Report("stewardship", issue, check.exists(), GSheetChecker.grade))
