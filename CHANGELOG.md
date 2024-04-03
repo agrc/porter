@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.5.2](https://github.com/agrc/porter/compare/v2.5.1...v2.5.2) (2024-04-03)
+
+
+### 🌲 Dependencies
+
+* **dev:** bump the major-dependencies group with 3 updates ([28e80a3](https://github.com/agrc/porter/commit/28e80a3e17620962e36eb8238561ff4b6ced48e6))
+
+
+### 📖 Documentation Improvements
+
+* update readme ([4f35fe0](https://github.com/agrc/porter/commit/4f35fe023ec62b1bb5449c64bf3ea0b107bad28f))
+
 ## [2.5.1](https://github.com/agrc/porter/compare/v2.5.0...v2.5.1) (2024-04-02)
 
 
