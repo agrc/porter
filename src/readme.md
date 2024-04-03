@@ -113,6 +113,27 @@ docker push gcr.io/ut-dts-agrc-porter-prod/conductor
 1. install dependencies and editable project: `pip install -e ".[tests]"`
 1. use `test_conductor` as the entry point
 1. install the Microsoft ODBC driver for SQL Server for [Windows](https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server) or [macOS](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos)
-1. create a copy of `src/conductor/connections_sample.py` as `src/conductor/connections.py`
-   1. generate a [new GitHub personal access token](https://github.com/settings/tokens/new) with `public_repo` and store it in `github_token`
-   1. set the `local.service_account_file` path to a service account file with access to the stewardship sheet
+1. create two secret files in `src/conductor/secrets`
+   1. `/db/connections`
+
+      ```json
+      {
+         "internalsgid": {
+            "server": "",
+            "database": "",
+            "user": "",
+            "password": "",
+            "driver": "ODBC Driver 17 for SQL Server"
+         },
+         "opensgid": {
+            "host": "",
+            "database": "",
+            "user": "",
+            "password": ""
+         },
+         "github_token": "generate a [new GitHub personal access token](https://github.com/settings/tokens/new) with `public_repo`"
+      }
+      ```
+
+   1. `/sheets/service-account`
+      - a service account with read access to the google sheet
