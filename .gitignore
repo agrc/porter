@@ -27,6 +27,7 @@ arc.dir
 
 # environments
 .env/
+venv/
 
 # cruft
 .DS_Store
