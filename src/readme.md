@@ -1,7 +1,6 @@
 # conductor
 
-![Tests](https://github.com/agrc/porter/workflows/Build%20and%20Test/badge.svg)
-![Continuous Deployment](https://github.com/agrc/porter/workflows/Build%20and%20Deploy%20to%20Cloud%20Run/badge.svg)
+[![Push Events](https://github.com/agrc/porter/actions/workflows/push.yml/badge.svg)](https://github.com/agrc/porter/actions/workflows/push.yml)
 
 a bot that checks on the existence of data and required fields
 
