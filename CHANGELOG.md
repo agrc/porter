@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.4](https://github.com/agrc/porter/compare/v2.5.3...v2.5.4) (2024-04-29)
+
+
+### 🐛 Bug Fixes
+
+* upgrade to debian and python 12 ([95c7ce6](https://github.com/agrc/porter/commit/95c7ce663de993888a92f02a114aba16c067dfa5))
+
 ## [2.5.3](https://github.com/agrc/porter/compare/v2.5.2...v2.5.3) (2024-04-29)
 
 
