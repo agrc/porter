@@ -120,6 +120,7 @@ runs:
             --max-retry-attempts=3 \
             --min-backoff=1m \
             --max-backoff=10m \
+            --attempt-deadline=300s \
             --oidc-service-account-email=cloud-scheduler@${{ inputs.project_id }}.iam.gserviceaccount.com \
             --quiet
         else
@@ -132,6 +133,7 @@ runs:
             --max-retry-attempts=3 \
             --min-backoff=1m \
             --max-backoff=10m \
+            --attempt-deadline=300s \
             --oidc-service-account-email=cloud-scheduler@${{ inputs.project_id }}.iam.gserviceaccount.com \
             --quiet
         fi
