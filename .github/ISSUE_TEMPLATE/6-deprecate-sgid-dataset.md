@@ -64,7 +64,7 @@ _Hard deletes are final. It is recommended to complete the soft delete process b
   - Deprecated AGOL items can be backed up on Google Drive > AGRC Projects > SGID > deprecated layers > [agol_sgid_layers](https://drive.google.com/drive/u/0/folders/1xwSxiDNIH-9Hhmn6I7NfKBhm4SbYonX5).
 - [ ] Remove Farm from AGOL connection (name, completed: `2024/00/00`)
 - [ ] Update the [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1024261148) fields: "arcGisOnline", "openSgid", "openSgidTableName"
-- [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/data) data pages (name, completed: `2024/00/00`)
+- [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/data) data pages (including `downloadMetadata.ts`) (name, completed: `2024/00/00`)
 - [ ] Update `SGID.META.AGOLItems` table (name, completed: `2024/00/00`)
   - cut and paste row to `AGOLItems_shelved` table if shelving (see below)
   - set the `AGOL_ITEM_ID` field to `hosted by <agency>` for Farm from AGOL
