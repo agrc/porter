@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.5](https://github.com/agrc/porter/compare/v2.5.4...v2.5.5) (2024-05-20)
+
+
+### 📖 Documentation Improvements
+
+* add note about downloadMetadata.ts update ([01d425e](https://github.com/agrc/porter/commit/01d425e2f4864a1a7895a4ccf2b1bbfbadf49b5d))
+
 ## [2.5.4](https://github.com/agrc/porter/compare/v2.5.3...v2.5.4) (2024-04-29)
 
 
