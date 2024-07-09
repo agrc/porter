@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.5.5](https://github.com/agrc/porter/compare/v2.5.4...v2.5.5) (2024-07-09)
+
+
+### Dependencies
+
+* **dev:** update gunicorn requirement in the major-dependencies group ([333caff](https://github.com/agrc/porter/commit/333caff773ecad417b8699d7c81d837edcef7605))
+
+
+### Documentation
+
+* add note about downloadMetadata.ts update ([01d425e](https://github.com/agrc/porter/commit/01d425e2f4864a1a7895a4ccf2b1bbfbadf49b5d))
+
 ## [2.5.4](https://github.com/agrc/porter/compare/v2.5.3...v2.5.4) (2024-04-29)
 
 
