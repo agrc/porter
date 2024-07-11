@@ -56,7 +56,7 @@ _Choose one._
 - [ ] Complete a `SGID.META.AGOLItems` record (name, completed: `2024/00/00`)
   - `AGOL_ITEM_ID` will be populated by Forklift after it publishes the new AGOL item.
 - [ ] Complete an [AGOLItems_shelved](http://utah.maps.arcgis.com/home/item.html?id=1760fbedbc7e49429aa6c0c3ab1442ec) record for any `static` or `shelved` item (name, completed: `2024/00/00`)
-- [ ] Define a record set with archives (@brigsz, completed: `2024/00/00`)
+- [ ] Data is assigned to a record series with archives (@brigsz, completed: `2024/00/00`)
 
 ### :robot: Automation validation
 
@@ -68,12 +68,12 @@ _Choose one._
 - [ ] ArcGIS Online via forklift (@stdavis on `2024/00/00`)
 - [ ] [Auditor](https://github.com/agrc/Auditor) ran successfully (@jacobdadams on `2024/00/00`)
 - [ ] [SGID on ArcGIS](https://opendata.gis.utah.gov) (name on `2024/00/00`)
-- [ ] [gis.utah.gov](https://gis.utah.gov/data) data pages (name on `2024/00/00`)
-- [ ] [sgid-index](https://gis.utah.gov/data/sgid-index) (@steveoh on `2024/00/00`)
+- [ ] [gis.utah.gov](https://gis.utah.gov/products/sgid/categories/) data pages (name on `2024/00/00`)
+- [ ] [sgid-index](https://gis.utah.gov/products/sgid/sgid-index/) (@steveoh on `2024/00/00`)
 
 ### Notification
 
-- [ ] Twitter (@steveoh)
+- [ ] X (@steveoh)
 
 ### Group Task Assignments
 
