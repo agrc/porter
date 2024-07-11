@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.6](https://github.com/agrc/porter/compare/v2.5.5...v2.5.6) (2024-07-11)
+
+
+### Dependencies
+
+* update ruff ([d4b21a4](https://github.com/agrc/porter/commit/d4b21a43cb2d4f7367ea70fb2bf3c134dbff2619))
+
 ## [2.5.5](https://github.com/agrc/porter/compare/v2.5.4...v2.5.5) (2024-07-09)
 
 
