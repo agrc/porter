@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.5.7](https://github.com/agrc/porter/compare/v2.5.6...v2.5.7) (2024-09-09)
+
+
+### Bug Fixes
+
+* better link ([165f250](https://github.com/agrc/porter/commit/165f250a14b68cf0ac345b30263952ff3ad3f1c1))
+* increase cloud run timeout ([b8fadde](https://github.com/agrc/porter/commit/b8fadde25be950b094000c240e0db69b0aebaa05))
+
+
+### Documentation
+
+* add link to api analytics dashboard ([448e0f0](https://github.com/agrc/porter/commit/448e0f0b86fe1679c01d79e087948d69108b16a4))
+
 ## [2.5.6](https://github.com/agrc/porter/compare/v2.5.5...v2.5.6) (2024-07-11)
 
 
