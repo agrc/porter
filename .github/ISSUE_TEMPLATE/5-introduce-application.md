@@ -3,7 +3,6 @@ name: (🔐 UGRC internal use) New application
 about: A new application is being developed by the UGRC
 title: Introduce <application>
 labels: "introduction, porter"
-assignees: "@nathankota"
 ---
 
 ## Summary
@@ -21,18 +20,18 @@ _A short summary of the application._
 1. _Check [x] the box when the task is completed and add the date of completion._
 1. _~Strike~ out all items that do not apply._
 
-- [ ] SOW or similar agreement (@nathankota, completed: `2024/00/00`)
-- [ ] Add to [gis.utah.gov](https://gis.utah.gov/developer/application) (name, completed: `2024/00/00`)
+- [ ] SOW or similar agreement (name, completed: `2024/00/00`)
+- [ ] Add to [gis.utah.gov]([https://gis.utah.gov/developer/application](https://gis.utah.gov/solutions/for-government/application-portfolio-highlights/)) (name, completed: `2024/00/00`)
 - [ ] Create Archer security diagram (name, completed: `2024/00/00`)
   - Diagram URL:
-- [ ] Add to Application Portfolio Management ("Business Applications" in ServiceNow) (@nathankota, completed: `2024/00/00`)
+- [ ] Add to Application Portfolio Management ("Business Applications" in ServiceNow) (nam,e, completed: `2024/00/00`)
   - Id:
-- [ ] Create maintenance contract (@nathankota, completed: `2024/00/00`)
-- [ ] Service Now task (@nathankota, completed: `2024/00/00`)
+- [ ] Create maintenance contract (name, completed: `2024/00/00`)
+- [ ] Service Now task (name, completed: `2024/00/00`)
   - Name:
 - [ ] GitHub repo (name, completed: `2024/00/00`)
   - Repo URL:
-- [ ] Primary client contact (@nathankota, completed: `2024/00/00`)
+- [ ] Primary client contact (name, completed: `2024/00/00`)
   - Name:
 
 ### Notification
