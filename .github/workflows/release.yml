@@ -1,0 +1,70 @@
+name: Release Events
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  id-token: write
+  deployments: write
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    if: github.event.release.prerelease == true
+    environment:
+      name: dev
+    permissions:
+      id-token: write
+
+    steps:
+      - name: ⬇️ Set up code
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: 🚀 Deploy
+        uses: ./.github/actions/deploy
+        with:
+          identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
+          service_account_email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          vpc: ${{ secrets.VPC }}
+          environment_variables: PORTER_DEVELOPMENT=1
+
+  deploy-prod:
+    runs-on: ubuntu-latest
+    if: github.event.release.prerelease == false
+    environment:
+      name: prod
+    permissions:
+      id-token: write
+
+    steps:
+      - name: ⬇️ Set up code
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: 🚀 Deploy
+        uses: ./.github/actions/deploy
+        with:
+          identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
+          service_account_email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          vpc: ${{ secrets.VPC }}
+
+  notify:
+    name: Notifications
+    needs: deploy-prod
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Release Notifier
+        uses: agrc/release-issue-notifications-action@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
