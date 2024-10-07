@@ -44,7 +44,7 @@ setup(
     extras_require={
         "cloud-run": [
             "flask==3.*",
-            "gunicorn>=21,<23",
+            "gunicorn>=21,<24",
         ],
         "tests": [
             "pytest-cov>=4,<6",
