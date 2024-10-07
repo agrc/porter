@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.8](https://github.com/agrc/porter/compare/v2.5.7...v2.5.8) (2024-10-07)
+
+
+### Dependencies
+
+* bump gunicorn ([b1d4c8e](https://github.com/agrc/porter/commit/b1d4c8e86407010d0f1066310fd7774fc7aa4d16))
+
 ## [2.5.7](https://github.com/agrc/porter/compare/v2.5.6...v2.5.7) (2024-09-09)
 
 
