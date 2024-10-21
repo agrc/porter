@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.9](https://github.com/agrc/porter/compare/v2.5.8...v2.5.9) (2024-10-21)
+
+
+### Bug Fixes
+
+* run scheduled task earlier in the morning ([63bccdb](https://github.com/agrc/porter/commit/63bccdbfc7e58b94e58dad76d04616c0a378430a))
+
 ## [2.5.8](https://github.com/agrc/porter/compare/v2.5.7...v2.5.8) (2024-10-07)
 
 
