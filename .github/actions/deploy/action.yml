@@ -113,7 +113,7 @@ runs:
         if [ ! "$(gcloud scheduler jobs list | grep conductor)" ]; then
           gcloud scheduler jobs create http conductor \
             --description="Trigger the conductor bot once a week on monday morning" \
-            --schedule="0 9 * * 1" \
+            --schedule="0 6 * * 1" \
             --time-zone=America/Denver \
             --uri=${{ steps.deploy.outputs.url }}/gcp/schedule \
             --http-method=POST \
@@ -126,7 +126,7 @@ runs:
         else
           gcloud scheduler jobs update http conductor \
             --description="Trigger the conductor bot once a week on monday morning" \
-            --schedule="0 9 * * 1" \
+            --schedule="0 6 * * 1" \
             --time-zone=America/Denver \
             --uri=${{ steps.deploy.outputs.url }}/gcp/schedule \
             --http-method=POST \
