@@ -3,7 +3,7 @@ name: (🔐 UGRC internal use) SGID deprecation
 about: SGID data is no longer relevant or has been replaced
 title: Remove <dataset name> from SGID
 labels: "deprecation, porter"
-assignees: "@steveoh, @gregbunce, @rkelson"
+assignees: "@steveoh, @ZachBeck, @rkelson"
 ---
 
 ## Summary
@@ -99,7 +99,7 @@ _Add record to table._
 ### Are there service dependencies
 
 - [ ] Are clients querying this data with the WebAPI? [This dashboard](https://lookerstudio.google.com/reporting/fbfcf1d5-e9c2-4b8a-94ae-9529d5d0bbef/page/p_7k74ao7wjd) may be helpful.
-- [ ] Notify Don Jackson (don.jackson1 at motorolasolutions.com) if the data is in the Next-Generation 911 Motorola Aware Map? (@gregbunce on `2024/00/00`)
+- [ ] Notify Don Jackson (don.jackson1 at motorolasolutions.com) if the data is in the Next-Generation 911 Motorola Aware Map? (@mhchou on `2024/00/00`)
 - [ ] Does any other application depend on this data?
 
 ### Notification
@@ -110,6 +110,6 @@ _Add record to table._
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 
-- [ ] Data Team (@gregbunce)
+- [ ] Data Team (@ZachBeck)
 - [ ] Dev Team (@steveoh)
 - [ ] Cadastre Team (@rkelson)
