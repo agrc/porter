@@ -3,7 +3,7 @@ name: (🔐 UGRC internal use) SGID addition
 about: A new SGID dataset is being proposed for inclusion in the SGID
 title: Add <dataset name> from <source>
 labels: "introduction, porter"
-assignees: "@steveoh, @gregbunce, @rkelson"
+assignees: "@steveoh, @ZachBeck, @rkelson"
 ---
 
 ## Summary
@@ -79,6 +79,6 @@ _Choose one._
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 
-- [ ] Data Team (@gregbunce)
+- [ ] Data Team (@ZachBeck)
 - [ ] Dev Team (@steveoh)
 - [ ] Cadastre Team (@rkelson)
