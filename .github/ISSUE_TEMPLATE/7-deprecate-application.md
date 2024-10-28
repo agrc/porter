@@ -3,7 +3,7 @@ name: (🔐 UGRC internal use) Application deprecation
 about: An application is no longer maintained, useful, or is being replaced
 title: Deprecate <application>
 labels: "deprecation, porter"
-assignees: "@steveoh, @gregbunce, @rkelson"
+assignees: "@steveoh, @ZachBeck, @rkelson"
 ---
 
 ## Summary
@@ -69,6 +69,6 @@ _Choose one._
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 
-- [ ] Data Team (@gregbunce)
+- [ ] Data Team (@ZachBeck)
 - [ ] Dev Team (@steveoh)
 - [ ] Cadastre Team (@rkelson)
