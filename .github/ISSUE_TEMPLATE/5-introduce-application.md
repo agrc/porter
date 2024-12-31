@@ -24,7 +24,7 @@ _A short summary of the application._
 - [ ] Add to [gis.utah.gov]([https://gis.utah.gov/developer/application](https://gis.utah.gov/solutions/for-government/application-portfolio-highlights/)) (name, completed: `2025/00/00`)
 - [ ] Create Archer security diagram (name, completed: `2025/00/00`)
   - Diagram URL:
-- [ ] Add to Application Portfolio Management ([Business Applications](https://utah.servicenowservices.com/now/nav/ui/classic/params/target/cmdb_ci_business_app_list.do%3Fsysparm_userpref_module%3D11133b75870003005f9f578c87cb0bfe) in ServiceNow) (name, completed: `2024/00/00`)
+- [ ] Add to Application Portfolio Management ([Business Applications](https://workspaces.dts.utah.gov/now/nav/ui/classic/params/target/cmdb_ci_business_app_list.do%3Fsysparm_userpref_module%3D11133b75870003005f9f578c87cb0bfe%26sysparm_view%3Dbusiness_application_readonly) in ServiceNow) (name, completed: `2025/00/00`)
   - Id:
 - [ ] Create maintenance contract (name, completed: `2025/00/00`)
 - [ ] Service Now task (name, completed: `2025/00/00`)

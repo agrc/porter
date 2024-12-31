@@ -41,7 +41,7 @@ _Introduce your data, where it comes from, why it is being added etc._
 _Choose one._
 
 - [ ] Internal SGID
-- [ ] Farm from AGOL ([agol item url](??))
+- [ ] Farm from AGOL ([agol item url](https://<orgname>.maps.arcgis.com/home/item.html?id=<itemid))
 
 ### Action items
 
