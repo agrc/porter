@@ -3,7 +3,7 @@ name: (🔐 UGRC internal use) SGID deprecation
 about: SGID data is no longer relevant or has been replaced
 title: Remove <dataset name> from SGID
 labels: "deprecation, porter"
-assignees: "@steveoh, @ZachBeck, @rkelson"
+assignees: "@steveoh, @eneemann, @rkelson"
 ---
 
 ## Summary
@@ -112,6 +112,6 @@ _Add record to table._
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 
-- [ ] Data Team (@ZachBeck)
+- [ ] Data Team (@eneemann)
 - [ ] Dev Team (@steveoh)
 - [ ] Cadastre Team (@rkelson)

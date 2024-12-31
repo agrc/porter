@@ -3,7 +3,7 @@ name: (🔐 UGRC internal use) Other deprecation
 about: Deprecating non data or application that requires a history
 title: Remove <thing> from <place>
 labels: "deprecation, porter"
-assignees: "@steveoh, @ZachBeck, @rkelson"
+assignees: "@steveoh, @eneemann, @rkelson"
 ---
 
 ## Summary
@@ -37,6 +37,6 @@ _A short summary of the situation._
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 
-- [ ] Data Team (@ZachBeck)
+- [ ] Data Team (@eneemann)
 - [ ] Dev Team (@steveoh)
 - [ ] Cadastre Team (@rkelson)

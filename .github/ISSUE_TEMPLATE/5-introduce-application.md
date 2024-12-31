@@ -42,6 +42,6 @@ _A short summary of the application._
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 
-- [ ] Data Team (@ZachBeck)
+- [ ] Data Team (@eneemann)
 - [ ] Dev Team (@steveoh)
 - [ ] Cadastre Team (@rkelson)

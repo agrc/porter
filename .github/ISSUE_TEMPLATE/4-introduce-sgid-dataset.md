@@ -3,7 +3,7 @@ name: (🔐 UGRC internal use) SGID addition
 about: A new SGID dataset is being proposed for inclusion in the SGID
 title: Add <dataset name> from <source>
 labels: "introduction, porter"
-assignees: "@steveoh, @ZachBeck, @rkelson"
+assignees: "@steveoh, @eneemann, @rkelson"
 ---
 
 ## Summary
@@ -55,8 +55,8 @@ _Choose one._
 - [ ] Add a [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1024261148) record (name, completed: `2025/00/00`)
 - [ ] Complete a `SGID.META.AGOLItems` record (name, completed: `2025/00/00`)
   - `AGOL_ITEM_ID` will be populated by Forklift after it publishes the new AGOL item.
-- [ ] Data is assigned to a record series with archives (@brigsz, completed: `2024/00/00`)
 - [ ] Complete an [AGOLItems_shelved](http://utah.maps.arcgis.com/home/item.html?id=1760fbedbc7e49429aa6c0c3ab1442ec) record for any `static` or `shelved` item (name, completed: `2025/00/00`)
+- [ ] Data is assigned to a record series with archives (@eneemann, completed: `2025/00/00`)
 
 ### :robot: Automation validation
 
@@ -79,6 +79,6 @@ _Choose one._
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 
-- [ ] Data Team (@ZachBeck)
+- [ ] Data Team (@eneemann)
 - [ ] Dev Team (@steveoh)
 - [ ] Cadastre Team (@rkelson)
