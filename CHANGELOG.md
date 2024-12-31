@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.10](https://github.com/agrc/porter/compare/v2.5.9...v2.5.10) (2024-12-31)
+
+
+### Bug Fixes
+
+* indexStatus column name ([9281542](https://github.com/agrc/porter/commit/9281542e14d511ece1c8ef24ecebdd7bc3b1bb74))
+
 ## [2.5.9](https://github.com/agrc/porter/compare/v2.5.8...v2.5.9) (2024-10-21)
 
 
