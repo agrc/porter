@@ -106,7 +106,7 @@ _Add record to table._
 
 ### Notification
 
-- [ ] Twitter (@steveoh)
+- [ ] X (@steveoh)
 
 ### Group Task Assignments
 

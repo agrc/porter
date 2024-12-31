@@ -31,7 +31,7 @@ _A short summary of the situation._
 
 ### Notification
 
-- [ ] Twitter (@steveoh)
+- [ ] X (@steveoh)
 
 ### Group Task Assignments
 

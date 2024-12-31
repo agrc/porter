@@ -63,7 +63,7 @@ _Choose one._
 
 ### Notification
 
-- [ ] Twitter (@steveoh)
+- [ ] X (@steveoh)
 
 ### Group Task Assignments
 
