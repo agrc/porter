@@ -36,7 +36,7 @@ _A short summary of the application._
 
 ### Notification
 
-- [ ] Twitter (@steveoh)
+- [ ] X (@steveoh)
 
 ### Group Task Assignments
 
