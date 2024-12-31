@@ -40,7 +40,7 @@ Note: If this dataset is being replaced, then wait until the new data is publicl
 - [ ] Append "(Mature Support)" to the end of the item title in the `SGID.META.AGOLItems` table (name, completed: `2024/00/00`)
 - [ ] Remove all tags other than "Deprecated" in the SDE metadata (name, completed: `2024/00/00`)
 - [ ] Add note to SDE description noting when layer will be deleted and any replacement layer (name, completed: `2024/00/00`)
-- [ ] Update the [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1024261148) row as deprecated by pasting the related Porter issue URL in the "porterUrl" field and setting the value of the "ugrcStatus" field as "removed". Also update the "refreshCycle" field (name, completed: `2024/00/00`)
+- [ ] Update the [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1024261148) row as deprecated by pasting the related Porter issue URL in the "porterUrl" field and setting the value of the "indexStatus" field as "removed". Also update the "refreshCycle" field (name, completed: `2024/00/00`)
 - [ ] Change `Authoritative` field to `d` in `SGID.META.AGOLItems` to automatically set the `Deprecated` AGOL flag. Allow the `d` to persist through one run of [Auditor](https://github.com/agrc/auditor) - currently, Auditor runs daily at 5:00am (name, completed: `2024/00/00`)
   - After at least one successful run of Auditor:
     - [ ] Remove the row from the `SGID.META.AGOLItems` table. This will trigger the removal of this item in Open SGID (name, completed: `2024/00/00`)
