@@ -90,7 +90,7 @@ _Add record to table._
 ### :robot: Automation validation
 
 1. _Assign yourself or someone to check the item by replacing `name` with their github `@name`._
-1. _Check [x] the box and add the date of verification `2020/01/01` when the task is verified._
+1. _Check [x] the box and add the date of verification `2025/01/01` when the task is verified._
 1. _~Strike~ out all items that do not apply._
 
 - [ ] Remove data from Open SGID (name on `2025/00/00`)
