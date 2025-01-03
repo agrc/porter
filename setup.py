@@ -47,7 +47,7 @@ setup(
             "gunicorn==23.*",
         ],
         "tests": [
-            "pytest-cov>=4,<6",
+            "pytest-cov==6.*",
             "pytest-instafail==0.5.*",
             "pytest-mock==3.*",
             "pytest-ruff==0.*",
