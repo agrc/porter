@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.5.10](https://github.com/agrc/porter/compare/v2.5.9...v2.5.10) (2025-01-03)
+
+
+### Bug Fixes
+
+* indexStatus column name ([9281542](https://github.com/agrc/porter/commit/9281542e14d511ece1c8ef24ecebdd7bc3b1bb74))
+
+
+### Dependencies
+
+* update packages ([c5146f9](https://github.com/agrc/porter/commit/c5146f9f817e9cc756654a47da0ba8140d608f5a))
+
 ## [2.5.9](https://github.com/agrc/porter/compare/v2.5.8...v2.5.9) (2024-10-21)
 
 
