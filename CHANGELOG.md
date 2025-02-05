@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.0](https://github.com/agrc/porter/compare/v2.5.10...v2.6.0) (2025-02-05)
+
+
+### Features
+
+* add moonwalk backup steps ([72a9988](https://github.com/agrc/porter/commit/72a9988844e818d7a75bc348b9a27fcab416eeac)), closes [#374](https://github.com/agrc/porter/issues/374)
+
 ## [2.5.10](https://github.com/agrc/porter/compare/v2.5.9...v2.5.10) (2025-01-03)
 
 
