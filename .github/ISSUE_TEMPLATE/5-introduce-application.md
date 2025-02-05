@@ -33,6 +33,7 @@ _A short summary of the application._
   - Repo URL:
 - [ ] Primary client contact (name, completed: `2025/00/00`)
   - Name:
+- [ ] Add `Backup` tag to any AGOL items so that they will be backed up by [moonwalk](https://github.com/agrc/project-moonwalk) (name, completed: `2025/00/00`)
 
 ### Notification
 
