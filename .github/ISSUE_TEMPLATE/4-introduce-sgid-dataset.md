@@ -42,6 +42,7 @@ _Choose one._
 
 - [ ] Internal SGID
 - [ ] Farm from AGOL ([agol item url](https://<orgname>.maps.arcgis.com/home/item.html?id=<itemid))
+- [ ] UGRC AGOL ([agol item url](https://<orgname>.maps.arcgis.com/home/item.html?id=<itemid))
 
 ### Action items
 
@@ -57,6 +58,7 @@ _Choose one._
   - `AGOL_ITEM_ID` will be populated by Forklift after it publishes the new AGOL item.
 - [ ] Complete an [AGOLItems_shelved](http://utah.maps.arcgis.com/home/item.html?id=1760fbedbc7e49429aa6c0c3ab1442ec) record for any `static` or `shelved` item (name, completed: `2025/00/00`)
 - [ ] Data is assigned to a record series with archives (@eneemann, completed: `2025/00/00`)
+- [ ] If data is hosted in AGOL exclusively, add `Backup` tag to hosted feature layer so that it will be backed up by [moonwalk](https://github.com/agrc/project-moonwalk) (name, completed: `2025/00/00`)
 
 ### :robot: Automation validation
 
