@@ -206,7 +206,7 @@ def write_reports(conductor_issues, secrets):
                     "SGID Index",
                     secrets["sheets-sa"],
                 )
-                reports[table].append(Report("stewardship", issue, check.exists(), GSheetChecker.grade))
+                reports[table].append(Report("SGID Index", issue, check.exists(), GSheetChecker.grade))
 
     return reports
 
