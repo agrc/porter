@@ -32,8 +32,6 @@ This dataset has been removed from internal and Open SGID but can still be acces
 
 #### Action Items
 
-Note: If this dataset is being replaced, then wait until the new data is publicly available before completing these steps:
-
 - [ ] Prevent forklift from updating the AGOL Item from Internal by updating the "AGOL_ITEM_ID" field in the META.AGOLItems table to be "hosted by UGRC" (name, completed: `2025/00/00`)
 - [ ] Update the [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1024261148) update "storageType" to be "AGOL". (name, completed: `2025/00/00`)
 - [ ] Check if this layer in the base maps. If so, work with Zach to develop a path forward before you proceed with a Hard Delete (name, completed: `2025/00/00`).
