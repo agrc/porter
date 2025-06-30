@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.12-3](https://github.com/agrc/porter/compare/v2.5.12-2...v2.5.12-3) (2025-06-30)
+
+
+### Bug Fixes
+
+* allow port to be expanded ([ca4536c](https://github.com/agrc/porter/commit/ca4536c07ad4026c42869e5da450b3e2dc221b3d))
+
 ## [2.5.12-2](https://github.com/agrc/porter/compare/v2.5.12-1...v2.5.12-2) (2025-06-30)
 
 
