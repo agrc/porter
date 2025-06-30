@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.5.12-1](https://github.com/agrc/porter/compare/v2.5.12-0...v2.5.12-1) (2025-06-30)
+
+
+### Bug Fixes
+
+* correct ci warnings ([3218c1f](https://github.com/agrc/porter/commit/3218c1f28713769af6c4e96be19a4dd393fe8aea))
+* correct path to readme ([e3d7b90](https://github.com/agrc/porter/commit/e3d7b900ac1eabe4e87401959d9d3ad9717d029c))
+
 ## [2.5.12-0](https://github.com/agrc/porter/compare/v2.5.11...v2.5.12-0) (2025-06-30)
 
 
