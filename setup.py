@@ -14,7 +14,7 @@ setup(
     version="2.5.12-0",
     license="MIT",
     description="A bot to check on the status of porter issues.",
-    long_description=(Path(__file__) / "README.md").read_text(),
+    long_description=(Path(__file__).parent / "README.md").read_text(),
     long_description_content_type="text/markdown",
     author="UGRC",
     author_email="ugrc-developers@utah.gov",
