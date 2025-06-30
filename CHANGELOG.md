@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.12-0](https://github.com/agrc/porter/compare/v2.5.11...v2.5.12-0) (2025-06-30)
+
+
+### Bug Fixes
+
+* update setup.py with agrc/python conventions ([e5d7a5f](https://github.com/agrc/porter/commit/e5d7a5f44b85b8fb0a3e5151fbe05cc6e8e2e76a))
+
 ## [2.5.11](https://github.com/agrc/porter/compare/v2.5.10...v2.5.11) (2025-03-03)
 
 
