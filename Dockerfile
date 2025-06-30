@@ -14,7 +14,7 @@ RUN chmod +rwx /etc/ssl/openssl.cnf
 RUN sed -i 's/TLSv1.2/TLSv1/g' /etc/ssl/openssl.cnf
 RUN sed -i 's/SECLEVEL=2/SECLEVEL=1/g' /etc/ssl/openssl.cnf
 
-ENV PYTHONUNBUFFERED True
+ENV PYTHONUNBUFFERED=True
 
 WORKDIR /app
 
@@ -25,4 +25,4 @@ RUN python -m pip install -U pip
 
 RUN pip install .[cloud-run]
 
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 conductor.server:app
+CMD ["gunicorn", "--bind", ":$PORT", "--workers", "1", "--threads", "8", "--timeout", "0", "conductor.server:app"]
