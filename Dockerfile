@@ -26,4 +26,4 @@ RUN python -m pip install -U pip
 
 RUN pip install .[cloud-run]
 
-CMD ["gunicorn", "--bind", ":$PORT", "--workers", "1", "--threads", "8", "--timeout", "0", "conductor.server:app"]
+CMD ["gunicorn", "--bind", :$PORT, "--workers", "1", "--threads", "8", "--timeout", "0", "conductor.server:app"]
