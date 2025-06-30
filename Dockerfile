@@ -19,6 +19,7 @@ ENV PYTHONUNBUFFERED=True
 WORKDIR /app
 
 COPY setup.py .
+COPY README.md .
 COPY src ./src
 
 RUN python -m pip install -U pip
