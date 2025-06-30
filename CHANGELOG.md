@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.12-2](https://github.com/agrc/porter/compare/v2.5.12-1...v2.5.12-2) (2025-06-30)
+
+
+### Bug Fixes
+
+* add readme to docker build ([bdeee9b](https://github.com/agrc/porter/commit/bdeee9b3fab7f770aa87dc52449c152067b901aa))
+
 ## [2.5.12-1](https://github.com/agrc/porter/compare/v2.5.12-0...v2.5.12-1) (2025-06-30)
 
 
