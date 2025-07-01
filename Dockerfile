@@ -17,9 +17,9 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Configure OpenSSL settings
-RUN chmod +rwx /etc/ssl/openssl.cnf && \
-    sed -i 's/TLSv1.2/TLSv1/g' /etc/ssl/openssl.cnf && \
-    sed -i 's/SECLEVEL=2/SECLEVEL=1/g' /etc/ssl/openssl.cnf
+RUN chmod u+rw,g+r,o+r /etc/ssl/openssl.cnf && \
+  sed -i 's/TLSv1.2/TLSv1/g' /etc/ssl/openssl.cnf && \
+  sed -i 's/SECLEVEL=2/SECLEVEL=1/g' /etc/ssl/openssl.cnf
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
