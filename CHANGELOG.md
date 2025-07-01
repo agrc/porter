@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.12-5](https://github.com/agrc/porter/compare/v2.5.12-4...v2.5.12-5) (2025-07-01)
+
+
+### Bug Fixes
+
+* 1 step forward 1 step back ([7d4c368](https://github.com/agrc/porter/commit/7d4c36845b76e312de7ccf37b66027d4f47c0072))
+
 ## [2.5.12-4](https://github.com/agrc/porter/compare/v2.5.12-3...v2.5.12-4) (2025-07-01)
 
 
