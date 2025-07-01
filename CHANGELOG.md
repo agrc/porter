@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.12-6](https://github.com/agrc/porter/compare/v2.5.12-5...v2.5.12-6) (2025-07-01)
+
+
+### Bug Fixes
+
+* correct ai errors ([eacd4e2](https://github.com/agrc/porter/commit/eacd4e2da4ab9a316431379e115ccfae4659b4a6))
+
 ## [2.5.12-5](https://github.com/agrc/porter/compare/v2.5.12-4...v2.5.12-5) (2025-07-01)
 
 
