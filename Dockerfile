@@ -48,4 +48,4 @@ USER dummy
 RUN python -m pip install --user --upgrade pip && \
     python -m pip install --user .[cloud-run]
 
-CMD ["gunicorn", "--bind", "0.0.0.0:${PORT:-8080}", "--workers", "1", "--threads", "8", "--timeout", "0", "conductor.server:app"]
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 main:app
