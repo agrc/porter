@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.5.12-4](https://github.com/agrc/porter/compare/v2.5.12-3...v2.5.12-4) (2025-07-01)
+
+
+### Bug Fixes
+
+* improve caching and remove all warnings ([23fd9a2](https://github.com/agrc/porter/commit/23fd9a2c8ee196d491b06da1d2f2a021c12409bc))
+* remove deprecated license ([5fc491c](https://github.com/agrc/porter/commit/5fc491c9a5eaa2afcee99753988ec8dca69b5f82))
+
 ## [2.5.12-3](https://github.com/agrc/porter/compare/v2.5.12-2...v2.5.12-3) (2025-06-30)
 
 
