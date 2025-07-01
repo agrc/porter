@@ -70,7 +70,7 @@ runs:
           type=raw,value=latest
 
     - name: 📦 Build and push image
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         file: ./Dockerfile
         context: .
