@@ -12,7 +12,6 @@ from setuptools import find_packages, setup
 setup(
     name="conductor",
     version="2.5.11",
-    license="MIT",
     description="A bot to check on the status of porter issues.",
     long_description=(Path(__file__).parent / "README.md").read_text(),
     long_description_content_type="text/markdown",
@@ -23,6 +22,7 @@ setup(
     package_dir={"": "src"},
     include_package_data=True,
     zip_safe=True,
+    license_files=["LICENSE"],
     classifiers=[
         # complete classifier list: http://pypi.python.org/pypi?%3Aaction=list_classifiers
         "Development Status :: 5 - Production/Stable",
