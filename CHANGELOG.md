@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.5.12](https://github.com/agrc/porter/compare/v2.5.11...v2.5.12) (2025-07-01)
+
+
+### Bug Fixes
+
+* correct ci warnings ([bf8c94e](https://github.com/agrc/porter/commit/bf8c94e5b478bb09b9df9a6b504040e750e9ff72))
+* switch to a safer permission set ([519eb96](https://github.com/agrc/porter/commit/519eb963a4e5353a5acc6d81cd52092bb5099b0b))
+* update setup.py with agrc/python conventions ([d7b57f5](https://github.com/agrc/porter/commit/d7b57f57c3c0750de1362a49244d864603ac1766))
+
+
+### Dependencies
+
+* update ci dependencies ([475adb1](https://github.com/agrc/porter/commit/475adb139ddd17677ada5da60d076f0add31fe45))
+
 ## [2.5.11](https://github.com/agrc/porter/compare/v2.5.10...v2.5.11) (2025-03-03)
 
 
