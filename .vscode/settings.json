@@ -10,6 +10,7 @@
     "cloudb",
     "cloudrun",
     "Codecov",
+    "cooldown",
     "dotenv",
     "finditer",
     "gcloud",
@@ -48,9 +49,7 @@
     "worknote"
   ],
   "editor.formatOnSave": true,
-  "editor.rulers": [
-    120
-  ],
+  "editor.rulers": [120],
   "coverage-gutters.showGutterCoverage": false,
   "coverage-gutters.showLineCoverage": true,
   "coverage-gutters.showRulerCoverage": false,
@@ -59,9 +58,7 @@
   "coverage-gutters.partialHighlightDark": "rgb(255, 133, 27, .05)",
   "python.languageServer": "Pylance",
   "python.testing.pytestEnabled": true,
-  "python.testing.pytestArgs": [
-    "--no-cov"
-  ],
+  "python.testing.pytestArgs": ["--no-cov"],
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   },
