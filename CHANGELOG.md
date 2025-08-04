@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.13](https://github.com/agrc/porter/compare/v2.5.12...v2.5.13) (2025-08-04)
+
+
+### Bug Fixes
+
+* bump memory for cloud run function ([6f041a1](https://github.com/agrc/porter/commit/6f041a18b8c1c9cbec7b910209ad9bbcb11dfa85))
+
 ## [2.5.12](https://github.com/agrc/porter/compare/v2.5.11...v2.5.12) (2025-07-01)
 
 
