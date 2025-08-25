@@ -40,7 +40,7 @@ This dataset has been removed from internal and Open SGID but can still be acces
 - [ ] Manually remove data from the Internal SGID (name, completed: `2025/00/00`)
 - [ ] Remove Farm from AGOL connection (forklift) (name, completed: `2025/00/00`)
 - [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/products/sgid/categories/) product pages (including `downloadMetadata.ts` and `public/_redirects`) (name , completed: `2025/00/00`)
-- [ ] Delete Google Drive data (name, completed: `2025/00/00`)
+- [ ] Delete [Google Drive](https://drive.google.com/drive/folders/0ByStJjVZ7c7mNlZRd2ZYOUdyX2M) data (name, completed: `2025/00/00`)
 - [ ] Remove row from `SGID.META.ChangeDetection` (name, completed: `2025/00/00`) (it was already gone)
 - [ ] Remove data from forklift hashing and receiving (name, completed: `2025/00/00`)
 - [ ] Remove row from `data/hashed/changedetection.gdb/TableHashes` (name, completed: `2025/00/00`)
