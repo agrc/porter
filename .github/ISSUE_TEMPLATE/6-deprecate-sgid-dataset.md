@@ -69,7 +69,7 @@ _Hard deletes are final. It is recommended to complete the soft delete process b
   - cut and paste row to `AGOLItems_shelved` table if shelving (see below)
   - set the `AGOL_ITEM_ID` field to `hosted by <agency>` for Farm from AGOL
   - set the `AGOL_ITEM_ID` field to `exclude from AGOL` to not publish to ArcGIS Online
-- [ ] Delete Google Drive data (name, completed: `2025/00/00`)
+- [ ] Delete [Google Drive](https://drive.google.com/drive/folders/0ByStJjVZ7c7mNlZRd2ZYOUdyX2M) data (name, completed: `2025/00/00`)
 - [ ] Remove row from `SGID.META.ChangeDetection` (name, completed: `2025/00/00`)
 - [ ] Remove data from forklift hashing and receiving (name, completed: `2025/00/00`)
 - [ ] Remove row from `data/hashed/changedetection.gdb/TableHashes` (name, completed: `2025/00/00`)
