@@ -74,6 +74,7 @@ _Hard deletes are final. It is recommended to complete the soft delete process b
 - [ ] Remove data from forklift hashing and receiving (name, completed: `2025/00/00`)
 - [ ] Remove row from `data/hashed/changedetection.gdb/TableHashes` (name, completed: `2025/00/00`)
 - [ ] Remove data from record series with archives (@eneemann, completed: `2025/00/00`)
+- [ ] Remove entry from [MATT](https://github.com/agrc/metadata-asset-tracking-tool/tree/main/metadata) (name, completed: `2025/00/00`)
 
 #### Shelve/Static
 
