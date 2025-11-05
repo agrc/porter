@@ -11,7 +11,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="conductor",
-    version="2.5.13",
+    version="2.5.14",
     description="A bot to check on the status of porter issues.",
     long_description=(Path(__file__).parent / "README.md").read_text(),
     long_description_content_type="text/markdown",
