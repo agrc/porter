@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: pip
     directory: /
     schedule:
-      interval: monthly
+      interval: quarterly
     groups:
       safe-dependencies:
         update-types:
@@ -29,7 +29,7 @@ updates:
       - /
       - /.github/actions/deploy
     schedule:
-      interval: monthly
+      interval: quarterly
     groups:
       ci-dependencies:
         dependency-type: production
