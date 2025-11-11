@@ -37,3 +37,14 @@ updates:
       default-days: 10
       exclude:
         - agrc/*
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: quarterly
+    groups:
+      docker-dependencies:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: deps(docker)
