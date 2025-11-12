@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.5.15](https://github.com/agrc/porter/compare/v2.5.14...v2.5.15) (2025-11-12)
+
+
+### Features
+
+* add docker package-ecosystem configuration to dependabot ([e71b4c6](https://github.com/agrc/porter/commit/e71b4c6bc79d4f3e2042a5000763e24e6c6b8f83))
+
+
+### Dependencies
+
+* **dev:** update pytest-cov version to 7 ([e8be14a](https://github.com/agrc/porter/commit/e8be14abccc10e583456b66dedfd16fc25cfbe09))
+
 ## [2.5.14](https://github.com/agrc/porter/compare/v2.5.13...v2.5.14) (2025-11-05)
 
 
