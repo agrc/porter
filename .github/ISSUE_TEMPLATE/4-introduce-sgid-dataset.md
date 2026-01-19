@@ -32,9 +32,9 @@ _Introduce your data, where it comes from, why it is being added etc._
 
 ### The data is of high quality
 
-- [ ] Sweeper checks have run and passed (name on `2025/00/00`)
-- [ ] The minimum requirements for [metadata](https://gis.utah.gov/about/policy/sgid/) are populated (name on `2025/00/00`)
-- [ ] The data complies with our [domain rules](https://gis.utah.gov/about/policy/sgid/) (name on `2025/00/00`)
+- [ ] Sweeper checks have run and passed (name on `2026/00/00`)
+- [ ] The minimum requirements for [metadata](https://gis.utah.gov/about/policy/sgid/) are populated (name on `2026/00/00`)
+- [ ] The data complies with our [domain rules](https://gis.utah.gov/about/policy/sgid/) (name on `2026/00/00`)
 
 ### Where is the data source
 
@@ -50,29 +50,29 @@ _Choose one._
 1. _Check [x] the box when the task is completed and add the date of completion._
 1. _~Strike~ out all items that do not apply._
 
-- [ ] Add data to the [Internal SGID](https://stackoverflow.com/c/ugrc/questions/109) (name, completed: `2025/00/00`)
-- [ ] Add new entry to [MATT](https://github.com/agrc/metadata-asset-tracking-tool/tree/main/metadata) (name, completed: `2025/00/00`)
-- [ ] Configure forklift for Farm from AGOL (name, completed: `2025/00/00`)
-- [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/data) data pages (name, completed: `2025/00/00`)
-- [ ] Add a [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1024261148) record (name, completed: `2025/00/00`)
-- [ ] Complete a `SGID.META.AGOLItems` record (name, completed: `2025/00/00`)
+- [ ] Add data to the [Internal SGID](https://stackoverflow.com/c/ugrc/questions/109) (name, completed: `2026/00/00`)
+- [ ] Add new entry to [MATT](https://github.com/agrc/metadata-asset-tracking-tool/tree/main/metadata) (name, completed: `2026/00/00`)
+- [ ] Configure forklift for Farm from AGOL (name, completed: `2026/00/00`)
+- [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/data) data pages (name, completed: `2026/00/00`)
+- [ ] Add a [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1024261148) record (name, completed: `2026/00/00`)
+- [ ] Complete a `SGID.META.AGOLItems` record (name, completed: `2026/00/00`)
   - `AGOL_ITEM_ID` will be populated by Forklift after it publishes the new AGOL item.
-- [ ] Complete an [AGOLItems_shelved](http://utah.maps.arcgis.com/home/item.html?id=1760fbedbc7e49429aa6c0c3ab1442ec) record for any `static` or `shelved` item (name, completed: `2025/00/00`)
-- [ ] Data is assigned to a record series with archives (@eneemann, completed: `2025/00/00`)
-- [ ] If data is hosted in AGOL exclusively, add `Backup` tag to hosted feature layer so that it will be backed up by [moonwalk](https://github.com/agrc/project-moonwalk) (name, completed: `2025/00/00`)
+- [ ] Complete an [AGOLItems_shelved](http://utah.maps.arcgis.com/home/item.html?id=1760fbedbc7e49429aa6c0c3ab1442ec) record for any `static` or `shelved` item (name, completed: `2026/00/00`)
+- [ ] Data is assigned to a record series with archives (@eneemann, completed: `2026/00/00`)
+- [ ] If data is hosted in AGOL exclusively, add `Backup` tag to hosted feature layer so that it will be backed up by [moonwalk](https://github.com/agrc/project-moonwalk) (name, completed: `2026/00/00`)
 
 ### :robot: Automation validation
 
 1. _Assign yourself or someone to check the item by replacing `name` with their github `@name`._
-1. _Check [x] the box and add the date of verification `2025/01/01` when the task is verified._
+1. _Check [x] the box and add the date of verification `2026/01/01` when the task is verified._
 1. _~Strike~ out all items that do not apply._
 
-- [ ] Open SGID via cloudb (@steveoh on `2025/00/00`)
-- [ ] ArcGIS Online via forklift (@stdavis on `2025/00/00`)
-- [ ] [Auditor](https://github.com/agrc/Auditor) ran successfully (@jacobdadams on `2025/00/00`)
-- [ ] [SGID on ArcGIS](https://opendata.gis.utah.gov) (name on `2025/00/00`)
-- [ ] [gis.utah.gov](https://gis.utah.gov/products/sgid/categories/) data pages (name on `2025/00/00`)
-- [ ] [sgid-index](https://gis.utah.gov/products/sgid/sgid-index/) (@steveoh on `2025/00/00`)
+- [ ] Open SGID via cloudb (@steveoh on `2026/00/00`)
+- [ ] ArcGIS Online via forklift (@stdavis on `2026/00/00`)
+- [ ] [Auditor](https://github.com/agrc/Auditor) ran successfully (@jacobdadams on `2026/00/00`)
+- [ ] [SGID on ArcGIS](https://opendata.gis.utah.gov) (name on `2026/00/00`)
+- [ ] [gis.utah.gov](https://gis.utah.gov/products/sgid/categories/) data pages (name on `2026/00/00`)
+- [ ] [sgid-index](https://gis.utah.gov/products/sgid/sgid-index/) (@steveoh on `2026/00/00`)
 
 ### Notification
 
