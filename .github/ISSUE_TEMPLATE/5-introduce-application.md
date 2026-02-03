@@ -37,12 +37,12 @@ _A short summary of the application._
 
 ### Notification
 
-- [ ] X (@steveoh)
+- [ ] X (@stdavis)
 
 ### Group Task Assignments
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 
 - [ ] Data Team (@eneemann)
-- [ ] Dev Team (@steveoh)
+- [ ] Dev Team (@stdavis)
 - [ ] Cadastre Team (@rkelson)

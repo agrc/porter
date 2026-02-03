@@ -3,7 +3,7 @@ name: (🔐 UGRC internal use) SGID deprecation
 about: SGID data is no longer relevant or has been replaced
 title: Remove <dataset name> from SGID
 labels: "deprecation, porter"
-assignees: "@steveoh, @eneemann, @rkelson"
+assignees: "@stdavis, @eneemann, @rkelson"
 ---
 
 ## Summary
@@ -95,7 +95,7 @@ _Add record to table._
 1. _~Strike~ out all items that do not apply._
 
 - [ ] Remove data from Open SGID (name on `2026/00/00`)
-- [ ] [sgid-index](https://gis.utah.gov/products/sgid/sgid-index/) (@steveoh on `2026/00/00`)
+- [ ] [sgid-index](https://gis.utah.gov/products/sgid/sgid-index/) (@stdavis on `2026/00/00`)
 - [ ] Auditor sets appropriate `shelved`/`static`/`Deprecated` information (@jacobdadams on `2026/00/00`)
 
 ### Are there service dependencies
@@ -107,12 +107,12 @@ _Add record to table._
 
 ### Notification
 
-- [ ] X (@steveoh)
+- [ ] X (@stdavis)
 
 ### Group Task Assignments
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 
 - [ ] Data Team (@eneemann)
-- [ ] Dev Team (@steveoh)
+- [ ] Dev Team (@stdavis)
 - [ ] Cadastre Team (@rkelson)

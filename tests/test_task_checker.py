@@ -23,7 +23,7 @@ def test_get_users_task_statuses():
     assert len(tasks) == 4
     assert tasks == [
         ("@gregbunce", 1, 1),
-        ("@steveoh", 3, 1),
+        ("@stdavis", 3, 1),
         ("@rkelson", 1, 0),
         ("@stdavis", 1, 0),
     ]
@@ -31,7 +31,7 @@ def test_get_users_task_statuses():
     tasks = get_users_task_statuses(body_mocks["strikethrough"])
 
     assert len(tasks) == 3
-    assert tasks == [("@gregbunce", 3, 0), ("@steveoh", 2, 0), ("@ZachBeck", 4, 3)]
+    assert tasks == [("@gregbunce", 3, 0), ("@stdavis", 2, 0), ("@ZachBeck", 4, 3)]
 
 
 def test_get_title():
