@@ -3,7 +3,7 @@ name: (🔐 UGRC internal use) SGID addition
 about: A new SGID dataset is being proposed for inclusion in the SGID
 title: Add <dataset name> from <source>
 labels: "introduction, porter"
-assignees: "@steveoh, @eneemann, @rkelson"
+assignees: "@stdavis, @eneemann, @rkelson"
 ---
 
 ## Summary
@@ -67,21 +67,21 @@ _Choose one._
 1. _Check [x] the box and add the date of verification `2026/01/01` when the task is verified._
 1. _~Strike~ out all items that do not apply._
 
-- [ ] Open SGID via cloudb (@steveoh on `2026/00/00`)
+- [ ] Open SGID via cloudb (@stdavis on `2026/00/00`)
 - [ ] ArcGIS Online via forklift (@stdavis on `2026/00/00`)
 - [ ] [Auditor](https://github.com/agrc/Auditor) ran successfully (@jacobdadams on `2026/00/00`)
 - [ ] [SGID on ArcGIS](https://opendata.gis.utah.gov) (name on `2026/00/00`)
 - [ ] [gis.utah.gov](https://gis.utah.gov/products/sgid/categories/) data pages (name on `2026/00/00`)
-- [ ] [sgid-index](https://gis.utah.gov/products/sgid/sgid-index/) (@steveoh on `2026/00/00`)
+- [ ] [sgid-index](https://gis.utah.gov/products/sgid/sgid-index/) (@stdavis on `2026/00/00`)
 
 ### Notification
 
-- [ ] X (@steveoh)
+- [ ] X (@stdavis)
 
 ### Group Task Assignments
 
 1. _Check [x] the box when you have assigned all the tasks relevant to your group._
 
 - [ ] Data Team (@eneemann)
-- [ ] Dev Team (@steveoh)
+- [ ] Dev Team (@stdavis)
 - [ ] Cadastre Team (@rkelson)

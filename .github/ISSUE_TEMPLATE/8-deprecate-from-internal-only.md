@@ -3,7 +3,7 @@ name: (🔐 UGRC internal use) Internal/Open SGID only deprecation
 about: Data is being removed from Internal/Open SGID but preserved in AGOL.
 title: Remove <thing> from Internal/Open SGID while preserving in AGOL
 labels: "deprecation, porter"
-assignees: "@steveoh, @eneemann, @rkelson"
+assignees: "@stdavis, @eneemann, @rkelson"
 ---
 
 ## Summary
@@ -65,12 +65,12 @@ This dataset has been removed from internal and Open SGID but can still be acces
 
 ### Notification
 
-- [ ] X (@steveoh)
+- [ ] X (@stdavis)
 
 ### Group Task Assignments
 
 1. _Check [ ] the box when you have assigned all the tasks relevant to your group._
 
 - [ ] Data Team (@eneemann)
-- [ ] Dev Team (@steveoh)
+- [ ] Dev Team (@stdavis)
 - [ ] Cadastre Team (@rkelson)

@@ -18,9 +18,9 @@ When the champion from your team has completed the triage, check [x] the checkbo
 # Triage
 
 - [x] Data Team Triage (@gregbunce)
-- [ ] Dev Team Triage (@steveoh)
+- [ ] Dev Team Triage (@stdavis)
 - [ ] Cadastre Team Triage (@rkelson)
 
-- [ ] Another task (@steveoh )
+- [ ] Another task (@stdavis )
 - [ ] Yet Another task (assigned @stdavis )
-- [x] [Stewardship doc] (@steveoh)(https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1)
+- [x] [Stewardship doc] (@stdavis)(https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1)

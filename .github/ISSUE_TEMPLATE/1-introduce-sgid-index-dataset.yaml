@@ -3,7 +3,7 @@ description: Request the addition of a new dataset to the SGID Index.
 title: 🌱 Request for addition to the SGID Index
 labels: ["introduction", "porter"]
 assignees:
-  - steveoh
+  - stdavis
   - ZachBeck
   - rkelson
 body:
