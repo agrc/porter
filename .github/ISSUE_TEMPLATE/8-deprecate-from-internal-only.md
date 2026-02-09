@@ -65,7 +65,7 @@ This dataset has been removed from internal and Open SGID but can still be acces
 
 ### Notification
 
-- [ ] X (@stdavis)
+- [ ] X ([post templates](https://github.com/agrc/porter#tweet-templates)) (@DenisePeterson on `2026/00/00`)
 
 ### Group Task Assignments
 
