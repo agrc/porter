@@ -107,7 +107,7 @@ _Add record to table._
 
 ### Notification
 
-- [ ] X (@stdavis)
+- [ ] X ([post templates](https://github.com/agrc/porter#tweet-templates)) (@DenisePeterson on `2026/00/00`)
 
 ### Group Task Assignments
 
