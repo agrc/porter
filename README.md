@@ -86,3 +86,7 @@ https://github.com/agrc/porter/issues/#
 
 #utmap #ugrcporter
 ```
+
+## Attribution
+
+This project was developed with the assistance of [GitHub Copilot](https://github.com/features/copilot).
