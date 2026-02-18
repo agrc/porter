@@ -20,12 +20,11 @@ for name in ["simple", "strikethrough"]:
 def test_get_users_task_statuses():
     tasks = get_users_task_statuses(body_mocks["simple"])
 
-    assert len(tasks) == 4
+    assert len(tasks) == 3
     assert tasks == [
         ("@gregbunce", 1, 1),
-        ("@stdavis", 3, 1),
+        ("@stdavis", 4, 1),
         ("@rkelson", 1, 0),
-        ("@stdavis", 1, 0),
     ]
 
     tasks = get_users_task_statuses(body_mocks["strikethrough"])
