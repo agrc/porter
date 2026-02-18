@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.5.16](https://github.com/agrc/porter/compare/v2.5.15...v2.5.16) (2026-02-18)
+
+
+### Dependencies
+
+* **dev:** update pytest requirement from &lt;9,&gt;=7 to &gt;=7,&lt;10 ([ee957a0](https://github.com/agrc/porter/commit/ee957a0f65107385540a267a8c062555506293fc))
+* **docker:** bump python in the docker-dependencies group ([e8f63d2](https://github.com/agrc/porter/commit/e8f63d2a4777ccbb3e2d1de165a532ada6701ed3))
+
+
+### Documentation
+
+* add attribution ([fda9f8c](https://github.com/agrc/porter/commit/fda9f8c8830d7a5823fdeef7a618403914ae2be6))
+
 ## [2.5.15](https://github.com/agrc/porter/compare/v2.5.14...v2.5.15) (2025-11-12)
 
 
