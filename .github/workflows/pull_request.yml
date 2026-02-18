@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "src/conductor/**"
+      - "tests/**"
       - ".github/workflows/*.yml"
       - "setup.py"
 
