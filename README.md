@@ -16,12 +16,23 @@ UGRC tracks the additions, replacements, and deletions of SGID items (in the bro
 1. The triagers will choose which items need to be handled and tag the appropriate people to handle them:
    - [ ] ArcGIS Online (@jacobdadams)
    - Items that don't need to be handled should be struck through (wrap the line with `~`'s) instead of being deleted:
-      - `~ArcGISOnline (assigned to)~` (note there are no spaces between the `~`'s and the text to be struck out)
+     - `~ArcGISOnline (assigned to)~` (note there are no spaces between the `~`'s and the text to be struck out)
    - Once the triager has identified any steps required for their team or made any relevant comments, they should check the box in the triage section to indicate that their triage is complete:
-      - [x] Data Team Triage (@gregbunce)
+     - [x] Data Team Triage (@gregbunce)
 1. The people assigned to different issues will check the boxes as they are completed and comment on the issue to notify the rest of the group:
    - [x] ArcGIS Online (@jacobdadams)
 1. Once all boxes are checked, the person who first opened the issue should close it.
+
+## Task Completion Dates
+
+Porter issue templates include task lines with placeholder completion dates, such as:
+
+- [ ] Data Team Triage (name, completed: `2026/00/00`)
+- [ ] Validation review (name on `2026/00/00`)
+
+When one of these Porter task lines is checked in an issue description, GitHub Actions automatically replaces the placeholder date with the current date in the `America/Denver` timezone.
+
+This automation only updates Porter-style checked task lines that still contain a placeholder date. It does not update unchecked tasks, struck-through tasks, or tasks that already have a real completion date. If a box is unchecked later, the existing completion date is left in place.
 
 ## Data Flow for New SGID Datasets
 
@@ -62,7 +73,6 @@ https://github.com/agrc/porter/issues/#
 #### intent to add
 
 ```md
-
 🌱🌱The SGID is growing🌳🌳
 
 Dataset from Agency coming soon!
@@ -77,7 +87,6 @@ Follow along and comment if you are interested!
 #### addition complete
 
 ```md
-
 🌱🌱The SGID has grown🌳🌳
 
 Dataset from Agency is live in the SGID!
