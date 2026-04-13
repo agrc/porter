@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.0](https://github.com/agrc/porter/compare/v2.5.16...v2.6.0) (2026-04-13)
+
+
+### Features
+
+* automatically set the complete date for porter task checkboxes ([34006f3](https://github.com/agrc/porter/commit/34006f33fa98fb3fbad77f387bbcd97d40a438fb))
+
 ## [2.5.16](https://github.com/agrc/porter/compare/v2.5.15...v2.5.16) (2026-02-18)
 
 
