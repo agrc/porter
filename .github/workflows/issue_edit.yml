@@ -1,0 +1,82 @@
+name: Update Issue Task Completion Date
+
+on:
+  issues:
+    types: [edited]
+
+permissions:
+  issues: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  update-completion-dates:
+    if: ${{ !github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Check out code
+        uses: actions/checkout@v6
+        with:
+          show-progress: false
+
+      - name: Update checked task completion dates
+        uses: actions/github-script@v8
+        with:
+          retries: 3
+          script: |
+            const { getUpdatedIssueBody } = await import('./.github/scripts/issue_edit.mjs')
+            const issue = context.payload.issue
+            const maxAttempts = 3
+            const retryableStatuses = new Set([409, 422, 500, 502, 503, 504])
+
+            const formatter = new Intl.DateTimeFormat('en-CA', {
+              timeZone: 'America/Denver',
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            })
+
+            const currentDate = formatter.format(new Date()).replace(/-/g, '/')
+
+            for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+              const latestIssue = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+              })
+
+              const currentBody = latestIssue.data.body || ''
+
+              const updatedBody = getUpdatedIssueBody({
+                currentBody,
+                currentDate,
+              })
+
+              if (updatedBody === currentBody) {
+                core.info('No completion dates needed to be updated.')
+                return
+              }
+
+              try {
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: updatedBody,
+                })
+
+                core.info(`Updated completion dates for issue #${issue.number} on attempt ${attempt}.`)
+                return
+              } catch (error) {
+                const status = error.status ?? 0
+
+                if (attempt === maxAttempts || !retryableStatuses.has(status)) {
+                  throw error
+                }
+
+                core.warning(`Attempt ${attempt} failed with status ${status}. Retrying with the latest issue body.`)
+              }
+            }
