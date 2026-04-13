@@ -65,5 +65,11 @@
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true
+  },
+  "chat.tools.terminal.autoApprove": {
+    "/^node --test tests/issue_edit\\.test\\.mjs$/": {
+      "approve": true,
+      "matchCommandLine": true
+    }
   }
 }

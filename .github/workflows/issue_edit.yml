@@ -27,7 +27,7 @@ jobs:
         with:
           retries: 3
           script: |
-            const { getUpdatedIssueBody } = await import('./.github/scripts/issue_edit.mjs')
+            const { getUpdatedIssueBody } = await import('${{ github.workspace }}/.github/scripts/issue_edit.mjs')
             const issue = context.payload.issue
             const maxAttempts = 3
             const retryableStatuses = new Set([409, 422, 500, 502, 503, 504])
