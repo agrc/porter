@@ -21,6 +21,9 @@ jobs:
         uses: actions/checkout@v6
         with:
           show-progress: false
+          sparse-checkout: |
+            .github/scripts/issue_edit.mjs
+          sparse-checkout-cone-mode: false
 
       - name: Update checked task completion dates
         uses: actions/github-script@v8
@@ -42,13 +45,17 @@ jobs:
             const currentDate = formatter.format(new Date()).replace(/-/g, '/')
 
             for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-              const latestIssue = await github.rest.issues.get({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issue.number,
-              })
+              let currentBody = context.payload.issue.body || ''
 
-              const currentBody = latestIssue.data.body || ''
+              if (attempt > 1) {
+                const latestIssue = await github.rest.issues.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                })
+
+                currentBody = latestIssue.data.body || ''
+              }
 
               const updatedBody = getUpdatedIssueBody({
                 currentBody,
