@@ -2,12 +2,8 @@ name: Pull Request Events
 
 on:
   pull_request:
-    paths:
-      - "src/conductor/**"
-      - "tests/**"
-      - ".github/scripts/**"
-      - ".github/workflows/*.yml"
-      - "setup.py"
+    paths-ignore:
+      - .github/ISSUE_TEMPLATE/**
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
