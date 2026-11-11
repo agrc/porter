@@ -371,6 +371,15 @@ def test_sheets_with_no_matches_returns_false(mocker):
     assert response.messages == "Did not find fake.table in the worksheet"
 
 
+def test_sheets_reports_invalid_table_name():
+    patient = GSheetChecker("table", "sheet_id", "worksheet_name", "TESTING")
+
+    response = patient.exists()
+
+    assert response.valid is False
+    assert response.messages == "Invalid table name 'table'; expected schema.table or database.schema.table"
+
+
 def test_sheets_returns_false_for_empty_values(mocker):
     patient = GSheetChecker("fake.table", "sheet_id", "worksheet_name", "TESTING")
     patient.build_header_row_index(header_row)
@@ -394,6 +403,19 @@ def test_sheets_returns_false_for_empty_values(mocker):
         "productPage": False,
         "itemId": False,
     }
+
+
+def test_sheets_handles_non_string_values(mocker):
+    patient = GSheetChecker("fake.table", "sheet_id", "worksheet_name", "TESTING")
+    patient.build_header_row_index(header_row)
+    patient._get_data = mocker.Mock(return_value=[Cell("A1", "table")])
+    mocker.patch("pygsheets.Cell.link")
+    mocker.patch("pygsheets.Cell.neighbour", return_value=Cell("A2", val=123))
+
+    response = patient.exists()
+
+    assert response.valid is True
+    assert all(response.messages.values())
 
 
 def test_sheets_requires_product_page_or_item_id(mocker):
