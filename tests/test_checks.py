@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# * coding: utf8 *
 """
 test_checks.py
 A module that contains tests for the checks module.
@@ -12,6 +10,8 @@ from pathlib import Path
 
 import psycopg2
 import pytest
+from pygsheets import Cell
+
 from conductor.checks import (
     ArcGisOnlineChecker,
     GSheetChecker,
@@ -21,7 +21,6 @@ from conductor.checks import (
     PGSqlTableChecker,
     TableChecker,
 )
-from pygsheets import Cell
 
 secret_path = Path(__file__).parent.parent / "src" / "conductor" / "secrets" / "db" / "connections"
 
@@ -315,6 +314,19 @@ header_row = [
     "confidenceRating",
     "porterUrl",
 ]
+
+
+@pytest.mark.parametrize("use_directory", [False, True])
+def test_sheets_client_rejects_invalid_file_path(tmp_path, use_directory):
+    path = tmp_path if use_directory else tmp_path / "missing.json"
+
+    with pytest.raises(ValueError, match="The path to the service account file is incorrect"):
+        GSheetChecker.create_client_with_service_account(path)
+
+
+def test_sheets_client_rejects_missing_key():
+    with pytest.raises(ValueError, match="The project secret might not exist or is incorrect"):
+        GSheetChecker.create_sheets_client(None)
 
 
 def test_sheets_build_header_row_index():

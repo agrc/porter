@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# * coding: utf8 *
 """
 test_triage_checker.py
 A module that contains tests for the TaskChecker module.

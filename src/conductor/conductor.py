@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# * coding: utf8 *
 """
 conductor.py a script that interacts with github issues, reads some metadata from the issue description,
 searchings our SGID facets for the item in the metadata, and finally posts a comment with the completeness
@@ -13,10 +11,10 @@ Options:
 """
 
 import json
+import logging
 from collections import namedtuple
 from contextlib import contextmanager
 from pathlib import Path
-from traceback import print_exc
 
 import github
 from colorama import Fore, init
@@ -31,6 +29,8 @@ from .checks import (
     TaskChecker,
     get_users_task_statuses,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def startup(secrets, is_production):
@@ -135,12 +135,11 @@ def write_reports(conductor_issues, secrets):
                 return report_value
 
             @contextmanager
-            def exception_catcher(report_name):
-                # pylint: disable=cell-var-from-loop
+            def exception_catcher(report_name, table=table, issue=issue):
                 try:
                     yield
                 except Exception:
-                    print_exc()
+                    logger.exception("check failed: %s", report_name)
                     reports[table].append(
                         Report(
                             report_name,
