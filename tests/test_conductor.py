@@ -4,7 +4,6 @@ test_conductor
 A module that contains tests for the project module.
 """
 
-import json
 from collections import namedtuple
 from os import environ
 from pathlib import Path
@@ -17,13 +16,14 @@ from github.Requester import Requester
 
 from conductor import conductor, server
 from conductor.checks import GSheetChecker, MetaTableChecker, TableChecker, UrlChecker
+from conftest import load_test_secrets
 
 secret_path = Path(__file__).parent.parent / "src" / "conductor" / "secrets" / "db" / "connections"
 
 if "CI" in environ:
     secret_path = Path.cwd() / "secrets" / "db" / "connections"
 
-SECRETS = json.loads(secret_path.read_text(encoding="utf-8"))
+SECRETS = load_test_secrets(secret_path)
 
 REQUESTER = Requester(
     auth=Token("token"),
