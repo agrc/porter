@@ -340,7 +340,7 @@ class GSheetChecker:
     def _get_sheet_search_term(self):
         """returns the schema name used to find the row in the worksheet"""
         if not isinstance(self.table, str):
-            raise ValueError(
+            raise TypeError(
                 f"Invalid table name {self.table!r}; expected schema.table or database.schema.table"
             )
 
@@ -369,7 +369,7 @@ class GSheetChecker:
 
         try:
             search_term = self._get_sheet_search_term()
-        except ValueError as error:
+        except (TypeError, ValueError) as error:
             return SheetResponse(False, str(error))
 
         cells = self._get_data(search_term)
