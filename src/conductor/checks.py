@@ -350,7 +350,7 @@ class GSheetChecker:
                 f"Invalid table name {self.table!r}; expected schema.table or database.schema.table"
             )
 
-        return parts[1]
+        return parts[-1]
 
     def _get_data(self, search_term=None):
         """search the worksheet for the table in SGID Data Layer"""
