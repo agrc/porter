@@ -371,13 +371,57 @@ def test_sheets_with_no_matches_returns_false(mocker):
     assert response.messages == "Did not find fake.table in the worksheet"
 
 
-def test_sheets_reports_invalid_table_name():
-    patient = GSheetChecker("table", "sheet_id", "worksheet_name", "TESTING")
+@pytest.mark.parametrize("table", ["table", ".table", "schema.", "schema..table", "schema.table.extra.parts", "schema. table"])
+def test_sheets_reports_invalid_table_name(table):
+    patient = GSheetChecker(table, "sheet_id", "worksheet_name", "TESTING")
 
     response = patient.exists()
 
     assert response.valid is False
-    assert response.messages == "Invalid table name 'table'; expected schema.table or database.schema.table"
+    assert response.messages == f"Invalid table name {table!r}; expected schema.table or database.schema.table"
+
+
+@pytest.mark.parametrize("table", [None, 123])
+def test_sheets_reports_non_string_table_name(table):
+    patient = GSheetChecker(table, "sheet_id", "worksheet_name", "TESTING")
+
+    response = patient.exists()
+
+    assert response.valid is False
+    assert response.messages == f"Invalid table name {table!r}; expected schema.table or database.schema.table"
+
+
+def test_sheets_searches_for_table_component_of_database_qualified_name(mocker):
+    patient = GSheetChecker("database.schema.table", "sheet_id", "worksheet_name", "TESTING")
+    patient._get_data = mocker.Mock(return_value=[])
+
+    patient.exists()
+
+    patient._get_data.assert_called_once_with("table")
+
+
+def test_sheets_get_data_uses_validated_search_term_by_default(mocker):
+    patient = GSheetChecker("schema.table", "sheet_id", "worksheet_name", "TESTING")
+    worksheet = mocker.Mock()
+    worksheet.get_row.return_value = header_row
+    patient.client = mocker.Mock()
+    patient.client.open_by_key.return_value.worksheet_by_title.return_value = worksheet
+
+    patient._get_data()
+
+    worksheet.find.assert_called_once_with("table", matchEntireCell=True, cols=(1, 12))
+
+
+def test_sheets_get_data_uses_provided_search_term(mocker):
+    patient = GSheetChecker("schema.table", "sheet_id", "worksheet_name", "TESTING")
+    worksheet = mocker.Mock()
+    worksheet.get_row.return_value = header_row
+    patient.client = mocker.Mock()
+    patient.client.open_by_key.return_value.worksheet_by_title.return_value = worksheet
+
+    patient._get_data("provided")
+
+    worksheet.find.assert_called_once_with("provided", matchEntireCell=True, cols=(1, 12))
 
 
 def test_sheets_returns_false_for_empty_values(mocker):
