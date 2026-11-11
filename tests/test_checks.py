@@ -3,7 +3,6 @@ test_checks.py
 A module that contains tests for the checks module.
 """
 
-import json
 from collections import namedtuple
 from os import environ
 from pathlib import Path
@@ -21,13 +20,14 @@ from conductor.checks import (
     PGSqlTableChecker,
     TableChecker,
 )
+from conftest import load_test_secrets
 
 secret_path = Path(__file__).parent.parent / "src" / "conductor" / "secrets" / "db" / "connections"
 
 if "CI" in environ:
     secret_path = Path.cwd() / "secrets" / "db" / "connections"
 
-SECRETS = json.loads(secret_path.read_text(encoding="utf-8"))
+SECRETS = load_test_secrets(secret_path)
 CONNECTION_STRING = ""
 
 
@@ -74,6 +74,7 @@ def test_checker_raises_with_no_connection_string():
         TableChecker("schema.table", None).connect()
 
 
+@pytest.mark.skipif(not SECRETS["opensgid"], reason="requires open SGID credentials")
 def test_open_sgid_can_connect():
     patient = PGSqlTableChecker("boundaries.municipal_boundaries", SECRETS["opensgid"])
 
@@ -90,6 +91,7 @@ def test_pgsql_postgresize():
     assert PGSqlTableChecker.postgresize("") == ""
 
 
+@pytest.mark.skipif(not SECRETS["sgid10"], reason="requires SGID10 credentials")
 @pytest.mark.vpn
 def test_mssql_table_can_connect():
     patient = MSSqlTableChecker("boundaries.municipalities", SECRETS["sgid10"])
@@ -99,6 +101,7 @@ def test_mssql_table_can_connect():
     assert cursor is not None
 
 
+@pytest.mark.skipif(not SECRETS["opensgid"], reason="requires open SGID credentials")
 def test_pgsql_table_exists_returns_true():
     patient = PGSqlTableChecker("boundaries.municipal_boundaries", SECRETS["opensgid"])
 
@@ -107,6 +110,7 @@ def test_pgsql_table_exists_returns_true():
     patient.connection.close()
 
 
+@pytest.mark.skipif(not SECRETS["sgid10"], reason="requires SGID10 credentials")
 @pytest.mark.vpn
 def test_mssql_table_exists_returns_true():
     patient = MSSqlTableChecker("boundaries.municipalities", SECRETS["sgid10"])
@@ -116,6 +120,7 @@ def test_mssql_table_exists_returns_true():
     patient.connection.close()
 
 
+@pytest.mark.skipif(not SECRETS["opensgid"], reason="requires open SGID credentials")
 def test_pgsql_table_does_not_exist_returns_false():
     patient = PGSqlTableChecker("fake.table", SECRETS["opensgid"])
 
@@ -124,6 +129,7 @@ def test_pgsql_table_does_not_exist_returns_false():
     patient.connection.close()
 
 
+@pytest.mark.skipif(not SECRETS["sgid10"], reason="requires SGID10 credentials")
 @pytest.mark.vpn
 def test_mssql_table_does_not_exist_returns_false():
     patient = MSSqlTableChecker("fake.table", SECRETS["sgid10"])
@@ -133,6 +139,7 @@ def test_mssql_table_does_not_exist_returns_false():
     patient.connection.close()
 
 
+@pytest.mark.skipif(not SECRETS["internalsgid"], reason="requires internal SGID credentials")
 @pytest.mark.vpn
 def test_metatable_response_returns_true_when_exists():
     patient = MetaTableChecker("sgid.boundaries.municipalities", SECRETS["internalsgid"])
@@ -143,6 +150,7 @@ def test_metatable_response_returns_true_when_exists():
     assert patient.data.item_name == "Utah Municipal Boundaries"
 
 
+@pytest.mark.skipif(not SECRETS["internalsgid"], reason="requires internal SGID credentials")
 @pytest.mark.vpn
 def test_response_returns_completely_missing_for_fake_table():
     patient = MetaTableChecker("sgid.fake.table", SECRETS["internalsgid"])
@@ -481,6 +489,7 @@ def test_sheets_returns_true_if_neighbors_all_have_values(mocker):
     }
 
 
+@pytest.mark.skipif(not SECRETS["sheets-sa"], reason="requires Google Sheets credentials")
 @pytest.mark.google
 def test_sheets_can_find_workspace():
     patient = GSheetChecker(
@@ -493,6 +502,7 @@ def test_sheets_can_find_workspace():
     assert len(patient._get_data()) == 0
 
 
+@pytest.mark.skipif(not SECRETS["sheets-sa"], reason="requires Google Sheets credentials")
 @pytest.mark.google
 def test_sheets_can_find_known_record_in_workspace():
     patient = GSheetChecker(
@@ -505,6 +515,7 @@ def test_sheets_can_find_known_record_in_workspace():
     assert len(patient._get_data()) == 1
 
 
+@pytest.mark.skipif(not SECRETS["sheets-sa"], reason="requires Google Sheets credentials")
 @pytest.mark.google
 def test_sheets_exists_returns_true_for_known_layer():
     patient = GSheetChecker(

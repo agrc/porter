@@ -4,7 +4,25 @@
 conftest.py
 a module to modify the pytest cli
 """
+import json
+
 import pytest
+
+
+def load_test_secrets(secret_path):
+    """loads test secrets when available and uses empty defaults otherwise"""
+    try:
+        contents = secret_path.read_text(encoding="utf-8").strip()
+    except FileNotFoundError:
+        contents = ""
+
+    return {
+        "internalsgid": {},
+        "opensgid": {},
+        "sgid10": {},
+        "sheets-sa": None,
+        **json.loads(contents or "{}"),
+    }
 
 
 def pytest_addoption(parser):
