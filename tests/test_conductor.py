@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# * coding: utf8 *
 """
 test_conductor
 .py
@@ -11,12 +9,13 @@ from collections import namedtuple
 from os import environ
 from pathlib import Path
 
+import pytest
 from github.Auth import Token
 from github.Issue import Issue
 from github.Label import Label
 from github.Requester import Requester
 
-from conductor import conductor
+from conductor import conductor, server
 from conductor.checks import GSheetChecker, MetaTableChecker, TableChecker, UrlChecker
 
 secret_path = Path(__file__).parent.parent / "src" / "conductor" / "secrets" / "db" / "connections"
@@ -554,18 +553,10 @@ def test_gather_issues(mocker):
 
 
 def test_gather_issues_skips_reminders(mocker):
-    reminder_issue = mocker.Mock(
-        **{
-            "title": "issue with reminder",
-            "labels": [Label(REQUESTER, {}, {"name": "reminder"}, True)],
-        }
-    )
+    reminder_issue = mocker.Mock(title="issue with reminder", labels=[Label(REQUESTER, {}, {"name": "reminder"}, True)])
 
     schedule_issue = mocker.Mock(
-        **{
-            "title": "issue with schedule",
-            "labels": [Label(REQUESTER, {}, {"name": "scheduled"}, True)],
-        }
+        title="issue with schedule", labels=[Label(REQUESTER, {}, {"name": "scheduled"}, True)]
     )
 
     porter = mocker.Mock(**{"get_issues.return_value": [reminder_issue, schedule_issue]})
@@ -577,21 +568,14 @@ def test_gather_issues_skips_reminders(mocker):
 
 def test_gather_issues_skips_blocked(mocker):
     title = "this should be included"
-    issue = mocker.Mock(
-        **{
-            "title": title,
-            "labels": [Label(REQUESTER, {}, {"name": "introduction"}, True)],
-        }
-    )
+    issue = mocker.Mock(title=title, labels=[Label(REQUESTER, {}, {"name": "introduction"}, True)])
 
     skip_issue = mocker.Mock(
-        **{
-            "title": "this should be skipped",
-            "labels": [
-                Label(REQUESTER, {}, {"name": "introduction"}, True),
-                Label(REQUESTER, {}, {"name": "blocked"}, True),
-            ],
-        }
+        title="this should be skipped",
+        labels=[
+            Label(REQUESTER, {}, {"name": "introduction"}, True),
+            Label(REQUESTER, {}, {"name": "blocked"}, True),
+        ],
     )
 
     porter = mocker.Mock(**{"get_issues.return_value": [issue, skip_issue]})
@@ -603,40 +587,21 @@ def test_gather_issues_skips_blocked(mocker):
 
 
 def test_gather_issues_skips_find_introductions_and_deprecations(mocker):
-    reminder_issue = mocker.Mock(
-        **{
-            "title": "issue with reminder",
-            "labels": [Label(REQUESTER, {}, {"name": "reminder"}, True)],
-        }
-    )
+    reminder_issue = mocker.Mock(title="issue with reminder", labels=[Label(REQUESTER, {}, {"name": "reminder"}, True)])
 
     schedule_issue = mocker.Mock(
-        **{
-            "title": "issue with schedule",
-            "labels": [Label(REQUESTER, {}, {"name": "scheduled"}, True)],
-        }
+        title="issue with schedule", labels=[Label(REQUESTER, {}, {"name": "scheduled"}, True)]
     )
 
     introduction_issue = mocker.Mock(
-        **{
-            "title": "issue with introduction",
-            "labels": [Label(REQUESTER, {}, {"name": "introduction"}, True)],
-        }
+        title="issue with introduction", labels=[Label(REQUESTER, {}, {"name": "introduction"}, True)]
     )
 
     deprecation_issue = mocker.Mock(
-        **{
-            "title": "issue with deprecation",
-            "labels": [Label(REQUESTER, {}, {"name": "deprecation"}, True)],
-        }
+        title="issue with deprecation", labels=[Label(REQUESTER, {}, {"name": "deprecation"}, True)]
     )
 
-    other_issue = mocker.Mock(
-        **{
-            "title": "issue with other",
-            "labels": [Label(REQUESTER, {}, {"name": "other"}, True)],
-        }
-    )
+    other_issue = mocker.Mock(title="issue with other", labels=[Label(REQUESTER, {}, {"name": "other"}, True)])
 
     porter = mocker.Mock(
         **{
@@ -653,6 +618,47 @@ def test_gather_issues_skips_find_introductions_and_deprecations(mocker):
     issues = conductor.gather_issues(porter)
 
     assert len(issues) == 2
+
+
+def test_write_reports_records_checker_exceptions_for_each_issue(mocker):
+    ConductorIssue = namedtuple("ConductorIssue", "issue introduction")
+    issues = [ConductorIssue(mocker.Mock(body="", number=number), True) for number in (1, 2)]
+    tables = ["fake.first", "fake.second"]
+    mocker.patch(
+        "conductor.conductor.extract_metadata_from_issue_body",
+        side_effect=[{"table": table} for table in tables],
+    )
+    for checker in ("MSSqlTableChecker", "MetaTableChecker", "GSheetChecker"):
+        mocker.patch(f"conductor.conductor.{checker}", side_effect=RuntimeError("check failed"))
+    log_exception = mocker.patch("conductor.conductor.logger.exception")
+
+    reports = conductor.write_reports(issues, {"internalsgid": {}, "sheets-sa": "TESTING"})
+
+    for table, issue in zip(tables, issues, strict=True):
+        assert len(reports[table]) == 3
+        for report in reports[table]:
+            assert report.issue == issue
+            assert report.report == "Exception was thrown!"
+            assert report.grader(True, report.report) == "Exception was thrown!"
+    assert log_exception.call_count == 6
+
+
+@pytest.mark.parametrize("fails", [False, True])
+def test_schedule_logs_result_and_preserves_response(mocker, monkeypatch, fails):
+    monkeypatch.delenv("PORTER_DEVELOPMENT", raising=False)
+    path = mocker.patch("conductor.server.Path")
+    path.return_value.read_text.side_effect = ["{}", "TESTING"]
+    startup = mocker.patch("conductor.server.startup", side_effect=RuntimeError("check failed") if fails else None)
+    log_exception = mocker.patch("conductor.server.logger.exception")
+    log_info = mocker.patch("conductor.server.logger.info")
+
+    response = server.app.test_client().post("/gcp/schedule")
+
+    startup.assert_called_once_with({"sheets-sa": "TESTING"}, True)
+    assert response.status_code == (500 if fails else 204)
+    assert response.data == (b"error: check failed" if fails else b"")
+    assert log_exception.call_count == int(fails)
+    assert log_info.call_count == int(not fails)
 
 
 def test_write_reports(mocker):

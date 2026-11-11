@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# * coding: utf8 *
 """
 checks.py
 a module with classes that check for the existence of things
@@ -10,6 +8,7 @@ import re
 from collections import namedtuple
 from pathlib import Path
 from textwrap import dedent
+from typing import ClassVar
 
 import psycopg2
 import pygsheets
@@ -308,7 +307,7 @@ class OpenDataChecker(UrlChecker):
 class GSheetChecker:
     """look for a record and attributes in the stewardship worksheet"""
 
-    required_fields = [
+    required_fields: ClassVar[list[str]] = [
         "displayName",
         "description",
         "justification",
@@ -416,7 +415,7 @@ class GSheetChecker:
                 ]
             )
 
-            return f" |{failures}{success}".rstrip(" |").strip("\n\n")
+            return f" |{failures}{success}".rstrip(" |").strip("\n")
 
         #: removal
         has_linked_deprecation_issue = report_value.messages["porterUrl"]
@@ -434,7 +433,7 @@ class GSheetChecker:
         path = Path(file_path)
 
         if not path.exists() or path.is_dir():
-            raise Exception("The path to the service account file is incorrect; Could not create client.")
+            raise ValueError("The path to the service account file is incorrect; Could not create client.")
 
         return pygsheets.authorize(service_account_file=file_path)
 
@@ -444,7 +443,7 @@ class GSheetChecker:
         service_account_key: the service account key
         """
         if service_account_key is None:
-            raise Exception("The project secret might not exist or is incorrect; Could not create client.")
+            raise ValueError("The project secret might not exist or is incorrect; Could not create client.")
 
         scopes = (
             "https://www.googleapis.com/auth/spreadsheets",
