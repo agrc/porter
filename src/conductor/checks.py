@@ -345,7 +345,7 @@ class GSheetChecker:
             )
 
         parts = self.table.split(".")
-        if not 2 <= len(parts) <= 3 or any(not part.strip() for part in parts):
+        if not 2 <= len(parts) <= 3 or any(not part or part != part.strip() for part in parts):
             raise ValueError(
                 f"Invalid table name {self.table!r}; expected schema.table or database.schema.table"
             )
