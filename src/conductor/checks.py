@@ -337,18 +337,42 @@ class GSheetChecker:
             if title in self.required_fields:
                 self.field_index[title] = index
 
-    def _get_data(self):
+    def _get_sheet_search_term(self):
+        """returns the schema name used to find the row in the worksheet"""
+        if not isinstance(self.table, str):
+            raise ValueError(
+                f"Invalid table name {self.table!r}; expected schema.table or database.schema.table"
+            )
+
+        parts = self.table.split(".")
+        if not 2 <= len(parts) <= 3 or any(not part.strip() for part in parts):
+            raise ValueError(
+                f"Invalid table name {self.table!r}; expected schema.table or database.schema.table"
+            )
+
+        return parts[1]
+
+    def _get_data(self, search_term=None):
         """search the worksheet for the table in SGID Data Layer"""
+        if search_term is None:
+            search_term = self._get_sheet_search_term()
+
         self.worksheet = self.client.open_by_key(self.sheet_id).worksheet_by_title(self.worksheet_name)
         header_row = self.worksheet.get_row(1)
         self.build_header_row_index(header_row)
 
-        return self.worksheet.find(self.table.split(".")[1], matchEntireCell=True, cols=(1, 12))
+        return self.worksheet.find(search_term, matchEntireCell=True, cols=(1, 12))
 
     def exists(self):
         """tests for if the row exists in the sheet"""
-        cells = self._get_data()
         SheetResponse = namedtuple("SheetResponse", "valid messages")
+
+        try:
+            search_term = self._get_sheet_search_term()
+        except ValueError as error:
+            return SheetResponse(False, str(error))
+
+        cells = self._get_data(search_term)
 
         if len(cells) > 1:
             row_indexes = ", ".join([str(cell.row) for cell in cells])
@@ -372,7 +396,8 @@ class GSheetChecker:
         item_id = None
         for key, position in fields.items():
             delta = (0, (position + 1) - starting_position)
-            value = cell.neighbour(delta).value.strip()
+            value = cell.neighbour(delta).value
+            value = "" if value is None else str(value).strip()
 
             if key == "productPage":
                 product_page = value
