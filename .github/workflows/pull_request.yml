@@ -30,30 +30,8 @@ jobs:
       - name: 🧪 Run workflow unit tests
         run: node --test tests/issue_edit.test.mjs
 
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v6
+      - name: 🧪 Run Python tests and upload coverage
+        uses: ./.github/actions/test-and-coverage
         with:
-          python-version: "3.12"
-          cache: pip
-          cache-dependency-path: setup.py
-
-      - name: 🏗 Install conductor
-        run: pip install .[tests,cloud-run]
-
-      - name: Create folders
-        run: mkdir -p secrets/db
-
-      - name: 🤐 Create secret file
-        uses: jsdaniell/create-json@v1.2.3
-        with:
-          name: "secrets/db/connections"
-          json: ${{ secrets.TESTING_DB_CONNECTIONS }}
-
-      - name: 🧪 Run pytest
-        run: pytest
-
-      - name: ⬆️ Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./cov.xml
+          testing_db_connections: ${{ secrets.TESTING_DB_CONNECTIONS }}
+          codecov_token: ${{ secrets.CODECOV_TOKEN }}

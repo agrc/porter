@@ -11,6 +11,25 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  test-unit:
+    name: Unit tests
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: ⬇️ Set up code
+        uses: actions/checkout@v6
+        with:
+          show-progress: false
+
+      - name: 🧪 Run Python tests and upload coverage
+        uses: ./.github/actions/test-and-coverage
+        with:
+          testing_db_connections: ${{ secrets.TESTING_DB_CONNECTIONS }}
+          codecov_token: ${{ secrets.CODECOV_TOKEN }}
+
   release-please:
     name: Create release
     runs-on: ubuntu-latest
