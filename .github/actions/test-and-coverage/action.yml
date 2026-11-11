@@ -1,0 +1,43 @@
+name: Test Python and upload coverage
+description: Run the Python test suite and upload coverage to Codecov
+inputs:
+  testing_db_connections:
+    description: JSON credentials used by the Python test suite
+    required: true
+  codecov_token:
+    description: Codecov upload token
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.12"
+        cache: pip
+        cache-dependency-path: setup.py
+
+    - name: 🏗 Install conductor
+      shell: bash
+      run: pip install '.[tests,cloud-run]'
+
+    - name: Create folders
+      shell: bash
+      run: mkdir -p secrets/db
+
+    - name: 🤐 Create secret file
+      uses: jsdaniell/create-json@v1.2.3
+      with:
+        name: "secrets/db/connections"
+        json: ${{ inputs.testing_db_connections }}
+
+    - name: 🧪 Run pytest
+      shell: bash
+      run: pytest
+
+    - name: ⬆️ Upload coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ inputs.codecov_token }}
+        files: ./cov.xml
