@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.6.1](https://github.com/agrc/porter/compare/v2.6.0...v2.6.1) (2026-11-12)
+
+
+### Bug Fixes
+
+* Change return value to last element of parts ([81d9619](https://github.com/agrc/porter/commit/81d96198bef9af68ece588ac6824c50246b685b1))
+* Improve table name validation logic ([35d00bd](https://github.com/agrc/porter/commit/35d00bde0b0d5e558a0c6149cfcb203a9ab57fee))
+* resolve Ruff errors in Python checks and tests ([a85f249](https://github.com/agrc/porter/commit/a85f249ead702afed31ddc9d4a8e58ab6ee95fc2))
+* use TypeError for non-string table names ([ec846a2](https://github.com/agrc/porter/commit/ec846a2b0d5174dbd2d8adb323c728b910baeee2))
+* validate table name format and handle non-string values ([5f3ecbc](https://github.com/agrc/porter/commit/5f3ecbca29ac8b1b0174c859f6a17a7d76e33200))
+
+
+### Dependencies
+
+* **dev:** update gunicorn requirement from ==23.* to &gt;=23,&lt;27 ([e9416d2](https://github.com/agrc/porter/commit/e9416d269c0b1634d4b05f731b93ac91074e264a))
+
 ## [2.6.0](https://github.com/agrc/porter/compare/v2.5.16...v2.6.0) (2026-04-13)
 
 
