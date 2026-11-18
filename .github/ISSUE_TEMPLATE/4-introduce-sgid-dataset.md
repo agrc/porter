@@ -53,7 +53,7 @@ _Choose one._
 - [ ] Add data to the [Internal SGID](https://stackoverflow.com/c/ugrc/questions/109) (name, completed: `2026/00/00`)
 - [ ] Add new entry to [MATT](https://github.com/agrc/metadata-asset-tracking-tool/tree/main/metadata) (name, completed: `2026/00/00`)
 - [ ] Configure forklift for Farm from AGOL (name, completed: `2026/00/00`)
-- [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/data) data pages (name, completed: `2026/00/00`)
+- [ ] Add/Update relevant [downloadMetadata.ts entry](https://github.com/agrc/gis.utah.gov/blob/main/src/data/downloadMetadata.ts) and [gis.utah.gov](https://gis.utah.gov/data) data page (name, completed: `2026/00/00`)
 - [ ] Add a [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1024261148) record (name, completed: `2026/00/00`)
 - [ ] Complete a `SGID.META.AGOLItems` record (name, completed: `2026/00/00`)
   - `AGOL_ITEM_ID` will be populated by Forklift after it publishes the new AGOL item.
