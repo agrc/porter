@@ -54,14 +54,14 @@ Note: If this dataset is being replaced, then wait until the new data is publicl
 _Hard deletes are final. It is recommended to complete the soft delete process before moving on to these steps. If you decide to skip the soft delete, note that you will need to incorporate some of those steps here._
 
 - [ ] Manually remove data from the Internal SGID (name, completed: `2026/00/00`)
-  - [ ] Deprecated database layers should be backed up on Google Drive > AGRC Projects > SGID > deprecated layers > [internal_db_sgid_layers](https://drive.google.com/drive/u/0/folders/10Fk8NI2UpEUnAbgvhjlN18pyvSFDWyIq) (name, completed: `2026/00/00`).
+  - [ ] Deprecated database layers should be backed up on Google Drive > UGRC Projects > SGID > deprecated layers > [internal_db_sgid_layers](https://drive.google.com/drive/u/0/folders/10Fk8NI2UpEUnAbgvhjlN18pyvSFDWyIq) (name, completed: `2026/00/00`).
 - [ ] Remove ArcGIS Online item: (name, completed: `2026/00/00`)
   - Manually delete the AGOL item
   - -OR-
   - Unshare by changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to something other than an Item ID and manually changing the sharing settings (remove the item from all SGID groups, remove Public sharing),
   - -OR-
   - Shelve the data by copying the row from `SGID.META.AGOLItems` to the `AGOLItems_shelved` table in AGOL and changing the `AGOL_ITEM_ID` field in `SGID.META.AGOLItems` to `shelved` or some other note.
-  - Deprecated AGOL items can be backed up on Google Drive > AGRC Projects > SGID > deprecated layers > [agol_sgid_layers](https://drive.google.com/drive/u/0/folders/1xwSxiDNIH-9Hhmn6I7NfKBhm4SbYonX5).
+  - Deprecated AGOL items can be backed up on Google Drive > UGRC Projects > SGID > deprecated layers > [agol_sgid_layers](https://drive.google.com/drive/u/0/folders/1xwSxiDNIH-9Hhmn6I7NfKBhm4SbYonX5).
 - [ ] Remove Farm from AGOL connection (name, completed: `2026/00/00`)
 - [ ] Update the [SGID Index](https://docs.google.com/spreadsheets/d/11ASS7LnxgpnD0jN4utzklREgMf1pcvYjcXcIcESHweQ/edit#gid=1024261148) fields: "arcGisOnline", "openSgid", "openSgidTableName"
 - [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/products/sgid/categories/) product pages (including `downloadMetadata.ts` and `public/_redirects`) (name, completed: `2026/00/00`)
@@ -80,8 +80,8 @@ _Hard deletes are final. It is recommended to complete the soft delete process b
 
 _Choose one based on situation._
 
-- [ ] Upload to `UtahAGRC/AGRC_Shelved` folder in AGOL (New shelved item not already in AGOL) (name, completed: `2026/00/00`)
-- [ ] Move existing AGOL item to `AGRC_Shelved` AGOL folder (shelving an item already in AGOL) (name, completed: `2026/00/00`)
+- [ ] Upload to `UtahAGRC/UGRC_Shelved` folder in AGOL (New shelved item not already in AGOL) (name, completed: `2026/00/00`)
+- [ ] Move existing AGOL item to `UGRC_Shelved` AGOL folder (shelving an item already in AGOL) (name, completed: `2026/00/00`)
 - [ ] Upload to appropriate `UtahAGRC/{SGID Category}` folder in AGOL (for `static` datasets) (name, completed: `2026/00/00`)
 
 _Add record to table._

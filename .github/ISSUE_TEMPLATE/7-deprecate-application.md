@@ -24,7 +24,7 @@ _A short summary of the situation._
 - [ ] Target delete date (name, set: `2026/00/00`)
 - [ ] Update relevant [gis.utah.gov](https://gis.utah.gov/developer/application) application pages (name, completed: `2026/00/00`)
 - [ ] Remove application-specific Databases (name, completed: `2026/00/00`)
-- [ ] AGRC Projects team drive [folder](https://drive.google.com/drive/folders/0AIVByxAYHd4oUk9PVA) (name, completed: `2026/00/00`)
+- [ ] UGRC Projects team drive [folder](https://drive.google.com/drive/folders/0AIVByxAYHd4oUk9PVA) (name, completed: `2026/00/00`)
 - [ ] Remove from Application Portfolio Management ([Business Applications](https://workspaces.dts.utah.gov/now/nav/ui/classic/params/target/cmdb_ci_business_app_list.do%3Fsysparm_userpref_module%3D11133b75870003005f9f578c87cb0bfe%26sysparm_view%3Dbusiness_application_readonly) in ServiceNow) (name, completed: `2026/00/00`)
 - [ ] Remove Google Analytics property (name, completed: `2026/00/00`)
 
